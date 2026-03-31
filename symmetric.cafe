@@ -1,0 +1,62 @@
+in pq3-imessage.cafe
+
+open PQ3 .
+  ops p q : -> Prin .
+  ops id id1 : -> ID-SecretK .
+  ops ec ec1 ec2 : -> ECDHK-SecretK .
+  ops ml ml1 ml2 : -> MLK-SecretK .
+
+  op rm0 : -> RawMsg .
+  ops s0 s1 s2 s3 : -> Sys .
+  op ct0 : -> CipherT .
+
+  eq (p = q) = false .
+  eq (id = id1) = false .
+  eq (ec = ec1) = false .
+  eq (ec = ec2) = false .
+  eq (ec1 = ec2) = false .
+  eq (ml = ml1) = false .
+  eq (ml = ml2) = false .
+  eq (ml1 = ml2) = false .
+
+  -- register bundle keys of q and p on IDS server
+  eq s0 = 
+    register(
+        register(init, p, id, ec, ml),
+        q, id1, ec1, ml1
+    ) .
+
+  -- sender side init
+  eq s1 = send-init(s0, p, q, ec2, ml2) .
+  eq s2 = recv-init(
+    s1,
+    p, q,
+    sid(p, q, time(s0)),
+    ct-ecdh(s0, q, ec2),
+    ct-mlk(s0, q, ml2),
+    time(s0)        
+  ) .
+  -- symmetric
+  eq s3 = send-sym(s1, p, q, sid(p, q, time(s0)), rm0) .
+  eq ct0 = senc(mk-sym(sck(s1, p, q, sid(p, q, time(s0)))), rm0) .
+
+  -- sender side symmetric
+  red c-send-sym(s1, p, q, sid(p, q, time(s0)), rm0) .
+  red ns(s3, p, q, sid(p, q, time(s0))) .
+  red sck(s3, p, q, sid(p, q, time(s0))) = nextck(sck(s1, p, q, sid(p, q, time(s0)))) .
+
+  -- receiver side symmetric
+  red active(s2, q, p, sid(p, q, time(s0))) .
+  red active(s2, p, q, sid(p, q, time(s0))) .
+  red nr(s2, q, p, sid(p, q, time(s0))) .
+  red nr(s2, p, q, sid(p, q, time(s0))) .
+
+  red c-recv-sym(s3, p, q, sid(p, q, time(s0)), 0, 0, ct0, time(s1)) .
+
+  op s4 : -> Sys .
+  eq s4 = recv-sym(s3, p, q, sid(p, q, time(s0)), 0, 0, ct0, time(s1)) .
+
+  red rck(s4, p, q, sid(p, q, time(s0))) .
+  red nr(s4, q, p, sid(p, q, time(s0))) .
+  red nr(s4, p, q, sid(p, q, time(s0))) .
+close

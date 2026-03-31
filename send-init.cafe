@@ -1,0 +1,71 @@
+in pq3-imessage.cafe
+
+open PQ3 .
+  ops p q : -> Prin .
+  ops id id1 : -> ID-SecretK .
+  ops ec ec1 ec2 : -> ECDHK-SecretK .
+  ops ml ml1 ml2 : -> MLK-SecretK .
+
+  op s0 : -> Sys .
+  op s1 : -> Sys .
+  op s2 : -> Sys .
+
+  eq (p = q) = false .
+  eq (id = id1) = false .
+  eq (ec = ec1) = false .
+  eq (ec = ec2) = false .
+  eq (ec1 = ec2) = false .
+  eq (ml = ml1) = false .
+  eq (ml = ml2) = false .
+  eq (ml1 = ml2) = false .
+
+  -- register bundle keys of q and p on IDS server
+  eq s0 = register(register(init, p, id, ec, ml), q, id1, ec1, ml1) .
+  eq s1 = send-init(s0, p, q, ec2, ml2) .
+  eq s2 =
+    recv-init(
+      s1,
+      p, q,
+      sid(p, q, time(s0)),
+      ct-ecdh(s0, q, ec2),
+      ct-mlk(s0, q, ml2),
+      time(s0)
+    ) .
+  -- sender side init
+  red time(s0) .
+  red c-send-init(s0, p, q, ec2, ml2) .
+  red active(s1, p, q, sid(p, q, time(s0))) .
+  red rk(s1, p, q, sid(p, q, time(s0))) .
+  red sck(s1, p, q, sid(p, q, time(s0))) .
+  red rck(s1, p, q, sid(p, q, time(s0))) .
+  red ns(s1, p, q, sid(p, q, time(s0))) .
+  red nr(s1, p, q, sid(p, q, time(s0))) .
+  red pn(s1, p, q, sid(p, q, time(s0))) .
+
+  -- receiver side init
+  red c-recv-init(
+        s1,
+        p, q,
+        sid(p, q, time(s0)),
+        ct-ecdh(s0, q, ec2),
+        ct-mlk(s0, q, ml2),
+        time(s0)
+      ) .
+
+  red active(s2, q, p, sid(p, q, time(s0))) .
+  red rk(s2, q, p, sid(p, q, time(s0))) .
+  red sck(s2, q, p, sid(p, q, time(s0))) .
+  red rck(s2, q, p, sid(p, q, time(s0))) .
+
+  -- sender/receiver key agreement checks
+  red rk(s1, p, q, sid(p, q, time(s0))) = rk(s2, q, p, sid(p, q, time(s0))) .
+  red sck(s1, p, q, sid(p, q, time(s0))) = rck(s2, q, p, sid(p, q, time(s0))) .
+  red rck(s1, p, q, sid(p, q, time(s0))) = sck(s2, q, p, sid(p, q, time(s0))) .
+
+  -- asym state after init
+  red selfEcdhPK(s1, p, q, sid(p, q, time(s0))) = ecdhk-keygen(ec2) .
+  red selfMlkPK(s1, p, q, sid(p, q, time(s0))) = mlk-keygen(ml2) .
+  red peerEcdhPK(s2, q, p, sid(p, q, time(s0))) = ecdhk-keygen(ecdhk-getSecret(ct-ecdh(s0, q, ec2))) .
+  red peerMlkPK(s2, q, p, sid(p, q, time(s0))) = mlk-keygen(mlk-getSecret(ct-mlk(s0, q, ml2))) .
+
+close
