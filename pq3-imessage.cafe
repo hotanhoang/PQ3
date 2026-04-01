@@ -842,7 +842,7 @@ mod* PQ3 {
     ceq active(send-ar(S, P, Q, SID, ESK, MSK), A, B, SID2) = active(S, A, B, SID2) if c-send-ar(S, P, Q, SID, ESK, MSK) .
     ceq rk(send-ar(S, P, Q, SID, ESK, MSK), A, B, SID2) = (if A = P and B = Q and SID2 = SID then ar-rk(rk(S, P, Q, SID), ar-ss-ecdh-send(S, P, Q, SID, ESK), ar-ss-mlk-send(S, P, Q, SID, MSK)) else rk(S, A, B, SID2) fi) if c-send-ar(S, P, Q, SID, ESK, MSK) .
     ceq sck(send-ar(S, P, Q, SID, ESK, MSK), A, B, SID2) = (if A = P and B = Q and SID2 = SID then ar-ck(sck(S, P, Q, SID), ar-ss-ecdh-send(S, P, Q, SID, ESK), ar-ss-mlk-send(S, P, Q, SID, MSK)) else sck(S, A, B, SID2) fi) if c-send-ar(S, P, Q, SID, ESK, MSK) .
-    ceq rck(send-ar(S, P, Q, SID, ESK, MSK), A, B, SID2) = (if A = P and B = Q and SID2 = SID then rck(S, P, Q, SID) else rck(S, A, B, SID2) fi) if c-send-ar(S, P, Q, SID, ESK, MSK) .
+    ceq rck(send-ar(S, P, Q, SID, ESK, MSK), A, B, SID2) = rck(S, A, B, SID2) if c-send-ar(S, P, Q, SID, ESK, MSK) .
     ceq ns(send-ar(S, P, Q, SID, ESK, MSK), A, B, SID2) = (if A = P and B = Q and SID2 = SID then 0 else ns(S, A, B, SID2) fi) if c-send-ar(S, P, Q, SID, ESK, MSK) . -- reset ns -> 0
     ceq nr(send-ar(S, P, Q, SID, ESK, MSK), A, B, SID2) =  nr(S, A, B, SID2) if c-send-ar(S, P, Q, SID, ESK, MSK) .
     ceq pn(send-ar(S, P, Q, SID, ESK, MSK), A, B, SID2) = (if A = P and B = Q and SID2 = SID then ns(S, P, Q, SID) else pn(S, A, B, SID2) fi) if c-send-ar(S, P, Q, SID, ESK, MSK) .
