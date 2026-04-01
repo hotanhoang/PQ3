@@ -614,7 +614,7 @@ mod* PQ3 {
     -- asymmetric-key operations
     eq ar-ct-ecdh-send(S, P, Q, SID, ESK) = ecdhk-encapsC(peerEcdhPK(S, P, Q, SID), ESK) .
     eq ar-ss-ecdh-send(S, P, Q, SID, ESK) = ecdhk-encapsK(peerEcdhPK(S, P, Q, SID), ESK) .
-    
+
     eq ar-ct-mlk-send(S, P, Q, SID, MSK) = mlk-encapsC(peerMlkPK(S, P, Q, SID), MSK) .
     eq ar-ss-mlk-send(S, P, Q, SID, MSK) = mlk-encapsK(peerMlkPK(S, P, Q, SID), MSK) .
 
@@ -689,7 +689,7 @@ mod* PQ3 {
          and not active(S, P, Q, sid(P, Q, time(S)))) .
     
     ceq nw(send-init(S, P, Q, ESK, MSK)) = msg(P, P, Q, initBody(sid(P, Q, time(S)), ct-ecdh(S, Q, ESK), ct-mlk(S, Q, MSK)), time(S)), nw(S) if c-send-init(S, P, Q, ESK, MSK) .
-    ceq usedSecret(send-init(S, P, Q, ESK, MSK)) = ESK MSK usedSecret(S) if c-send-init(S, P, Q, ESK, MSK) .
+    ceq usedSecret(send-init(S, P, Q, ESK, MSK)) = ESK MSK usedSecret(S) if c-send-init(S, P, Q, ESK, MSK) . 
     ceq idsServer(send-init(S, P, Q, ESK, MSK)) = idsServer(S) if c-send-init(S, P, Q, ESK, MSK) . 
     ceq time(send-init(S, P, Q, ESK, MSK)) = s(time(S)) if c-send-init(S, P, Q, ESK, MSK) . 
 
@@ -699,7 +699,7 @@ mod* PQ3 {
 
     ceq active(send-init(S, P, Q, ESK, MSK), A, B, SID) = (if A = P and B = Q and SID = sid(P, Q, time(S)) then true else active(S, A, B, SID) fi) if c-send-init(S, P, Q, ESK, MSK) .
     ceq rk(send-init(S, P, Q, ESK, MSK), A, B, SID) = (if A = P and B = Q and SID = sid(P, Q, time(S)) then init-rk(ss-ecdh(S, Q, ESK), ss-mlk(S, Q, MSK)) else rk(S, A, B, SID) fi) if c-send-init(S, P, Q, ESK, MSK) .
-    ceq sck (send-init(S, P, Q, ESK, MSK), A, B, SID) = (if A = P and B = Q and SID = sid(P, Q, time(S)) then init-sck(ss-ecdh(S, Q, ESK), ss-mlk(S, Q, MSK)) else sck(S, A, B, SID) fi) if c-send-init(S, P, Q, ESK, MSK) .
+    ceq sck(send-init(S, P, Q, ESK, MSK), A, B, SID) = (if A = P and B = Q and SID = sid(P, Q, time(S)) then init-sck(ss-ecdh(S, Q, ESK), ss-mlk(S, Q, MSK)) else sck(S, A, B, SID) fi) if c-send-init(S, P, Q, ESK, MSK) .
     ceq rck(send-init(S, P, Q, ESK, MSK), A, B, SID) = (if A = P and B = Q and SID = sid(P, Q, time(S)) then init-rck(ss-ecdh(S, Q, ESK), ss-mlk(S, Q, MSK)) else rck(S, A, B, SID) fi) if c-send-init(S, P, Q, ESK, MSK) .
     ceq ns(send-init(S, P, Q, ESK, MSK), A, B, SID) = (if A = P and B = Q and SID = sid(P, Q, time(S)) then 0 else ns(S, A, B, SID) fi) if c-send-init(S, P, Q, ESK, MSK) .
     ceq nr(send-init(S, P, Q, ESK, MSK), A, B, SID) = (if A = P and B = Q and SID = sid(P, Q, time(S)) then 0 else nr(S, A, B, SID) fi) if c-send-init(S, P, Q, ESK, MSK) .
