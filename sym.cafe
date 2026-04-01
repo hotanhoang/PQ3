@@ -20,11 +20,7 @@ open PQ3 .
   eq (ml1 = ml2) = false .
 
   -- register bundle keys of q and p on IDS server
-  eq s0 = 
-    register(
-        register(init, p, id, ec, ml),
-        q, id1, ec1, ml1
-    ) .
+  eq s0 = register(register(init, p, id, ec, ml), q, id1, ec1, ml1) .
 
   -- sender side init
   eq s1 = send-init(s0, p, q, ec2, ml2) .
@@ -37,26 +33,28 @@ open PQ3 .
     time(s0)        
   ) .
   -- symmetric
-  eq s3 = send-sym(s1, p, q, sid(p, q, time(s0)), rm0) .
-  eq ct0 = senc(mk-sym(sck(s1, p, q, sid(p, q, time(s0)))), rm0) .
+  eq s3 = send-sym(s2, p, q, sid(p, q, time(s0)), rm0) .
+  eq ct0 = senc(mk-sym(sck(s2, p, q, sid(p, q, time(s0)))), rm0) .
 
   -- sender side symmetric
-  red c-send-sym(s1, p, q, sid(p, q, time(s0)), rm0) .
-  red ns(s3, p, q, sid(p, q, time(s0))) .
-  red sck(s3, p, q, sid(p, q, time(s0))) = nextck(sck(s1, p, q, sid(p, q, time(s0)))) .
+  -- red c-send-sym(s2, p, q, sid(p, q, time(s0)), rm0) . -- true
+  -- red ns(s3, p, q, sid(p, q, time(s0))) . -- 1
+  -- red sck(s3, p, q, sid(p, q, time(s0))) = nextck(sck(s2, p, q, sid(p, q, time(s0)))) . -- true
 
-  -- receiver side symmetric
-  red active(s2, q, p, sid(p, q, time(s0))) .
-  red active(s2, p, q, sid(p, q, time(s0))) .
-  red nr(s2, q, p, sid(p, q, time(s0))) .
-  red nr(s2, p, q, sid(p, q, time(s0))) .
+  -- -- receiver side symmetric
+  -- red active(s2, q, p, sid(p, q, time(s0))) . -- true
+  -- red active(s2, p, q, sid(p, q, time(s0))) . -- true
+  -- red nr(s2, q, p, sid(p, q, time(s0))) . -- 0   
+  -- red nr(s2, p, q, sid(p, q, time(s0))) . -- 0
 
-  red c-recv-sym(s3, p, q, sid(p, q, time(s0)), 0, 0, ct0, time(s1)) .
+  -- red c-recv-sym(s3, p, q, sid(p, q, time(s0)), 0, 0, ct0, time(s1)) . -- true
 
   op s4 : -> Sys .
   eq s4 = recv-sym(s3, p, q, sid(p, q, time(s0)), 0, 0, ct0, time(s1)) .
 
-  red rck(s4, p, q, sid(p, q, time(s0))) .
-  red nr(s4, q, p, sid(p, q, time(s0))) .
-  red nr(s4, p, q, sid(p, q, time(s0))) .
+  -- red rck(s4, p, q, sid(p, q, time(s0))) . -- (init-rck((ec1 & ec2),(ml1 & ml2))):ChainK
+  -- red nr(s4, q, p, sid(p, q, time(s0))) . -- 1
+  -- red nr(s4, p, q, sid(p, q, time(s0))) . -- 0
+
+  red rk(s3, p, q, sid(p, q, time(s0))) = rk(s4, q, p, sid(p, q, time(s0))) . -- true
 close

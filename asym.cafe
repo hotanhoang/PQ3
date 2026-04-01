@@ -46,30 +46,32 @@ open PQ3 .
   -- asym sender side
   eq s3 = send-ar(s2, p, q, sid(p, q, time(s0)), ec3, ml3) .
 
-  red active(s2, q, p, sid(p, q, time(s0))) .
-  red c-send-ar(s2, p, q, sid(p, q, time(s0)), ec3, ml3) .
-  red active(s3, q, p, sid(p, q, time(s0))) .
-  red rk(s3, p, q, sid(p, q, time(s0))) .
-  red sck(s3, p, q, sid(p, q, time(s0))) .
-  red pn(s3, p, q, sid(p, q, time(s0))) .
-  red pn(s3, p, q, sid(p, q, time(s0))) = ns(s1, p, q, sid(p, q, time(s0))) .
-  red ns(s3, p, q, sid(p, q, time(s0))) .
+  -- red active(s2, q, p, sid(p, q, time(s0))) .
+  -- red c-send-ar(s2, p, q, sid(p, q, time(s0)), ec3, ml3) .
+  -- red active(s3, q, p, sid(p, q, time(s0))) .
+  -- red rk(s3, p, q, sid(p, q, time(s0))) .
+  -- red sck(s3, p, q, sid(p, q, time(s0))) .
+  -- red pn(s3, p, q, sid(p, q, time(s0))) .
+  -- red pn(s3, p, q, sid(p, q, time(s0))) = ns(s1, p, q, sid(p, q, time(s0))) .
+  -- red ns(s3, p, q, sid(p, q, time(s0))) .
   
 --   asym receiver side
   eq s4 = recv-ar(s3, p, q, sid(p, q, time(s0)), ar-ct-ecdh-send(s2, p, q, sid(p, q, time(s0)), ec3), ar-ct-mlk-send(s2, p, q, sid(p, q, time(s0)), ml3), time(s2)) .
 
-  red c-recv-ar(
-        s3, p, q, sid(p, q, time(s0)),
-        ar-ct-ecdh-send(s2, p, q, sid(p, q, time(s0)), ec3),
-        ar-ct-mlk-send(s2, p, q, sid(p, q, time(s0)), ml3),
-        time(s2)
-      ) .   
+  -- red c-recv-ar(
+  --       s3, p, q, sid(p, q, time(s0)),
+  --       ar-ct-ecdh-send(s2, p, q, sid(p, q, time(s0)), ec3),
+  --       ar-ct-mlk-send(s2, p, q, sid(p, q, time(s0)), ml3),
+  --       time(s2)
+  --     ) .   
   
-  red nw(s4) .
-  red rk(s4, p, q, sid(p, q, time(s0))) .
-  red rck(s4, p, q, sid(p, q, time(s0))) .
-  red nr(s4, p, q, sid(p, q, time(s0))) .
-  red peerEcdhPK(s4, q, p, sid(p, q, time(s0))) = ecdhk-keygen(ec3) .
-  red peerMlkPK(s4, q, p, sid(p, q, time(s0))) = mlk-keygen(ml3) .
+  -- red nw(s4) .
+  -- red rk(s4, p, q, sid(p, q, time(s0))) .
+  -- red rck(s4, p, q, sid(p, q, time(s0))) .
+  -- red nr(s4, p, q, sid(p, q, time(s0))) .
+  -- red peerEcdhPK(s4, q, p, sid(p, q, time(s0))) = ecdhk-keygen(ec3) .
+  -- red peerMlkPK(s4, q, p, sid(p, q, time(s0))) = mlk-keygen(ml3) .
+
+  red rk(s3, p, q, sid(p, q, time(s0))) = rk(s4, q, p, sid(p, q, time(s0))) .
 
 close

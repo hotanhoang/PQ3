@@ -31,17 +31,17 @@ open PQ3 .
       ct-mlk(s0, q, ml2),
       time(s0)
     ) .
-  red nw(s2) .
+  red nw(s2) . -- (msg(p,p,q,initBody(sid(p,q,0),ecdhk-encapsC(ecdhk-keygen(ec1),ec2),mlk-encapsC(mlk-keygen(ml1),ml2)),0)):Msg
   -- sender side init
-  red time(s0) .
-  red c-send-init(s0, p, q, ec2, ml2) .
-  red active(s1, p, q, sid(p, q, time(s0))) .
-  red rk(s1, p, q, sid(p, q, time(s0))) .
-  red sck(s1, p, q, sid(p, q, time(s0))) .
-  red rck(s1, p, q, sid(p, q, time(s0))) .
-  red ns(s1, p, q, sid(p, q, time(s0))) .
-  red nr(s1, p, q, sid(p, q, time(s0))) .
-  red pn(s1, p, q, sid(p, q, time(s0))) .
+  red time(s0) . -- 0
+  red c-send-init(s0, p, q, ec2, ml2) . -- true
+  red active(s1, p, q, sid(p, q, time(s0))) . -- true
+  red rk(s1, p, q, sid(p, q, time(s0))) . -- (init-rk((ec1 & ec2),(ml1 & ml2))):RootK
+  red sck(s1, p, q, sid(p, q, time(s0))) . -- (init-sck((ec1 & ec2),(ml1 & ml2))):ChainK
+  red rck(s1, p, q, sid(p, q, time(s0))) . -- (init-rck((ec1 & ec2),(ml1 & ml2))):ChainK
+  red ns(s1, p, q, sid(p, q, time(s0))) . -- 0
+  red nr(s1, p, q, sid(p, q, time(s0))) . -- 0
+  red pn(s1, p, q, sid(p, q, time(s0))) . -- 0
 
   -- receiver side init
   red c-recv-init(
@@ -51,17 +51,17 @@ open PQ3 .
         ct-ecdh(s0, q, ec2),
         ct-mlk(s0, q, ml2),
         time(s0)
-      ) .
+      ) . -- true
 
-  red active(s2, q, p, sid(p, q, time(s0))) .
-  red rk(s2, q, p, sid(p, q, time(s0))) .
-  red sck(s2, q, p, sid(p, q, time(s0))) .
-  red rck(s2, q, p, sid(p, q, time(s0))) .
+  red active(s2, q, p, sid(p, q, time(s0))) . -- true
+  red rk(s2, q, p, sid(p, q, time(s0))) . -- (init-rk((ec1 & ec2),(ml1 & ml2))):RootK
+  red sck(s2, q, p, sid(p, q, time(s0))) . -- (init-sck((ec1 & ec2),(ml1 & ml2))):ChainK
+  red rck(s2, q, p, sid(p, q, time(s0))) . -- (init-rck((ec1 & ec2),(ml1 & ml2))):ChainK
 
   -- sender/receiver key agreement checks
-  red rk(s1, p, q, sid(p, q, time(s0))) = rk(s2, q, p, sid(p, q, time(s0))) .
-  red sck(s1, p, q, sid(p, q, time(s0))) = rck(s2, q, p, sid(p, q, time(s0))) .
-  red rck(s1, p, q, sid(p, q, time(s0))) = sck(s2, q, p, sid(p, q, time(s0))) .
+  red rk(s1, p, q, sid(p, q, time(s0))) = rk(s2, q, p, sid(p, q, time(s0))) . -- true
+  red sck(s1, p, q, sid(p, q, time(s0))) = rck(s2, q, p, sid(p, q, time(s0))) . -- true
+  red rck(s1, p, q, sid(p, q, time(s0))) = sck(s2, q, p, sid(p, q, time(s0))) . -- true
 
   -- asym state after init
   red selfEcdhPK(s1, p, q, sid(p, q, time(s0))) = ecdhk-keygen(ec2) .

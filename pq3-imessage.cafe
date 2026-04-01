@@ -1,13 +1,15 @@
+-- Let us suppose that A is communicating with B to establish a shared secret key.
+
 mod! ML-KEM {
     [MLK-SecretK MLK-PublicK MLK-Cipher MLK-ShareS MLK-PriKeyTime]
 
     -- KeyGen and Encaps are probabilistic, seed input (randomness source)
     op mlk-keygen  : MLK-SecretK -> MLK-PublicK {constr}
-    -- Encaps: returns ciphertext / receiver's pk + sender's ephemeral sk -> ciphertext
+    -- Encaps: returns ciphertext / B's pk + A's ephemeral sk -> ciphertext
     op mlk-encapsC : MLK-PublicK MLK-SecretK -> MLK-Cipher {constr}
-    -- Encaps: returns shared key / receiver's pk + sender's ephemeral sk -> shared secret
+    -- Encaps: returns shared key / B's pk + A's ephemeral sk -> shared secret
     op mlk-encapsK : MLK-PublicK MLK-SecretK -> MLK-ShareS
-    -- ciphertext + receiver's long-term sk -> shared secret
+    -- ciphertext + B's long-term sk -> shared secret
     op mlk-decaps  : MLK-Cipher MLK-SecretK -> MLK-ShareS
 
     -- constructor of a shared key is a secret key pair
@@ -113,7 +115,6 @@ mod! LONGTERM-IDENTITY {
     ceq verify(id-keygen(SK), SD, sign(SK2, SD)) = false if not(SK = SK2) .
 
     eq (id-keygen(SK) = id-keygen(SK2)) = (SK = SK2) .
-
 }
 mod* PRINCIPAL {
     [Prin]
@@ -368,8 +369,8 @@ mod! PQ3-KDF-AR {
 
 }
 mod! INIT-PACKAGE {
-    pr(DATA + SESSION-ID + ECDH-KEM + ML-KEM)
-    [InitBody < Data]
+    pr(SESSION-ID + ECDH-KEM + ML-KEM)
+    [InitBody]
 
     op initBody : SessId ECDHK-Cipher MLK-Cipher -> InitBody {constr}
 
@@ -385,13 +386,12 @@ mod! INIT-PACKAGE {
     eq initEcdhCt(initBody(SID, C1, C2)) = C1 .
     eq initMlkCt(initBody(SID, C1, C2)) = C2 .
 
-    eq (initBody(SID, C1, C2) = initBody(SID2, C1', C2')) =
-        (SID = SID2 and C1 = C1' and C2 = C2') .
+    eq (initBody(SID, C1, C2) = initBody(SID2, C1', C2')) = (SID = SID2 and C1 = C1' and C2 = C2') .
 }
 mod! SYM-PACKAGE {
-    pr(DATA + SESSION-ID + PQ3-KDF + NAT + RAW-MESSAGE)
+    pr(SESSION-ID + PQ3-KDF + NAT + RAW-MESSAGE)
 
-    [CipherT SymBody < Data]
+    [CipherT SymBody]
 
     op senc : MsgK RawMsg -> CipherT {constr}
     op symBody : SessId Nat Nat CipherT -> SymBody {constr}
@@ -410,14 +410,12 @@ mod! SYM-PACKAGE {
     eq symPN(symBody(SID, N, PN, CT)) = PN .
     eq symCt(symBody(SID, N, PN, CT)) = CT .
 
-    eq (symBody(SID, N, PN, CT) = symBody(SID2, N2, PN2, CT2)) =
-        (SID = SID2 and N = N2 and PN = PN2 and CT = CT2) .
+    eq (symBody(SID, N, PN, CT) = symBody(SID2, N2, PN2, CT2)) = (SID = SID2 and N = N2 and PN = PN2 and CT = CT2) .
 }
 
 mod! ASYM-PACKAGE {
-    pr(DATA + SESSION-ID + ECDH-KEM + ML-KEM)
-
-    [AsymBody < Data]
+    pr(SESSION-ID + ECDH-KEM + ML-KEM)
+    [AsymBody]
 
     op asymBody : SessId ECDHK-Cipher MLK-Cipher -> AsymBody {constr}
 
@@ -433,10 +431,12 @@ mod! ASYM-PACKAGE {
     eq asymEcdhCt(asymBody(SID, C1, C2)) = C1 .
     eq asymMlkCt(asymBody(SID, C1, C2)) = C2 .
 
-    eq (asymBody(SID, C1, C2) = asymBody(SID2, C1', C2')) =
-        (SID = SID2 and C1 = C1' and C2 = C2') .
+    eq (asymBody(SID, C1, C2) = asymBody(SID2, C1', C2')) = (SID = SID2 and C1 = C1' and C2 = C2') .
 }
-
+mod! PACKAGE {
+  pr(DATA + INIT-PACKAGE + SYM-PACKAGE + ASYM-PACKAGE)
+  [InitBody SymBody AsymBody < Data]
+}
 mod* PQ3 {
     pr(NETWORK)
     pr(DATA)
@@ -445,9 +445,7 @@ mod* PQ3 {
     pr(RAW-MESSAGE)
     pr(PQ3-KDF)
     pr(PQ3-KDF-AR)
-    pr(INIT-PACKAGE)
-    pr(SYM-PACKAGE)
-    pr(ASYM-PACKAGE)
+    pr(PACKAGE)
     pr(SET(D <= TRIV2DATA)*{sort Set -> SecretKS})
     pr(SET(D <= TRIV2REGDATA)*{sort Set -> IDSServer})
 
@@ -460,7 +458,7 @@ mod* PQ3 {
 
     -- send a message from a principal P to another principal Q
     op send-init : Sys Prin Prin ECDHK-SecretK MLK-SecretK  -> Sys {constr}
-    op recv-init : Sys Prin Prin SessId ECDHK-Cipher MLK-Cipher Nat -> Sys {constr} -- ở đây còn thiếu ephemeral ml public key của bên gửi để bên nhận decapsulation ?
+    op recv-init : Sys Prin Prin SessId ECDHK-Cipher MLK-Cipher Nat -> Sys {constr}
 
     op send-sym : Sys Prin Prin SessId RawMsg -> Sys {constr}
     op recv-sym : Sys Prin Prin SessId Nat Nat CipherT Nat -> Sys {constr}
@@ -637,14 +635,15 @@ mod* PQ3 {
     ceq findRegData(P, RD IDS) = RD if P = getPrin(RD) .
     ceq findRegData(P, RD IDS) = findRegData(P, IDS) if not (P = getPrin(RD)) .
 
+    -- *****************************************************************************************************
     -- Registration
+    -- *****************************************************************************************************
     eq c-register(S, P, IdSK, ESK, MSK) =
        (not (existUser(P, idsServer(S)))
         and not (ESK \in usedSecret(S))
         and not (MSK \in usedSecret(S))) .
     ceq usedSecret(register(S, P, IdSK, ESK, MSK)) = ESK MSK usedSecret(S) if c-register(S, P, IdSK, ESK, MSK) .
     ceq nw(register(S, P, IdSK, ESK, MSK)) = nw(S) if c-register(S, P, IdSK, ESK, MSK) .
-    -- ceq usedSecret(register(S, P, Id-SK, Ecdhk-SK, Mlk-SK)) = Id-SK Ecdhk-SK Mlk-SK usedSecret(S) if c-register(S, P, Id-SK, Ecdhk-SK, Mlk-SK) .
 
     ceq idsServer(register(S, P, IdSK, ESK, MSK)) = 
         regData(
@@ -664,13 +663,10 @@ mod* PQ3 {
         )
         idsServer(S) if c-register(S, P, IdSK, ESK, MSK) .
     ceq time(register(S, P, IdSK, ESK, MSK)) = time(S) if c-register(S, P, IdSK, ESK, MSK) .
+    ceq idsk(register(S, P, IdSK, ESK, MSK), A) = (if A = P then IdSK else idsk(S, A) fi) if c-register(S, P, IdSK, ESK, MSK) .
+    ceq lecdhsk(register(S, P, IdSK, ESK, MSK), A) = (if A = P then ESK else lecdhsk(S, A) fi) if c-register(S, P, IdSK, ESK, MSK) . 
+    ceq lmlksk(register(S, P, IdSK, ESK, MSK), A) = (if A = P then MSK else lmlksk(S, A) fi) if c-register(S, P, IdSK, ESK, MSK) .
 
-    ceq idsk(register(S, P, IdSK, ESK, MSK), P) = IdSK if c-register(S, P, IdSK, ESK, MSK) .
-    ceq idsk(register(S, P, IdSK, ESK, MSK), A) = idsk(S, A) if c-register(S, P, IdSK, ESK, MSK) and not (A = P) .
-    ceq lecdhsk(register(S, P, IdSK, ESK, MSK), P) = ESK if c-register(S, P, IdSK, ESK, MSK) .
-    ceq lecdhsk(register(S, P, IdSK, ESK, MSK), A) = lecdhsk(S, A) if c-register(S, P, IdSK, ESK, MSK) and not (A = P) .
-    ceq lmlksk(register(S, P, IdSK, ESK, MSK), P) = MSK if c-register(S, P, IdSK, ESK, MSK) .  
-    ceq lmlksk(register(S, P, IdSK, ESK, MSK), A) = lmlksk(S, A) if c-register(S, P, IdSK, ESK, MSK) and not (A = P) .
     ceq active(register(S, P, IdSK, ESK, MSK), A, B, SID) = active(S, A, B, SID) if c-register(S, P, IdSK, ESK, MSK) .
     ceq rk(register(S, P, IdSK, ESK, MSK), A, B, SID) = rk(S, A, B, SID) if c-register(S, P, IdSK, ESK, MSK) .
     ceq sck(register(S, P, IdSK, ESK, MSK), A, B, SID) = sck(S, A, B, SID) if c-register(S, P, IdSK, ESK, MSK) .
@@ -696,23 +692,19 @@ mod* PQ3 {
     ceq usedSecret(send-init(S, P, Q, ESK, MSK)) = ESK MSK usedSecret(S) if c-send-init(S, P, Q, ESK, MSK) .
     ceq idsServer(send-init(S, P, Q, ESK, MSK)) = idsServer(S) if c-send-init(S, P, Q, ESK, MSK) . 
     ceq time(send-init(S, P, Q, ESK, MSK)) = s(time(S)) if c-send-init(S, P, Q, ESK, MSK) . 
+
     ceq idsk(send-init(S, P, Q, ESK, MSK), A) = idsk(S, A) if c-send-init(S, P, Q, ESK, MSK) .
     ceq lecdhsk(send-init(S, P, Q, ESK, MSK), A) = lecdhsk(S, A) if c-send-init(S, P, Q, ESK, MSK) . 
     ceq lmlksk(send-init(S, P, Q, ESK, MSK), A) = lmlksk(S, A) if c-send-init(S, P, Q, ESK, MSK) . 
-    ceq active(send-init(S, P, Q, ESK, MSK), P, Q, SID) = true if c-send-init(S, P, Q, ESK, MSK) and SID = sid(P, Q, time(S)) . 
-    ceq active(send-init(S, P, Q, ESK, MSK), A, B, SID) = active(S, A, B, SID) if c-send-init(S, P, Q, ESK, MSK) and not (A = P and B = Q and SID = sid(P, Q, time(S))) .
-    ceq rk(send-init(S, P, Q, ESK, MSK), P, Q, SID) = init-rk(ss-ecdh(S, Q, ESK), ss-mlk(S, Q, MSK)) if c-send-init(S, P, Q, ESK, MSK) and SID = sid(P, Q, time(S)) .
-    ceq rk(send-init(S, P, Q, ESK, MSK), A, B, SID) = rk(S, A, B, SID) if c-send-init(S, P, Q, ESK, MSK) and not (A = P and B = Q and SID = sid(P, Q, time(S))) . 
-    ceq sck(send-init(S, P, Q, ESK, MSK), P, Q, SID) = init-sck(ss-ecdh(S, Q, ESK), ss-mlk(S, Q, MSK)) if c-send-init(S, P, Q, ESK, MSK) and SID = sid(P, Q, time(S)) . 
-    ceq sck(send-init(S, P, Q, ESK, MSK), A, B, SID) = sck(S, A, B, SID) if c-send-init(S, P, Q, ESK, MSK) and not (A = P and B = Q and SID = sid(P, Q, time(S))) . 
-    ceq rck(send-init(S, P, Q, ESK, MSK), P, Q, SID) = init-rck(ss-ecdh(S, Q, ESK), ss-mlk(S, Q, MSK)) if c-send-init(S, P, Q, ESK, MSK) and SID = sid(P, Q, time(S)) . 
-    ceq rck(send-init(S, P, Q, ESK, MSK), A, B, SID) = rck(S, A, B, SID) if c-send-init(S, P, Q, ESK, MSK) and not (A = P and B = Q and SID = sid(P, Q, time(S))) .
-    ceq ns(send-init(S, P, Q, ESK, MSK), P, Q, SID) = 0 if c-send-init(S, P, Q, ESK, MSK) and SID = sid(P, Q, time(S)) .
-    ceq ns(send-init(S, P, Q, ESK, MSK), A, B, SID) = ns(S, A, B, SID) if c-send-init(S, P, Q, ESK, MSK) and not (A = P and B = Q and SID = sid(P, Q, time(S))) .
-    ceq nr(send-init(S, P, Q, ESK, MSK), P, Q, SID) = 0 if c-send-init(S, P, Q, ESK, MSK) and SID = sid(P, Q, time(S)) .
-    ceq nr(send-init(S, P, Q, ESK, MSK), A, B, SID) = nr(S, A, B, SID) if c-send-init(S, P, Q, ESK, MSK) and not (A = P and B = Q and SID = sid(P, Q, time(S))) .
-    ceq pn(send-init(S, P, Q, ESK, MSK), P, Q, SID) = 0 if c-send-init(S, P, Q, ESK, MSK) and SID = sid(P, Q, time(S)) .
-    ceq pn(send-init(S, P, Q, ESK, MSK), A, B, SID) = pn(S, A, B, SID) if c-send-init(S, P, Q, ESK, MSK) and not (A = P and B = Q and SID = sid(P, Q, time(S))) .
+
+    ceq active(send-init(S, P, Q, ESK, MSK), A, B, SID) = (if A = P and B = Q and SID = sid(P, Q, time(S)) then true else active(S, A, B, SID) fi) if c-send-init(S, P, Q, ESK, MSK) .
+    ceq rk(send-init(S, P, Q, ESK, MSK), A, B, SID) = (if A = P and B = Q and SID = sid(P, Q, time(S)) then init-rk(ss-ecdh(S, Q, ESK), ss-mlk(S, Q, MSK)) else rk(S, A, B, SID) fi) if c-send-init(S, P, Q, ESK, MSK) .
+    ceq sck (send-init(S, P, Q, ESK, MSK), A, B, SID) = (if A = P and B = Q and SID = sid(P, Q, time(S)) then init-sck(ss-ecdh(S, Q, ESK), ss-mlk(S, Q, MSK)) else sck(S, A, B, SID) fi) if c-send-init(S, P, Q, ESK, MSK) .
+    ceq rck(send-init(S, P, Q, ESK, MSK), A, B, SID) = (if A = P and B = Q and SID = sid(P, Q, time(S)) then init-rck(ss-ecdh(S, Q, ESK), ss-mlk(S, Q, MSK)) else rck(S, A, B, SID) fi) if c-send-init(S, P, Q, ESK, MSK) .
+    ceq ns(send-init(S, P, Q, ESK, MSK), A, B, SID) = (if A = P and B = Q and SID = sid(P, Q, time(S)) then 0 else ns(S, A, B, SID) fi) if c-send-init(S, P, Q, ESK, MSK) .
+    ceq nr(send-init(S, P, Q, ESK, MSK), A, B, SID) = (if A = P and B = Q and SID = sid(P, Q, time(S)) then 0 else nr(S, A, B, SID) fi) if c-send-init(S, P, Q, ESK, MSK) .
+    ceq pn(send-init(S, P, Q, ESK, MSK), A, B, SID) = (if A = P and B = Q and SID = sid(P, Q, time(S)) then 0 else pn(S, A, B, SID) fi) if c-send-init(S, P, Q, ESK, MSK) .
+
     ceq send-init(S, P, Q, ESK, MSK) = S if not c-send-init(S, P, Q, ESK, MSK) .
 
     -- asym key-pair at sender side
@@ -738,43 +730,29 @@ mod* PQ3 {
     ceq usedSecret(recv-init(S, P, Q, SID, C1, C2, N)) = usedSecret(S) if c-recv-init(S, P, Q, SID, C1, C2, N) .
     ceq idsServer(recv-init(S, P, Q, SID, C1, C2, N)) = idsServer(S) if c-recv-init(S, P, Q, SID, C1, C2, N) .
     ceq time(recv-init(S, P, Q, SID, C1, C2, N)) = time(S) if c-recv-init(S, P, Q, SID, C1, C2, N) .
+
     ceq idsk(recv-init(S, P, Q, SID, C1, C2, N), A) = idsk(S, A) if c-recv-init(S, P, Q, SID, C1, C2, N) .
     ceq lecdhsk(recv-init(S, P, Q, SID, C1, C2, N), A) = lecdhsk(S, A) if c-recv-init(S, P, Q, SID, C1, C2, N) .
     ceq lmlksk(recv-init(S, P, Q, SID, C1, C2, N), A) = lmlksk(S, A) if c-recv-init(S, P, Q, SID, C1, C2, N) .
-    ceq active(recv-init(S, P, Q, SID, C1, C2, N), Q, P, SID) = true if c-recv-init(S, P, Q, SID, C1, C2, N) .
-    ceq active(recv-init(S, P, Q, SID, C1, C2, N), A, B, SID) = active(S, A, B, SID) if c-recv-init(S, P, Q, SID, C1, C2, N) and not (A = Q and B = P) .
-    ceq rk(recv-init(S, P, Q, SID, C1, C2, N), Q, P, SID) = init-rk(rs-ecdh(S, Q, C1), rs-mlk(S, Q, C2))if c-recv-init(S, P, Q, SID, C1, C2, N) .
-    ceq rk(recv-init(S, P, Q, SID, C1, C2, N), A, B, SID) = rk(S, A, B, SID) if c-recv-init(S, P, Q, SID, C1, C2, N) and not (A = Q and B = P) .
-    ceq sck(recv-init(S, P, Q, SID, C1, C2, N), Q, P, SID) = init-rck(rs-ecdh(S, Q, C1), rs-mlk(S, Q, C2)) if c-recv-init(S, P, Q, SID, C1, C2, N) .
-    ceq sck(recv-init(S, P, Q, SID, C1, C2, N), A, B, SID) = sck(S, A, B, SID) if c-recv-init(S, P, Q, SID, C1, C2, N) and not (A = Q and B = P) .
-    ceq rck(recv-init(S, P, Q, SID, C1, C2, N), Q, P, SID) = init-sck(rs-ecdh(S, Q, C1), rs-mlk(S, Q, C2)) if c-recv-init(S, P, Q, SID, C1, C2, N) .
-    ceq rck(recv-init(S, P, Q, SID, C1, C2, N), A, B, SID) = rck(S, A, B, SID) if c-recv-init(S, P, Q, SID, C1, C2, N) and not (A = Q and B = P) .
-    ceq ns(recv-init(S, P, Q, SID, C1, C2, N), Q, P, SID) = 0 if c-recv-init(S, P, Q, SID, C1, C2, N) .
-    ceq ns(recv-init(S, P, Q, SID, C1, C2, N), A, B, SID) = ns(S, A, B, SID) if c-recv-init(S, P, Q, SID, C1, C2, N) and not (A = Q and B = P) .
-    ceq nr(recv-init(S, P, Q, SID, C1, C2, N), Q, P, SID) = 0 if c-recv-init(S, P, Q, SID, C1, C2, N) .
-    ceq nr(recv-init(S, P, Q, SID, C1, C2, N), A, B, SID) = nr(S, A, B, SID) if c-recv-init(S, P, Q, SID, C1, C2, N) and not (A = Q and B = P) .
-    ceq pn(recv-init(S, P, Q, SID, C1, C2, N), Q, P, SID) = 0 if c-recv-init(S, P, Q, SID, C1, C2, N) .
-    ceq pn(recv-init(S, P, Q, SID, C1, C2, N), A, B, SID) = pn(S, A, B, SID) if c-recv-init(S, P, Q, SID, C1, C2, N) and not (A = Q and B = P) .
+
+    ceq active(recv-init(S, P, Q, SID, C1, C2, N), A, B, SID) = (if A = Q and B = P  then true else active(S, A, B, SID) fi) if c-recv-init(S, P, Q, SID, C1, C2, N) .
+
+    ceq rk(recv-init(S, P, Q, SID, C1, C2, N), A, B, SID) = (if A = Q and B = P then init-rk(rs-ecdh(S, Q, C1), rs-mlk(S, Q, C2)) else rk(S, A, B, SID) fi) if c-recv-init(S, P, Q, SID, C1, C2, N) .
+    ceq sck(recv-init(S, P, Q, SID, C1, C2, N), A, B, SID) = (if A = Q and B = P then init-sck(rs-ecdh(S, Q, C1), rs-mlk(S, Q, C2)) else sck(S, A, B, SID) fi) if c-recv-init(S, P, Q, SID, C1, C2, N) .
+    ceq rck(recv-init(S, P, Q, SID, C1, C2, N), A, B, SID) = (if A = Q and B = P then init-rck(rs-ecdh(S, Q, C1), rs-mlk(S, Q, C2)) else rck(S, A, B, SID) fi) if c-recv-init(S, P, Q, SID, C1, C2, N) .
+    ceq ns(recv-init(S, P, Q, SID, C1, C2, N), A, B, SID) = (if A = Q and B = P then 0 else ns(S, A, B, SID) fi) if c-recv-init(S, P, Q, SID, C1, C2, N) .
+    ceq nr(recv-init(S, P, Q, SID, C1, C2, N), A, B, SID) = (if A = Q and B = P then 0 else nr(S, A, B, SID) fi) if c-recv-init(S, P, Q, SID, C1, C2, N) .
+    ceq pn(recv-init(S, P, Q, SID, C1, C2, N), A, B, SID) = (if A = Q and B = P then 0 else pn(S, A, B, SID) fi) if c-recv-init(S, P, Q, SID, C1, C2, N) .
     ceq recv-init(S, P, Q, SID, C1, C2, N) = S if not c-recv-init(S, P, Q, SID, C1, C2, N) .
 
     -- asym key-pair at receiver side after receiving initial message
-    ceq selfEcdhSK(recv-init(S, P, Q, SID, C1, C2, N), Q, P, SID) = lecdhsk(S, Q) if c-recv-init(S, P, Q, SID, C1, C2, N) .
-    ceq selfEcdhSK(recv-init(S, P, Q, SID, C1, C2, N), A, B, SID2) = selfEcdhSK(S, A, B, SID2) if c-recv-init(S, P, Q, SID, C1, C2, N) and not (A = Q and B = P and SID2 = SID) .
 
-    ceq selfEcdhPK(recv-init(S, P, Q, SID, C1, C2, N), Q, P, SID) = ecdhk-keygen(lecdhsk(S, Q)) if c-recv-init(S, P, Q, SID, C1, C2, N) .
-    ceq selfEcdhPK(recv-init(S, P, Q, SID, C1, C2, N), A, B, SID2) = selfEcdhPK(S, A, B, SID2) if c-recv-init(S, P, Q, SID, C1, C2, N) and not (A = Q and B = P and SID2 = SID) .
-   
-    ceq selfMlkSK(recv-init(S, P, Q, SID, C1, C2, N), Q, P, SID) = lmlksk(S, Q) if c-recv-init(S, P, Q, SID, C1, C2, N) .
-    ceq selfMlkSK(recv-init(S, P, Q, SID, C1, C2, N), A, B, SID2) = selfMlkSK(S, A, B, SID2) if c-recv-init(S, P, Q, SID, C1, C2, N) and not (A = Q and B = P and SID2 = SID) .
-
-    ceq selfMlkPK(recv-init(S, P, Q, SID, C1, C2, N), Q, P, SID) = mlk-keygen(lmlksk(S, Q)) if c-recv-init(S, P, Q, SID, C1, C2, N) .
-    ceq selfMlkPK(recv-init(S, P, Q, SID, C1, C2, N), A, B, SID2) = selfMlkPK(S, A, B, SID2) if c-recv-init(S, P, Q, SID, C1, C2, N) and not (A = Q and B = P and SID2 = SID) .
-
-    ceq peerEcdhPK(recv-init(S, P, Q, SID, C1, C2, N), Q, P, SID) = ecdhk-keygen(ecdhk-getSecret(C1)) if c-recv-init(S, P, Q, SID, C1, C2, N) .
-    ceq peerEcdhPK(recv-init(S, P, Q, SID, C1, C2, N), A, B, SID2) = peerEcdhPK(S, A, B, SID2) if c-recv-init(S, P, Q, SID, C1, C2, N) and not (A = Q and B = P and SID2 = SID) .
- 
-    ceq peerMlkPK(recv-init(S, P, Q, SID, C1, C2, N), Q, P, SID) = mlk-keygen(mlk-getSecret(C2)) if c-recv-init(S, P, Q, SID, C1, C2, N) . 
-    ceq peerMlkPK(recv-init(S, P, Q, SID, C1, C2, N), A, B, SID2) = peerMlkPK(S, A, B, SID2) if c-recv-init(S, P, Q, SID, C1, C2, N) and not (A = Q and B = P and SID2 = SID) .
+    ceq selfEcdhSK(recv-init(S, P, Q, SID, C1, C2, N), A, B, SID2) = (if A = Q and B = P and SID2 = SID then lecdhsk(S, Q) else selfEcdhSK(S, A, B, SID2) fi) if c-recv-init(S, P, Q, SID, C1, C2, N) .
+    ceq selfEcdhPK(recv-init(S, P, Q, SID, C1, C2, N), A, B, SID2) = (if A = Q and B = P and SID2 = SID then ecdhk-keygen(lecdhsk(S, Q)) else selfEcdhPK(S, A, B, SID2) fi) if c-recv-init(S, P, Q, SID, C1, C2, N) .
+    ceq selfMlkSK(recv-init(S, P, Q, SID, C1, C2, N), A, B, SID2) = (if A = Q and B = P and SID2 = SID then lmlksk(S, Q) else selfMlkSK(S, A, B, SID2) fi) if c-recv-init(S, P, Q, SID, C1, C2, N) .
+    ceq selfMlkPK(recv-init(S, P, Q, SID, C1, C2, N), A, B, SID2) = (if A = Q and B = P and SID2 = SID then mlk-keygen(lmlksk(S, Q)) else selfMlkPK(S, A, B, SID2) fi) if c-recv-init(S, P, Q, SID, C1, C2, N) .
+    ceq peerEcdhPK(recv-init(S, P, Q, SID, C1, C2, N), A, B, SID2) = (if A = Q and B = P and SID2 = SID then ecdhk-keygen(ecdhk-getSecret(C1)) else peerEcdhPK(S, A, B, SID2) fi) if c-recv-init(S, P, Q, SID, C1, C2, N) .
+    ceq peerMlkPK(recv-init(S, P, Q, SID, C1, C2, N), A, B, SID2) = (if A = Q and B = P and SID2 = SID then mlk-keygen(mlk-getSecret(C2)) else peerMlkPK(S, A, B, SID2) fi) if c-recv-init(S, P, Q, SID, C1, C2, N) .
 
 
     -- *****************************************************************************************************
@@ -783,21 +761,21 @@ mod* PQ3 {
     eq c-send-sym(S, P, Q, SID, RM) = 
         (active(S, P, Q, SID)
          and not (sck(S, P, Q, SID) = noChainK)) .
-    ceq nw(send-sym(S, P, Q, SID, RM)) =
-        msg(P, P, Q, symBody(SID, ns(S, P, Q, SID), pn(S, P, Q, SID), senc(mk-sym(sck(S, P, Q, SID)), RM)), time(S)), nw(S) if c-send-sym(S, P, Q, SID, RM) .
+
+    ceq nw(send-sym(S, P, Q, SID, RM)) = msg(P, P, Q, symBody(SID, ns(S, P, Q, SID), pn(S, P, Q, SID), senc(mk-sym(sck(S, P, Q, SID)), RM)), time(S)), nw(S) if c-send-sym(S, P, Q, SID, RM) .
     ceq usedSecret(send-sym(S, P, Q, SID, RM)) = usedSecret(S) if c-send-sym(S, P, Q, SID, RM) . 
     ceq idsServer(send-sym(S, P, Q, SID, RM)) = idsServer(S) if c-send-sym(S, P, Q, SID, RM) .
     ceq time(send-sym(S, P, Q, SID, RM)) = s(time(S)) if c-send-sym(S, P, Q, SID, RM) .
+    
     ceq idsk(send-sym(S, P, Q, SID, RM), A) = idsk(S, A) if c-send-sym(S, P, Q, SID, RM) . 
     ceq lecdhsk(send-sym(S, P, Q, SID, RM), A) = lecdhsk(S, A) if c-send-sym(S, P, Q, SID, RM) . 
     ceq lmlksk(send-sym(S, P, Q, SID, RM), A) = lmlksk(S, A) if c-send-sym(S, P, Q, SID, RM) . 
+
     ceq active(send-sym(S, P, Q, SID, RM), A, B, SID) = active(S, A, B, SID) if c-send-sym(S, P, Q, SID, RM) . 
     ceq rk(send-sym(S, P, Q, SID, RM), A, B, SID) = rk(S, A, B, SID) if c-send-sym(S, P, Q, SID, RM) .
-    ceq sck(send-sym(S, P, Q, SID, RM), P, Q, SID) = nextck(sck(S, P, Q, SID)) if c-send-sym(S, P, Q, SID, RM) . -- Khi P gửi tin nhắn cho Q thì chain key của symmetric session giữa P và Q được cập nhật bằng hàm nextck với input là chain key hiện tại
-    ceq sck(send-sym(S, P, Q, SID, RM), A, B, SID) = sck(S, A, B, SID) if c-send-sym(S, P, Q, SID, RM) and not (A = P and B = Q) .
+    ceq sck(send-sym(S, P, Q, SID, RM), A, B, SID) = (if A = P and B = Q then nextck(sck(S, P, Q, SID)) else sck(S, A, B, SID) fi) if c-send-sym(S, P, Q, SID, RM) .
     ceq rck(send-sym(S, P, Q, SID, RM), A, B, SID) = rck(S, A, B, SID) if c-send-sym(S, P, Q, SID, RM) .
-    ceq ns(send-sym(S, P, Q, SID, RM), P, Q, SID) = s(ns(S, P, Q, SID)) if c-send-sym(S, P, Q, SID, RM) .
-    ceq ns(send-sym(S, P, Q, SID, RM), A, B, SID) = ns(S, A, B, SID) if c-send-sym(S, P, Q, SID, RM) and not (A = P and B = Q) .
+    ceq ns(send-sym(S, P, Q, SID, RM), A, B, SID) = (if A = P and B = Q then s(ns(S, P, Q, SID)) else ns(S, A, B, SID) fi) if c-send-sym(S, P, Q, SID, RM) .
     ceq nr(send-sym(S, P, Q, SID, RM), A, B, SID) = nr(S, A, B, SID) if c-send-sym(S, P, Q, SID, RM) .
     ceq pn(send-sym(S, P, Q, SID, RM), A, B, SID) = pn(S, A, B, SID) if c-send-sym(S, P, Q, SID, RM) .
     ceq send-sym(S, P, Q, SID, RM) = S if not c-send-sym(S, P, Q, SID, RM) .
@@ -818,17 +796,17 @@ mod* PQ3 {
     ceq usedSecret(recv-sym(S, P, Q, SID, I, PN0, CT, N)) = usedSecret(S) if c-recv-sym(S, P, Q, SID, I, PN0, CT, N) .
     ceq idsServer(recv-sym(S, P, Q, SID, I, PN0, CT, N)) = idsServer(S) if c-recv-sym(S, P, Q, SID, I, PN0, CT, N) .
     ceq time(recv-sym(S, P, Q, SID, I, PN0, CT, N)) = time(S) if c-recv-sym(S, P, Q, SID, I, PN0, CT, N) .
+
     ceq idsk(recv-sym(S, P, Q, SID, I, PN0, CT, N), A) = idsk(S, A) if c-recv-sym(S, P, Q, SID, I, PN0, CT, N) .
     ceq lecdhsk(recv-sym(S, P, Q, SID, I, PN0, CT, N), A) = lecdhsk(S, A) if c-recv-sym(S, P, Q, SID, I, PN0, CT, N) .
     ceq lmlksk(recv-sym(S, P, Q, SID, I, PN0, CT, N), A) = lmlksk(S, A) if c-recv-sym(S, P, Q, SID, I, PN0, CT, N) .
+
     ceq active(recv-sym(S, P, Q, SID, I, PN0, CT, N), A, B, SID) = active(S, A, B, SID) if c-recv-sym(S, P, Q, SID, I, PN0, CT, N) .
     ceq rk(recv-sym(S, P, Q, SID, I, PN0, CT, N), A, B, SID) = rk(S, A, B, SID) if c-recv-sym(S, P, Q, SID, I, PN0, CT, N) .
     ceq sck(recv-sym(S, P, Q, SID, I, PN0, CT, N), A, B, SID) = sck(S, A, B, SID) if c-recv-sym(S, P, Q, SID, I, PN0, CT, N) .
-    ceq rck(recv-sym(S, P, Q, SID, I, PN0, CT, N), Q, P, SID) = nextck(rck(S, Q, P, SID)) if c-recv-sym(S, P, Q, SID, I, PN0, CT, N) .
-    ceq rck(recv-sym(S, P, Q, SID, I, PN0, CT, N), A, B, SID) = rck(S, A, B, SID) if c-recv-sym(S, P, Q, SID, I, PN0, CT, N) and not (A = Q and B = P) .
+    ceq rck(recv-sym(S, P, Q, SID, I, PN0, CT, N), A, B, SID) = (if A = Q and B = P then nextck(rck(S, Q, P, SID)) else rck(S, A, B, SID) fi) if c-recv-sym(S, P, Q, SID, I, PN0, CT, N) . -- derive rck for receiver side from the previous rck value
     ceq ns(recv-sym(S, P, Q, SID, I, PN0, CT, N), A, B, SID) = ns(S, A, B, SID) if c-recv-sym(S, P, Q, SID, I, PN0, CT, N) .
-    ceq nr(recv-sym(S, P, Q, SID, I, PN0, CT, N), Q, P, SID) = s(nr(S, Q, P, SID)) if c-recv-sym(S, P, Q, SID, I, PN0, CT, N) .
-    ceq nr(recv-sym(S, P, Q, SID, I, PN0, CT, N), A, B, SID) = nr(S, A, B, SID) if c-recv-sym(S, P, Q, SID, I, PN0, CT, N) and not (A = Q and B = P) .
+    ceq nr(recv-sym(S, P, Q, SID, I, PN0, CT, N), A, B, SID) = (if A = Q and B = P then s(nr(S, Q, P, SID)) else nr(S, A, B, SID) fi) if c-recv-sym(S, P, Q, SID, I, PN0, CT, N) . 
     ceq pn(recv-sym(S, P, Q, SID, I, PN0, CT, N), A, B, SID) = pn(S, A, B, SID) if c-recv-sym(S, P, Q, SID, I, PN0, CT, N) .
     ceq recv-sym(S, P, Q, SID, I, PN0, CT, N) = S if not c-recv-sym(S, P, Q, SID, I, PN0, CT, N) .
 
@@ -840,8 +818,8 @@ mod* PQ3 {
         (active(S, P, Q, SID)
          and not (ESK \in usedSecret(S))
          and not (MSK \in usedSecret(S))
-         and not (peerEcdhPK(S, P, Q, SID) = noREcdhPK)
-         and not (peerMlkPK(S, P, Q, SID) = noRMlkPK)) .
+         and not (peerEcdhPK(S, P, Q, SID) = noREcdhPK) 
+         and not (peerMlkPK(S, P, Q, SID) = noRMlkPK)) . 
 
 
     ceq nw(send-ar(S, P, Q, SID, ESK, MSK)) =
@@ -856,48 +834,23 @@ mod* PQ3 {
     ceq usedSecret(send-ar(S, P, Q, SID, ESK, MSK)) = ESK MSK usedSecret(S) if c-send-ar(S, P, Q, SID, ESK, MSK) .
     ceq idsServer(send-ar(S, P, Q, SID, ESK, MSK)) = idsServer(S) if c-send-ar(S, P, Q, SID, ESK, MSK) .
     ceq time(send-ar(S, P, Q, SID, ESK, MSK)) = s(time(S)) if c-send-ar(S, P, Q, SID, ESK, MSK) .
+
     ceq idsk(send-ar(S, P, Q, SID, ESK, MSK), A) = idsk(S, A) if c-send-ar(S, P, Q, SID, ESK, MSK) .
     ceq lecdhsk(send-ar(S, P, Q, SID, ESK, MSK), A) = lecdhsk(S, A) if c-send-ar(S, P, Q, SID, ESK, MSK) .
     ceq lmlksk(send-ar(S, P, Q, SID, ESK, MSK), A) = lmlksk(S, A) if c-send-ar(S, P, Q, SID, ESK, MSK) .
+
     ceq active(send-ar(S, P, Q, SID, ESK, MSK), A, B, SID2) = active(S, A, B, SID2) if c-send-ar(S, P, Q, SID, ESK, MSK) .
-
-    ceq rk(send-ar(S, P, Q, SID, ESK, MSK), P, Q, SID) =
-        ar-rk(rk(S, P, Q, SID),
-              ar-ss-ecdh-send(S, P, Q, SID, ESK),
-              ar-ss-mlk-send(S, P, Q, SID, MSK))
-    if c-send-ar(S, P, Q, SID, ESK, MSK) .
-    ceq rk(send-ar(S, P, Q, SID, ESK, MSK), A, B, SID2) = rk(S, A, B, SID2) if c-send-ar(S, P, Q, SID, ESK, MSK) and not (A = P and B = Q and SID2 = SID) .
-
-    ceq sck(send-ar(S, P, Q, SID, ESK, MSK), P, Q, SID) =
-        ar-ck(sck(S, P, Q, SID),
-              ar-ss-ecdh-send(S, P, Q, SID, ESK),
-              ar-ss-mlk-send(S, P, Q, SID, MSK))
-    if c-send-ar(S, P, Q, SID, ESK, MSK) .
-    ceq sck(send-ar(S, P, Q, SID, ESK, MSK), A, B, SID2) = sck(S, A, B, SID2) if c-send-ar(S, P, Q, SID, ESK, MSK) and not (A = P and B = Q and SID2 = SID) .
-
-    ceq rck(send-ar(S, P, Q, SID, ESK, MSK), P, Q, SID) = rck(S, P, Q, SID) if c-send-ar(S, P, Q, SID, ESK, MSK) .
-    ceq rck(send-ar(S, P, Q, SID, ESK, MSK), A, B, SID2) = rck(S, A, B, SID2) if c-send-ar(S, P, Q, SID, ESK, MSK) and not (A = P and B = Q and SID2 = SID) .
-
-    ceq ns(send-ar(S, P, Q, SID, ESK, MSK), P, Q, SID) = 0 if c-send-ar(S, P, Q, SID, ESK, MSK) .
-    ceq ns(send-ar(S, P, Q, SID, ESK, MSK), A, B, SID2) = ns(S, A, B, SID2) if c-send-ar(S, P, Q, SID, ESK, MSK)  and not (A = P and B = Q and SID2 = SID) .
-
+    ceq rk(send-ar(S, P, Q, SID, ESK, MSK), A, B, SID2) = (if A = P and B = Q and SID2 = SID then ar-rk(rk(S, P, Q, SID), ar-ss-ecdh-send(S, P, Q, SID, ESK), ar-ss-mlk-send(S, P, Q, SID, MSK)) else rk(S, A, B, SID2) fi) if c-send-ar(S, P, Q, SID, ESK, MSK) .
+    ceq sck(send-ar(S, P, Q, SID, ESK, MSK), A, B, SID2) = (if A = P and B = Q and SID2 = SID then ar-ck(sck(S, P, Q, SID), ar-ss-ecdh-send(S, P, Q, SID, ESK), ar-ss-mlk-send(S, P, Q, SID, MSK)) else sck(S, A, B, SID2) fi) if c-send-ar(S, P, Q, SID, ESK, MSK) .
+    ceq rck(send-ar(S, P, Q, SID, ESK, MSK), A, B, SID2) = (if A = P and B = Q and SID2 = SID then rck(S, P, Q, SID) else rck(S, A, B, SID2) fi) if c-send-ar(S, P, Q, SID, ESK, MSK) .
+    ceq ns(send-ar(S, P, Q, SID, ESK, MSK), A, B, SID2) = (if A = P and B = Q and SID2 = SID then 0 else ns(S, A, B, SID2) fi) if c-send-ar(S, P, Q, SID, ESK, MSK) . -- reset ns -> 0
     ceq nr(send-ar(S, P, Q, SID, ESK, MSK), A, B, SID2) =  nr(S, A, B, SID2) if c-send-ar(S, P, Q, SID, ESK, MSK) .
-
-    ceq pn(send-ar(S, P, Q, SID, ESK, MSK), P, Q, SID) = ns(S, P, Q, SID) if c-send-ar(S, P, Q, SID, ESK, MSK) .
-    ceq pn(send-ar(S, P, Q, SID, ESK, MSK), A, B, SID2) = pn(S, A, B, SID2) if c-send-ar(S, P, Q, SID, ESK, MSK) and not (A = P and B = Q and SID2 = SID) .
-
-    ceq selfEcdhSK(send-ar(S, P, Q, SID, ESK, MSK), P, Q, SID) = ESK if c-send-ar(S, P, Q, SID, ESK, MSK) .
-    ceq selfEcdhSK(send-ar(S, P, Q, SID, ESK, MSK), A, B, SID2) = selfEcdhSK(S, A, B, SID2) if c-send-ar(S, P, Q, SID, ESK, MSK) and not (A = P and B = Q and SID2 = SID) .
-
-    ceq selfEcdhPK(send-ar(S, P, Q, SID, ESK, MSK), P, Q, SID) = ecdhk-keygen(ESK) if c-send-ar(S, P, Q, SID, ESK, MSK) .
-    ceq selfEcdhPK(send-ar(S, P, Q, SID, ESK, MSK), A, B, SID2) = selfEcdhPK(S, A, B, SID2) if c-send-ar(S, P, Q, SID, ESK, MSK) and not (A = P and B = Q and SID2 = SID) .
-
-    ceq selfMlkSK(send-ar(S, P, Q, SID, ESK, MSK), P, Q, SID) = MSK if c-send-ar(S, P, Q, SID, ESK, MSK) .
-    ceq selfMlkSK(send-ar(S, P, Q, SID, ESK, MSK), A, B, SID2) = selfMlkSK(S, A, B, SID2) if c-send-ar(S, P, Q, SID, ESK, MSK) and not (A = P and B = Q and SID2 = SID) .
-
-    ceq selfMlkPK(send-ar(S, P, Q, SID, ESK, MSK), P, Q, SID) = mlk-keygen(MSK) if c-send-ar(S, P, Q, SID, ESK, MSK) .
-    ceq selfMlkPK(send-ar(S, P, Q, SID, ESK, MSK), A, B, SID2) = selfMlkPK(S, A, B, SID2) if c-send-ar(S, P, Q, SID, ESK, MSK) and not (A = P and B = Q and SID2 = SID) .
-
+    ceq pn(send-ar(S, P, Q, SID, ESK, MSK), A, B, SID2) = (if A = P and B = Q and SID2 = SID then ns(S, P, Q, SID) else pn(S, A, B, SID2) fi) if c-send-ar(S, P, Q, SID, ESK, MSK) .
+    
+    ceq selfEcdhSK(send-ar(S, P, Q, SID, ESK, MSK), A, B, SID2) = (if A = P and B = Q and SID2 = SID then ESK else selfEcdhSK(S, A, B, SID2) fi) if c-send-ar(S, P, Q, SID, ESK, MSK) .
+    ceq selfEcdhPK(send-ar(S, P, Q, SID, ESK, MSK), A, B, SID2) = (if A = P and B = Q and SID2 = SID then ecdhk-keygen(ESK) else selfEcdhPK(S, A, B, SID2) fi) if c-send-ar(S, P, Q, SID, ESK, MSK) .
+    ceq selfMlkSK(send-ar(S, P, Q, SID, ESK, MSK), A, B, SID2) = (if A = P and B = Q and SID2 = SID then MSK else selfMlkSK(S, A, B, SID2) fi) if c-send-ar(S, P, Q, SID, ESK, MSK) .
+    ceq selfMlkPK(send-ar(S, P, Q, SID, ESK, MSK), A, B, SID2) = (if A = P and B = Q and SID2 = SID then mlk-keygen(MSK) else selfMlkPK(S, A, B, SID2) fi) if c-send-ar(S, P, Q, SID, ESK, MSK) .
     ceq peerEcdhPK(send-ar(S, P, Q, SID, ESK, MSK), A, B, SID2) = peerEcdhPK(S, A, B, SID2) if c-send-ar(S, P, Q, SID, ESK, MSK) .
     ceq peerMlkPK(send-ar(S, P, Q, SID, ESK, MSK), A, B, SID2) = peerMlkPK(S, A, B, SID2) if c-send-ar(S, P, Q, SID, ESK, MSK) .
 
@@ -908,48 +861,35 @@ mod* PQ3 {
     -- *****************************************************************************************************
 
     eq c-recv-ar(S, P, Q, SID, C1, C2, N) =
-    (active(S, Q, P, SID)
-        and msg(P, P, Q, asymBody(SID, C1, C2), N) \in nw(S)
-        and not (selfEcdhPK(S, Q, P, SID) = noREcdhPK)
-        and not (selfMlkPK(S, Q, P, SID) = noRMlkPK)
-        and (
-            not (peerEcdhPK(S, Q, P, SID) = ecdhk-keygen(ecdhk-getSecret(C1)))
-            or
-            not (peerMlkPK(S, Q, P, SID) = mlk-keygen(mlk-getSecret(C2)))
+        (active(S, Q, P, SID)
+            and msg(P, P, Q, asymBody(SID, C1, C2), N) \in nw(S)
+            and not (selfEcdhPK(S, Q, P, SID) = noREcdhPK)
+            and not (selfMlkPK(S, Q, P, SID) = noRMlkPK)
+            and (
+                not (peerEcdhPK(S, Q, P, SID) = ecdhk-keygen(ecdhk-getSecret(C1))) 
+                and
+                not (peerMlkPK(S, Q, P, SID) = mlk-keygen(mlk-getSecret(C2)))
             )) .
-
-    ceq rk(recv-ar(S, P, Q, SID, C1, C2, N), Q, P, SID) =
-        ar-rk(rk(S, Q, P, SID),
-            ar-ss-ecdh-recv(S, Q, P, SID, C1),
-            ar-ss-mlk-recv(S, Q, P, SID, C2))
-    if c-recv-ar(S, P, Q, SID, C1, C2, N) .
-    ceq rk(recv-ar(S, P, Q, SID, C1, C2, N), A, B, SID2) = rk(S, A, B, SID2) if c-recv-ar(S, P, Q, SID, C1, C2, N) and not (A = Q and B = P and SID2 = SID) .
-    
-    ceq rck(recv-ar(S, P, Q, SID, C1, C2, N), Q, P, SID) =
-        ar-ck(rck(S, Q, P, SID),
-            ar-ss-ecdh-recv(S, Q, P, SID, C1),
-            ar-ss-mlk-recv(S, Q, P, SID, C2))
-    if c-recv-ar(S, P, Q, SID, C1, C2, N) .
-    ceq rck(recv-ar(S, P, Q, SID, C1, C2, N), A, B, SID2) = rck(S, A, B, SID2) if c-recv-ar(S, P, Q, SID, C1, C2, N) and not (A = Q and B = P and SID2 = SID) .
-    
-    ceq sck(recv-ar(S, P, Q, SID, C1, C2, N), A, B, SID2) = sck(S, A, B, SID2) if c-recv-ar(S, P, Q, SID, C1, C2, N) .
-
-    ceq nr(recv-ar(S, P, Q, SID, C1, C2, N), Q, P, SID) = 0 if c-recv-ar(S, P, Q, SID, C1, C2, N) .
-    ceq nr(recv-ar(S, P, Q, SID, C1, C2, N), A, B, SID2) = nr(S, A, B, SID2) if c-recv-ar(S, P, Q, SID, C1, C2, N) and not (A = Q and B = P and SID2 = SID) .
-
-    ceq ns(recv-ar(S, P, Q, SID, C1, C2, N), A, B, SID2) = ns(S, A, B, SID2) if c-recv-ar(S, P, Q, SID, C1, C2, N) .
-    ceq pn(recv-ar(S, P, Q, SID, C1, C2, N), A, B, SID2) = pn(S, A, B, SID2) if c-recv-ar(S, P, Q, SID, C1, C2, N) .
-
-    ceq peerEcdhPK(recv-ar(S, P, Q, SID, C1, C2, N), Q, P, SID) = ecdhk-keygen(ecdhk-getSecret(C1)) if c-recv-ar(S, P, Q, SID, C1, C2, N) .
-    ceq peerEcdhPK(recv-ar(S, P, Q, SID, C1, C2, N), A, B, SID2) = peerEcdhPK(S, A, B, SID2) if c-recv-ar(S, P, Q, SID, C1, C2, N) and not (A = Q and B = P and SID2 = SID) .
-
-    ceq peerMlkPK(recv-ar(S, P, Q, SID, C1, C2, N), Q, P, SID) = mlk-keygen(mlk-getSecret(C2)) if c-recv-ar(S, P, Q, SID, C1, C2, N) .
-    ceq peerMlkPK(recv-ar(S, P, Q, SID, C1, C2, N), A, B, SID2) = peerMlkPK(S, A, B, SID2) if c-recv-ar(S, P, Q, SID, C1, C2, N) and not (A = Q and B = P and SID2 = SID) .
-
+        
     ceq nw(recv-ar(S, P, Q, SID, C1, C2, N)) = nw(S) if c-recv-ar(S, P, Q, SID, C1, C2, N) .
     ceq usedSecret(recv-ar(S, P, Q, SID, C1, C2, N)) = usedSecret(S) if c-recv-ar(S, P, Q, SID, C1, C2, N) .
     ceq idsServer(recv-ar(S, P, Q, SID, C1, C2, N)) = idsServer(S) if c-recv-ar(S, P, Q, SID, C1, C2, N) .
     ceq time(recv-ar(S, P, Q, SID, C1, C2, N)) = time(S) if c-recv-ar(S, P, Q, SID, C1, C2, N) .
+
+
+    ceq rk(recv-ar(S, P, Q, SID, C1, C2, N), A, B, SID2) = (if A = Q and B = P and SID2 = SID then ar-rk(rk(S, Q, P, SID), ar-ss-ecdh-recv(S, Q, P, SID, C1), ar-ss-mlk-recv(S, Q, P, SID, C2)) else rk(S, A, B, SID2) fi) if c-recv-ar(S, P, Q, SID, C1, C2, N) .
+    ceq rck(recv-ar(S, P, Q, SID, C1, C2, N), A, B, SID2) = (if A = Q and B = P and SID2 = SID then ar-ck(rck(S, Q, P, SID), ar-ss-ecdh-recv(S, Q, P, SID, C1), ar-ss-mlk-recv(S, Q, P, SID, C2)) else rck(S, A, B, SID2) fi) if c-recv-ar(S, P, Q, SID, C1, C2, N) .
+    ceq sck(recv-ar(S, P, Q, SID, C1, C2, N), A, B, SID2) = sck(S, A, B, SID2) if c-recv-ar(S, P, Q, SID, C1, C2, N) .
+
+
+    ceq nr(recv-ar(S, P, Q, SID, C1, C2, N), A, B, SID2) = (if A = Q and B = P and SID2 = SID then 0 else nr(S, A, B, SID2) fi) if c-recv-ar(S, P, Q, SID, C1, C2, N) . -- reset nr -> 0
+    ceq ns(recv-ar(S, P, Q, SID, C1, C2, N), A, B, SID2) = ns(S, A, B, SID2) if c-recv-ar(S, P, Q, SID, C1, C2, N) .
+    ceq pn(recv-ar(S, P, Q, SID, C1, C2, N), A, B, SID2) = pn(S, A, B, SID2) if c-recv-ar(S, P, Q, SID, C1, C2, N) .
+
+    ceq peerEcdhPK(recv-ar(S, P, Q, SID, C1, C2, N), A, B, SID2) = (if A = Q and B = P and SID2 = SID then ecdhk-keygen(ecdhk-getSecret(C1)) else peerEcdhPK(S, A, B, SID2) fi) if c-recv-ar(S, P, Q, SID, C1, C2, N) .
+    ceq peerMlkPK(recv-ar(S, P, Q, SID, C1, C2, N), A, B, SID2) = (if A = Q and B = P and SID2 = SID then mlk-keygen(mlk-getSecret(C2)) else peerMlkPK(S, A, B, SID2) fi) if c-recv-ar(S, P, Q, SID, C1, C2, N) .
+
+    
     ceq idsk(recv-ar(S, P, Q, SID, C1, C2, N), A) = idsk(S, A) if c-recv-ar(S, P, Q, SID, C1, C2, N) .
     ceq lecdhsk(recv-ar(S, P, Q, SID, C1, C2, N), A) = lecdhsk(S, A) if c-recv-ar(S, P, Q, SID, C1, C2, N) .
     ceq lmlksk(recv-ar(S, P, Q, SID, C1, C2, N), A) = lmlksk(S, A) if c-recv-ar(S, P, Q, SID, C1, C2, N) .
@@ -958,5 +898,6 @@ mod* PQ3 {
     ceq selfEcdhPK(recv-ar(S, P, Q, SID, C1, C2, N), A, B, SID2) = selfEcdhPK(S, A, B, SID2) if c-recv-ar(S, P, Q, SID, C1, C2, N) .
     ceq selfMlkSK(recv-ar(S, P, Q, SID, C1, C2, N), A, B, SID2) = selfMlkSK(S, A, B, SID2) if c-recv-ar(S, P, Q, SID, C1, C2, N) .
     ceq selfMlkPK(recv-ar(S, P, Q, SID, C1, C2, N), A, B, SID2) = selfMlkPK(S, A, B, SID2) if c-recv-ar(S, P, Q, SID, C1, C2, N) .
+
     ceq recv-ar(S, P, Q, SID, C1, C2, N) = S if not c-recv-ar(S, P, Q, SID, C1, C2, N) .
 }
