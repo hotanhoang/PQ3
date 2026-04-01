@@ -1,15 +1,15 @@
--- Let us suppose that A is communicating with B to establish a shared secret key.
+-- Let us suppose that P is communicating with Q to establish a shared secret key.
 
 mod! ML-KEM {
     [MLK-SecretK MLK-PublicK MLK-Cipher MLK-ShareS MLK-PriKeyTime]
 
     -- KeyGen and Encaps are probabilistic, seed input (randomness source)
     op mlk-keygen  : MLK-SecretK -> MLK-PublicK {constr}
-    -- Encaps: returns ciphertext / B's pk + A's ephemeral sk -> ciphertext
+    -- Encaps: returns ciphertext / Q's pk + P's ephemeral sk -> ciphertext
     op mlk-encapsC : MLK-PublicK MLK-SecretK -> MLK-Cipher {constr}
-    -- Encaps: returns shared key / B's pk + A's ephemeral sk -> shared secret
+    -- Encaps: returns shared key / Q's pk + P's ephemeral sk -> shared secret
     op mlk-encapsK : MLK-PublicK MLK-SecretK -> MLK-ShareS
-    -- ciphertext + B's long-term sk -> shared secret
+    -- ciphertext + Q's long-term sk -> shared secret
     op mlk-decaps  : MLK-Cipher MLK-SecretK -> MLK-ShareS
 
     -- constructor of a shared key is a secret key pair
@@ -468,18 +468,18 @@ mod* PQ3 {
 
  
     -- observers
-    op nw : Sys -> Network 
-    op usedSecret : Sys -> SecretKS 
-    op idsServer : Sys -> IDSServer
-    op time : Sys -> Nat
+    op nw : Sys -> Network -- a multiset of messages in the network
+    op usedSecret : Sys -> SecretKS -- a set of secret keys that have been used in the system, used to define the security property of forward secrecy
+    op idsServer : Sys -> IDSServer -- a set of registered principals and their bundle keys in the IDS server
+    op time : Sys -> Nat 
 
 
-    -- Bổ sung thêm 3 observers để lấy long term identity, ecdh key, mlk key của một principal vì bên nhận message phải lấy đúng secret key của mình để decapsulate ECDH/MLK
+    -- the observers for secret keys of a principal P, used to query the secret keys of P to perform decapsulation ECDH and MLK operations
     op idsk : Sys Prin -> ID-SecretK    
     op lecdhsk : Sys Prin -> ECDHK-SecretK
     op lmlksk : Sys Prin -> MLK-SecretK
 
-    -- asymmetric
+    -- the observers for asymmetric keys of a principal P, used to query the asymmetric keys of P to perform encapsulation/decapsulation ECDH and MLK operations
     op selfEcdhSK : Sys Prin Prin SessId -> ECDHK-SecretK
     op selfEcdhPK : Sys Prin Prin SessId -> ECDHK-PublicK
     op selfMlkSK : Sys Prin Prin SessId -> MLK-SecretK
@@ -488,14 +488,14 @@ mod* PQ3 {
     op peerEcdhPK : Sys Prin Prin SessId -> ECDHK-PublicK
     op peerMlkPK : Sys Prin Prin SessId -> MLK-PublicK
 
-    -- session state
-    op active : Sys Prin Prin SessId -> Bool
-    op rk : Sys Prin Prin SessId -> RootK
-    op sck : Sys Prin Prin SessId -> ChainK
-    op rck : Sys Prin Prin SessId -> ChainK
-    op ns : Sys Prin Prin SessId -> Nat
-    op nr : Sys Prin Prin SessId -> Nat
-    op pn : Sys Prin Prin SessId -> Nat
+    -- the observers for session state
+    op active : Sys Prin Prin SessId -> Bool --  status of a session
+    op rk : Sys Prin Prin SessId -> RootK -- root key of a session
+    op sck : Sys Prin Prin SessId -> ChainK -- sending chain key of a session
+    op rck : Sys Prin Prin SessId -> ChainK -- receiving chain key of a session
+    op ns : Sys Prin Prin SessId -> Nat -- number of messages sent in a session
+    op nr : Sys Prin Prin SessId -> Nat -- number of messages received in a session
+    op pn : Sys Prin Prin SessId -> Nat -- number of messages in the previous sending phase, used to determine when to perform a ratchet step
 
     -- init state for symmetric
     op noIdSK : -> ID-SecretK {constr}
@@ -508,10 +508,10 @@ mod* PQ3 {
     op noRMlkSK : -> MLK-SecretK {constr}
     op noRMlkPK : -> MLK-PublicK {constr}
     
-    --
+    -- the observer for session identifier, used to determine which session a message belongs to
     op sid0 : Sys Prin Prin -> SessId
 
-    -- symmetric-key operations
+    -- the observers for symmetric-key operations
     op ct-ecdh : Sys Prin ECDHK-SecretK -> ECDHK-Cipher
     op ss-ecdh : Sys Prin ECDHK-SecretK -> ECDHK-ShareS
     op ct-mlk  : Sys Prin MLK-SecretK -> MLK-Cipher
@@ -520,7 +520,7 @@ mod* PQ3 {
     op rs-ecdh : Sys Prin ECDHK-Cipher -> ECDHK-ShareS
     op rs-mlk  : Sys Prin MLK-Cipher -> MLK-ShareS
 
-    -- asymmetric-key operations
+    -- the observers for asymmetric-key operations
     op ar-ct-ecdh-send : Sys Prin Prin SessId ECDHK-SecretK -> ECDHK-Cipher .
     op ar-ss-ecdh-send : Sys Prin Prin SessId ECDHK-SecretK -> ECDHK-ShareS .
     op ar-ct-mlk-send : Sys Prin Prin SessId MLK-SecretK -> MLK-Cipher .
@@ -550,8 +550,8 @@ mod* PQ3 {
     vars SID SID2 : SessId
 
     var IdSK : ID-SecretK
-    vars ESK ESK2 : ECDHK-SecretK
-    vars MSK MSK2 : MLK-SecretK
+    vars ESK ESK2 E : ECDHK-SecretK
+    vars MSK MSK2 M : MLK-SecretK
 
     vars C1 C1' : ECDHK-Cipher
     vars C2 C2' : MLK-Cipher
@@ -561,7 +561,7 @@ mod* PQ3 {
 
     vars N I PN0 : Nat
 
-    -- Initialization
+    -- initialization
     eq nw(init) = void .
     eq usedSecret(init) = empty .
     eq idsServer(init) = empty .
@@ -589,8 +589,7 @@ mod* PQ3 {
     eq peerEcdhPK(init, P, Q, SID) = noREcdhPK .
     eq peerMlkPK(init, P, Q, SID) = noRMlkPK .
 
-    vars E : ECDHK-SecretK .
-    vars M : MLK-SecretK .
+
 
     eq (ecdhk-getSecret(noREcdhPK) = E) = false .
     eq (E = ecdhk-getSecret(noREcdhPK)) = false .
@@ -615,6 +614,7 @@ mod* PQ3 {
     -- asymmetric-key operations
     eq ar-ct-ecdh-send(S, P, Q, SID, ESK) = ecdhk-encapsC(peerEcdhPK(S, P, Q, SID), ESK) .
     eq ar-ss-ecdh-send(S, P, Q, SID, ESK) = ecdhk-encapsK(peerEcdhPK(S, P, Q, SID), ESK) .
+    
     eq ar-ct-mlk-send(S, P, Q, SID, MSK) = mlk-encapsC(peerMlkPK(S, P, Q, SID), MSK) .
     eq ar-ss-mlk-send(S, P, Q, SID, MSK) = mlk-encapsK(peerMlkPK(S, P, Q, SID), MSK) .
 
