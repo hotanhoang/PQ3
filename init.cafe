@@ -41,7 +41,6 @@ open PQ3 .
   red rck(s1, p, q, sid(p, q, time(s0))) . -- (init-rck((ec1 & ec2),(ml1 & ml2))):ChainK
   red ns(s1, p, q, sid(p, q, time(s0))) . -- 0
   red nr(s1, p, q, sid(p, q, time(s0))) . -- 0
-  red pn(s1, p, q, sid(p, q, time(s0))) . -- 0
 
   -- receiver side init
   red c-recv-init(

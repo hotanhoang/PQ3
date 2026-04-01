@@ -50,8 +50,9 @@ open PQ3 .
   -- red c-recv-sym(s3, p, q, sid(p, q, time(s0)), 0, 0, ct0, time(s1)) . -- true
 
   op s4 : -> Sys .
-  eq s4 = recv-sym(s3, p, q, sid(p, q, time(s0)), 0, 0, ct0, time(s1)) .
-  red mk-sym(sck(s2, p, q, sid(p, q, time(s0)))) = mk-sym(rck(s3, q, p, sid(p, q, time(s0)))) .
+  eq s4 = recv-sym(s3, p, q, sid(p, q, time(s0)), 0, ct0, time(s1)) .
+  red mk-sym(sck(s2, p, q, sid(p, q, time(s0))))
+  = mk-sym(rck(s3, q, p, sid(p, q, time(s0)))) .
   -- red rck(s4, p, q, sid(p, q, time(s0))) . -- (init-rck((ec1 & ec2),(ml1 & ml2))):ChainK
   -- red nr(s4, q, p, sid(p, q, time(s0))) . -- 1
   -- red nr(s4, p, q, sid(p, q, time(s0))) . -- 0
