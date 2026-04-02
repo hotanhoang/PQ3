@@ -119,6 +119,44 @@ mod! LONGTERM-IDENTITY {
 mod* PRINCIPAL {
     [Prin]
     op intru : -> Prin {constr}
+
+    -- The following operators define long-term keys for a principal
+    op MLK-PriK : Prin -> MLK-SecretK {constr} 
+    op MLK-PriK : MLK-PriKeyTime -> MLK-SecretK 
+    op MLK-PubK : Prin -> MLK-PublicK 
+    op MLK-PriKTime : Prin -> MLK-PriKeyTime {constr}
+
+    op ECDHK-PriK : Prin -> ECDHK-SecretK {constr} 
+    op ECDHK-PubK : Prin -> ECDHK-PublicK 
+
+    eq ECDHK-PubK(B) = ecdhk-keygen(ECDHK-PriK(B)) .  
+    eq MLK-PubK(B) = mlk-keygen(MLK-PriK(B)) .
+    eq MLDSA-PubK(B) = mldsa-public(MLDSA-PriK(B)) .
+    eq EdDSA-PubK(B) = eddsa-public(EdDSA-PriK(B)) .
+
+    vars A B : Prin 
+    eq (MLK-PubK(A) = MLK-PubK(B)) = (A = B) .
+    eq (MLK-PriK(A) = MLK-PriK(B)) = (A = B) .
+    eq (ECDHK-PubK(A) = ECDHK-PubK(B)) = (A = B) .
+    eq (ECDHK-PriK(A) = ECDHK-PriK(B)) = (A = B) .
+
+    op pkNPair : MLK-SecretK Nat -> MLK-PriKeyTime {constr}
+    -- op priK : MLK-PriKeyTime -> PriKey
+    
+    op time : MLK-PriKeyTime -> Nat
+    
+    vars N N2 : Nat
+    vars MLK-LSK MLK-LSK2 : MLK-SecretK
+    eq MLK-PriK(pkNPair(MLK-LSK, N)) = MLK-LSK .
+
+    eq time(pkNPair(MLK-LSK, N)) = N .
+
+    eq (pkNPair(MLK-LSK, N) = pkNPair(MLK-LSK2, N2)) = (N = N2) .
+
+    -- trivial lemmas
+    ceq (s(N) < N2) = false if not(N < N2) .
+    eq (N < N) = false .
+    
 }
 mod! RAW-MESSAGE {
     [RawMsg]
@@ -469,8 +507,9 @@ mod* PQ3 {
     op nw : Sys -> Network -- a multiset of messages in the network
     op usedSecret : Sys -> SecretKS -- a set of secret keys that have been used in the system, used to define the security property of forward secrecy
     op idsServer : Sys -> IDSServer -- a set of registered principals and their bundle keys in the IDS server
+    op leakscr : Sys -> SecretKS -- a set of secret keys that have been leaked to the adversary
     op time : Sys -> Nat 
-
+    op knl : Sys -> DataL -- a list of data that the adversary has learned
 
     -- the observers for secret keys of a principal P, used to query the secret keys of P to perform decapsulation ECDH and MLK operations
     op idsk : Sys Prin -> ID-SecretK    
@@ -508,7 +547,7 @@ mod* PQ3 {
     -- the observer for session identifier, used to determine which session a message belongs to
     op sid0 : Sys Prin Prin -> SessId
 
-    -- the observers for symmetric-key operations
+    -- the observers for symmetric-key operations   
     op ct-ecdh : Sys Prin ECDHK-SecretK -> ECDHK-Cipher
     op ss-ecdh : Sys Prin ECDHK-SecretK -> ECDHK-ShareS
     op ct-mlk  : Sys Prin MLK-SecretK -> MLK-Cipher
@@ -526,17 +565,18 @@ mod* PQ3 {
     op ar-ss-ecdh-recv : Sys Prin Prin SessId ECDHK-Cipher -> ECDHK-ShareS .
     op ar-ss-mlk-recv : Sys Prin Prin SessId MLK-Cipher -> MLK-ShareS .
 
-    -- effective condition
-    -- init
+    -- register effective condition
     op c-register : Sys Prin ID-SecretK ECDHK-SecretK MLK-SecretK -> Bool
+
+    -- init effective condition
     op c-send-init : Sys Prin Prin ECDHK-SecretK MLK-SecretK -> Bool
     op c-recv-init : Sys Prin Prin SessId ECDHK-Cipher MLK-Cipher Nat -> Bool
      
-    -- symmetric
+    -- symmetric effective condition
     op c-send-sym : Sys Prin Prin SessId RawMsg -> Bool
     op c-recv-sym : Sys Prin Prin SessId Nat CipherT Nat -> Bool
 
-    -- asymmetric
+    -- asymmetric effective condition
     op c-send-ar : Sys Prin Prin SessId ECDHK-SecretK MLK-SecretK -> Bool
     op c-recv-ar : Sys Prin Prin SessId ECDHK-Cipher MLK-Cipher Nat -> Bool
     
@@ -586,8 +626,11 @@ mod* PQ3 {
     eq peerEcdhPK(init, P, Q, SID) = noREcdhPK .
     eq peerMlkPK(init, P, Q, SID) = noRMlkPK .
 
-
-
+    -- init for intruder
+    -- eq leakscr(init) = empty .
+    -- eq knl(init) = (MLDSA-PriK(intru) || MLDSA-PubK(intru) || EdDSA-PriK(intru) || EdDSA-PubK(intru) || MLK-PubK(intru) || MLK-PriK(intru) || ECDHK-PubK(intru) || ECDHK-PriK(intru)) . 
+  
+    -- trivial lemmas 
     eq (ecdhk-getSecret(noREcdhPK) = E) = false .
     eq (E = ecdhk-getSecret(noREcdhPK)) = false .
 
@@ -596,25 +639,27 @@ mod* PQ3 {
 
 
     -- symmetric-key operations
-    -- encapsulation
+    -- **** encapsulation at the sender side, it uses the public key of the receiver queried from the IDS server to perform encapsulation ****
     eq ct-ecdh(S, Q, ESK) = ecdhk-encapsC(getEcdhkPK(findRegData(Q, idsServer(S))), ESK) .
     eq ss-ecdh(S, Q, ESK) = ecdhk-encapsK(getEcdhkPK(findRegData(Q, idsServer(S))), ESK) .
 
     eq ct-mlk(S, Q, MSK) = mlk-encapsC(getMlkPK(findRegData(Q, idsServer(S))), MSK) .
     eq ss-mlk(S, Q, MSK) = mlk-encapsK(getMlkPK(findRegData(Q, idsServer(S))), MSK) .
 
-    -- decapsulation
+    -- **** decapsulation at the receiver side, it uses the local secret key of the receiver to perform decapsulation ****
     eq rs-ecdh(S, Q, C1) = ecdhk-decaps(C1, lecdhsk(S, Q)) .
     eq rs-mlk(S, Q, C2) = mlk-decaps(C2, lmlksk(S, Q)) .
 
 
     -- asymmetric-key operations
+    -- **** encapsulation at the sender side, it uses the public key of the receiver from previous session and secret key of sender to perform encapsulation ****
     eq ar-ct-ecdh-send(S, P, Q, SID, ESK) = ecdhk-encapsC(peerEcdhPK(S, P, Q, SID), ESK) .
     eq ar-ss-ecdh-send(S, P, Q, SID, ESK) = ecdhk-encapsK(peerEcdhPK(S, P, Q, SID), ESK) .
 
     eq ar-ct-mlk-send(S, P, Q, SID, MSK) = mlk-encapsC(peerMlkPK(S, P, Q, SID), MSK) .
     eq ar-ss-mlk-send(S, P, Q, SID, MSK) = mlk-encapsK(peerMlkPK(S, P, Q, SID), MSK) .
 
+    -- **** decapsulation at the receiver side, it uses the local secret key of the receiver to perform decapsulation ****
     eq ar-ss-ecdh-recv(S, P, Q, SID, C1) = ecdhk-decaps(C1, selfEcdhSK(S, P, Q, SID)) .
     eq ar-ss-mlk-recv(S, P, Q, SID, C2) = mlk-decaps(C2, selfMlkSK(S, P, Q, SID)) .
     
