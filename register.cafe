@@ -1,70 +1,18 @@
 in pq3-imessage.cafe .
 
--- -- case 1: true
--- open PQ3 .
---   op s : -> Sys .
---   op p : -> Prin .
---   ops id1 id2 : -> ID-SecretK .
---   ops e1 e2 : -> ECDHK-SecretK .
---   ops m1 m2 : -> MLK-SecretK .
-
---   red c-register(init,p,id1,e1,m1) .
--- close
-
--- -- case 2: false
--- open PQ3 .
---   op id1 : -> ID-SecretK .
---   op e1 : -> ECDHK-SecretK .
---   op m1 : -> MLK-SecretK .
---   op p : -> Prin .
---   op s1 : -> Sys .
---   eq s1 = register(init, p, id1, e1, m1) .
-
---   red c-register(s1, p, id1, e1, m1) .
--- close
-
--- -- case 3: true / true / true
--- open PQ3 .
---   op id1 : -> ID-SecretK .
---   op e1 : -> ECDHK-SecretK .
---   op m1 : -> MLK-SecretK .
---   op p : -> Prin .
---   op s1 : -> Sys .
---   eq s1 = register(init, p, id1, e1, m1) .
-
---   red id1 \in usedSecret(s1) .
---   red e1 \in usedSecret(s1) .
---   red m1 \in usedSecret(s1) .
--- close
-
--- -- case 4: (regData(p,id-keygen(id1),ecdhk-keygen(e1),mlk-keygen(m1),sign(id1,regPayload(p,id-keygen(id1),ecdhk-keygen(e1),mlk-keygen(m1))))):RegData
--- open PQ3 .
---   op id1 : -> ID-SecretK .
---   op e1 : -> ECDHK-SecretK .
---   op m1 : -> MLK-SecretK .
---   op p : -> Prin .
---   op s1 : -> Sys .
---   eq s1 = register(init, p, id1, e1, m1) .
-
---   red idsServer(s1) .
--- close
-
 
 
 open PQ3 .
   ops p q : -> Prin .
-  ops id id' : -> ID-SecretK .
   ops ec ec' : -> ECDHK-SecretK .
   ops ml ml' : -> MLK-SecretK .
 
   op s1 : -> Sys .
-  eq s1 = register(init, p, id, ec, ml) .
+  eq s1 = register(init, p, sk(p), ec, ml) .
 
   -- registration ephemeral keys of p on IDS server
-  red c-register(init, p, id, ec, ml) .
+  red c-register(init, p, sk(p), ec, ml) .
 
-  -- 
-  red active(s1, p, q, sid0(s1, p, q)) .
   -- IDS server should contain p
   red existUser(p, idsServer(s1)) .
   red getPrin(findRegData(p, idsServer(s1))) .
@@ -83,11 +31,9 @@ open PQ3 .
   red idsServer(s1) .
   red time(s1) .
 
-  red idsk(s1, p) .
   red lecdhsk(s1, p) .
   red lmlksk(s1, p) .
 
-  red c-register(s1, q, id', ec, ml) .
+  red c-register(s1, q, sk(q), ec, ml) .
 
-  -- red c-register(s1, q, id', ec', ml') .
 close
