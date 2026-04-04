@@ -46,6 +46,8 @@ open PQ3 .
 
   -- send / receive init
   eq s1 = send-init(s0, p, q, sid0, ec2, ml2) .
+  red peerPKS(s1) .
+  red selfSKS(s1) .
 
   eq s2 =
     recv-init(
@@ -54,39 +56,49 @@ open PQ3 .
       sid0,
       ib0,
       time(s0)) .
+  red peerPKS(s2) .
+  red selfSKS(s2) .
 
   eq ab0 =
     mkAsymBody(
-      p, q, sid0,
-      ns(s2, p, q, sid0),
-      ar-ct-ecdh-send(s2, p, q, sid0, ec3),
-      ar-ct-mlk-send(s2, p, q, sid0, ml3),
+      q, p, sid0,
+      ns(s2, q, p, sid0),
+      ar-ct-ecdh-send(s2, q, p, sid0, ec3),
+      ar-ct-mlk-send(s2, q, p, sid0, ml3),
       aenc(mk-sym(
           ar-sck(
-              rk(s2, p, q, sid0),
-              ar-ss-ecdh-send(s2, p, q, sid0, ec3),
-              ar-ss-mlk-send(s2, p, q, sid0, ml3)
+              rk(s2, q, p, sid0),
+              ar-ss-ecdh-send(s2, q, p, sid0, ec3),
+              ar-ss-mlk-send(s2, q, p, sid0, ml3)
           )
       ), rm0)
     ) .
 
-  -- asym sender side
-  eq s3 = send-ar(s2, p, q, sid0, ec3, ml3, rm0) .
+  -- -- asym sender side
+  eq s3 = send-ar(s2, q, p, sid0, ec3, ml3, rm0) .
 
-  -- asym receiver side
+  red peerPKS(s3) .
+  red selfSKS(s3) .
+
+  -- -- asym receiver side
   eq s4 =
     recv-ar(
       s3,
-      p, q,
+      q, p,
       sid0,
       ab0,
       time(s2)
     ) .
 
+  red peerPKS(s4) .
+  red selfSKS(s4) .
 
-  -- sender-side AR checks
-  red c-send-ar(s2, p, q, sid0, ec3, ml3, rm0) .
-  red validAsymBody(p, q, ab0) .
+
+  red rk(s3, q, p, sid0) = rk(s4, q, p, sid0) .
+
+  -- -- sender-side AR checks
+  -- red c-send-ar(s2, p, q, sid0, ec3, ml3, rm0) .
+  -- red validAsymBody(p, q, ab0) .
   -- red msg(p, p, q, ab0, time(s2)) \in nw(s3) .
 
   -- -- -- receiver-side AR check
@@ -101,12 +113,12 @@ open PQ3 .
   -- -- red findSelfMlkSK(p, q, sid0, selfSKS(s3)) = ml3 .
 
   -- -- -- receiver state after recv-ar
-  -- red rk(s4, q, p, sid0) .
+  -- -- red rk(s4, q, p, sid0) .
   -- -- red rck(s4, q, p, sid0) .
   -- -- red nr(s4, q, p, sid0) .
 
-  -- -- -- agreement of root key after AR
-  -- red rk(s3, p, q, sid0) = rk(s4, p, q, sid0) .
+  -- -- -- -- agreement of root key after AR
+  -- red rk(s3, p, q, sid0) = rk(s4, q, p, sid0) .
 
 
 close

@@ -149,10 +149,10 @@ mod! LONGTERM-IDENTITY {
     op verify : ID-PublicK SignedData Signature -> Bool
 
     vars P Q : Prin
-    var SD : SignedData
+    vars SD SD' : SignedData
 
     eq verify(pk(P), SD, sign(sk(P), SD)) = true .
-    ceq verify(pk(P), SD, sign(sk(Q), SD)) = false if not(P = Q) .
+    ceq verify(pk(P), SD, sign(sk(Q), SD')) = false if not(P = Q) or not(SD = SD') .
 
     eq (pk(P) = pk(Q)) = (P = Q) .
     eq (sk(P) = sk(Q)) = (P = Q) .
@@ -927,8 +927,8 @@ mod* PQ3 {
     ceq peerPKS(send-init(S, P, Q, SID, ESK, MSK))
         = peerPKRec(
             P, Q, SID,
-            ecdhk-keygen(ESK),
-            mlk-keygen(MSK)
+            getEcdhkPK(findRegData(Q, idsServer(S))),
+            getMlkPK(findRegData(Q, idsServer(S)))
             )
             removePeerPK(P, Q, SID, peerPKS(S))
         if c-send-init(S, P, Q, SID, ESK, MSK) .
@@ -961,8 +961,24 @@ mod* PQ3 {
     ceq rck(recv-init(S, P, Q, SID, IB, N), A, B, SID2) = (if A = Q and B = P and SID2 = SID then init-rck(rs-ecdh(S, Q, initEcdhCt(IB)), rs-mlk(S, Q, initMlkCt(IB))) else rck(S, A, B, SID2) fi) if c-recv-init(S, P, Q, SID, IB, N) .
     ceq ns(recv-init(S, P, Q, SID, IB, N), A, B, SID2) = (if A = Q and B = P and SID2 = SID then 0 else ns(S, A, B, SID2) fi) if c-recv-init(S, P, Q, SID, IB, N) .
     ceq nr(recv-init(S, P, Q, SID, IB, N), A, B, SID2) = (if A = Q and B = P and SID2 = SID then 0 else nr(S, A, B, SID2) fi) if c-recv-init(S, P, Q, SID, IB, N) .
-    ceq peerPKS(recv-init(S, P, Q, SID, IB, N)) = peerPKS(S) if c-recv-init(S, P, Q, SID, IB, N) .
-    ceq selfSKS(recv-init(S, P, Q, SID, IB, N)) = selfSKS(S) if c-recv-init(S, P, Q, SID, IB, N) .
+    -- ceq peerPKS(recv-init(S, P, Q, SID, IB, N)) = peerPKS(S) if c-recv-init(S, P, Q, SID, IB, N) .
+    ceq peerPKS(recv-init(S, P, Q, SID, IB, N))
+        = peerPKRec(
+            Q, P, SID,
+            initEcdhPkEph(IB),
+            initMlkPkEph(IB)
+        )
+        removePeerPK(Q, P, SID, peerPKS(S))
+        if c-recv-init(S, P, Q, SID, IB, N) .
+    -- ceq selfSKS(recv-init(S, P, Q, SID, IB, N)) = selfSKS(S) if c-recv-init(S, P, Q, SID, IB, N) .
+    ceq selfSKS(recv-init(S, P, Q, SID, IB, N))
+        = selfSKRec(
+            Q, P, SID,
+            preEcdhsk(S, Q),
+            preMlksk(S, Q)
+        )
+        removeSelfSK(Q, P, SID, selfSKS(S))
+        if c-recv-init(S, P, Q, SID, IB, N) .
     ceq recv-init(S, P, Q, SID, IB, N) = S if not c-recv-init(S, P, Q, SID, IB, N) .
     
     -- *****************************************************************************************************
@@ -1110,7 +1126,7 @@ mod* PQ3 {
          and asymSid(AB) = SID
          and asymN(AB) = nr(S, Q, P, SID)
          and validAsymBody(P, Q, AB)
-         and existSelfSK(P, Q, SID, selfSKS(S))
+         and existSelfSK(Q, P, SID, selfSKS(S))
          and not(rck(S, Q, P, SID) = noChainK)) .
 
     ceq usedSecret(recv-ar(S, P, Q, SID, AB, N)) = usedSecret(S) if c-recv-ar(S, P, Q, SID, AB, N) .
@@ -1128,7 +1144,7 @@ mod* PQ3 {
                     ar-ss-mlk-recv(S, Q, P, SID, asymMlkCt(AB)))
         else rk(S, A, B, SID2) fi)
     if c-recv-ar(S, P, Q, SID, AB, N) .
-    ceq rck(recv-ar(S, Q, P, SID, AB, N), A, B, SID2)
+    ceq rck(recv-ar(S, P, Q, SID, AB, N), A, B, SID2)
         = (if A = Q and B = P and SID2 = SID
             then nextck(
                     ar-rck(
