@@ -1,74 +1,4 @@
-in pq3-imessage.cafe
-
--- open PQ3 .
---   ops p q : -> Prin .
---   ops id id1 : -> ID-SecretK .
---   ops ec ec1 ec2 : -> ECDHK-SecretK .
---   ops ml ml1 ml2 : -> MLK-SecretK .
-
---   op s0 : -> Sys .
---   op s1 : -> Sys .
---   op s2 : -> Sys .
-
---   eq (p = q) = false .
---   eq (id = id1) = false .
---   eq (ec = ec1) = false .
---   eq (ec = ec2) = false .
---   eq (ec1 = ec2) = false .
---   eq (ml = ml1) = false .
---   eq (ml = ml2) = false .
---   eq (ml1 = ml2) = false .
-
---   -- register bundle keys of q and p on IDS server
---   eq s0 = register(register(init, p, id, ec, ml), q, id1, ec1, ml1) .
---   eq s1 = send-init(s0, p, q, ec2, ml2) .
---   eq s2 =
---     recv-init(
---       s1,
---       p, q,
---       sid(p, q, time(s0)),
---       ct-ecdh(s0, q, ec2),
---       ct-mlk(s0, q, ml2),
---       time(s0)
---     ) .
---   red nw(s2) . -- (msg(p,p,q,initBody(sid(p,q,0),ecdhk-encapsC(ecdhk-keygen(ec1),ec2),mlk-encapsC(mlk-keygen(ml1),ml2)),0)):Msg
---   -- sender side init
---   red time(s0) . -- 0
---   red c-send-init(s0, p, q, ec2, ml2) . -- true
---   red active(s1, p, q, sid(p, q, time(s0))) . -- true
---   red rk(s1, p, q, sid(p, q, time(s0))) . -- (init-rk((ec1 & ec2),(ml1 & ml2))):RootK
---   red sck(s1, p, q, sid(p, q, time(s0))) . -- (init-sck((ec1 & ec2),(ml1 & ml2))):ChainK
---   red rck(s1, p, q, sid(p, q, time(s0))) . -- (init-rck((ec1 & ec2),(ml1 & ml2))):ChainK
---   red ns(s1, p, q, sid(p, q, time(s0))) . -- 0
---   red nr(s1, p, q, sid(p, q, time(s0))) . -- 0
-
---   -- receiver side init
---   red c-recv-init(
---         s1,
---         p, q,
---         sid(p, q, time(s0)),
---         ct-ecdh(s0, q, ec2),
---         ct-mlk(s0, q, ml2),
---         time(s0)
---       ) . -- true
-
---   red active(s2, q, p, sid(p, q, time(s0))) . -- true
---   red rk(s2, q, p, sid(p, q, time(s0))) . -- (init-rk((ec1 & ec2),(ml1 & ml2))):RootK
---   red sck(s2, q, p, sid(p, q, time(s0))) . -- (init-sck((ec1 & ec2),(ml1 & ml2))):ChainK
---   red rck(s2, q, p, sid(p, q, time(s0))) . -- (init-rck((ec1 & ec2),(ml1 & ml2))):ChainK
-
---   -- sender/receiver key agreement checks
---   red rk(s1, p, q, sid(p, q, time(s0))) = rk(s2, q, p, sid(p, q, time(s0))) . -- true
---   red sck(s1, p, q, sid(p, q, time(s0))) = rck(s2, q, p, sid(p, q, time(s0))) . -- true
---   red rck(s1, p, q, sid(p, q, time(s0))) = sck(s2, q, p, sid(p, q, time(s0))) . -- true
-
---   -- asym state after init
---   red selfEcdhPK(s1, p, q, sid(p, q, time(s0))) = ecdhk-keygen(ec2) .
---   red selfMlkPK(s1, p, q, sid(p, q, time(s0))) = mlk-keygen(ml2) .
---   red peerEcdhPK(s2, q, p, sid(p, q, time(s0))) = ecdhk-keygen(ecdhk-getSecret(ct-ecdh(s0, q, ec2))) .
---   red peerMlkPK(s2, q, p, sid(p, q, time(s0))) = mlk-keygen(mlk-getSecret(ct-mlk(s0, q, ml2))) .
-
--- close
+in pq3-imessage-clean.cafe .
 
 
 open PQ3 .
@@ -80,7 +10,7 @@ open PQ3 .
   op s1 : -> Sys .
   op s2 : -> Sys .
 
-  op sidInit : -> SessId .
+  op sid0 : -> SessId .
   op ibInit : -> InitBody .
 
   eq (p = q) = false .
@@ -94,13 +24,12 @@ open PQ3 .
   -- register bundle keys of p and q on IDS server
   eq s0 = register(register(init, p, sk(p), ec, ml), q, sk(q), ec1, ml1) .
 
-  -- session id used by the initial message
-  eq sidInit = sid(p, q, time(s0)) .
+
 
   eq ibInit =
     mkInitBody(
       p,
-      sidInit,
+      sid0,
       ct-ecdh(s0, q, ec2),
       ct-mlk(s0, q, ml2),
       ecdhk-keygen(ec2),
@@ -108,13 +37,14 @@ open PQ3 .
       hash(ecdhk-keygen(ec2), mlk-keygen(ml2))
     ) .
 
-  eq s1 = send-init(s0, p, q, ec2, ml2) .
+  eq s1 = send-init(s0, p, q, sid0, ec2, ml2) .
+
 
   eq s2 =
     recv-init(
       s1,
       p, q,
-      sidInit,
+      sid0,
       ibInit,
       time(s0)
     ) .
@@ -123,39 +53,39 @@ open PQ3 .
   red nw(s2) .
 
   -- sender side init
-  red c-send-init(s0, p, q, ec2, ml2) .  
-  red sidInit \in usedSession(s1) .       
-  red validInitBody(p, sidInit, ibInit) . 
+  red c-send-init(s0, p, q, sid0, ec2, ml2) .
+  red sid0 \in usedSession(s1) .       
+  red validInitBody(p, sid0, ibInit) . 
+  red msg(p, p, q, ibInit, time(s0)) \in nw(s1) .
+  red rk(s1, p, q, sid0) .  
+  red sck(s1, p, q, sid0) .
+  red rck(s1, p, q, sid0) .
+  red ns(s1, p, q, sid0) .            
+  red nr(s1, p, q, sid0) .             
 
-  -- red rk(s1, p, q, sidInit) .
-  -- red sck(s1, p, q, sidInit) .
-  -- red rck(s1, p, q, sidInit) .
-  -- red ns(s1, p, q, sidInit) .            
-  -- red nr(s1, p, q, sidInit) .             
-
-  -- -- receiver side init
+  -- -- -- receiver side init
   red c-recv-init(
         s1,
         p, q,
-        sidInit,
+        sid0,
         ibInit,
         time(s0)
       ) .                                 
 
-  -- red rk(s2, q, p, sidInit) .
-  -- red sck(s2, q, p, sidInit) .
-  -- red rck(s2, q, p, sidInit) .
+  red rk(s2, q, p, sid0) .
+  red sck(s2, q, p, sid0) .
+  red rck(s2, q, p, sid0) .
 
   -- -- sender/receiver key agreement checks
-  red rk(s1, p, q, sidInit) = rk(s2, q, p, sidInit) .   
-  -- red sck(s1, p, q, sidInit) = rck(s2, q, p, sidInit) . 
-  -- red rck(s1, p, q, sidInit) = sck(s2, q, p, sidInit) . 
+  red rk(s1, p, q, sid0) = rk(s2, q, p, sid0) .   
+  red sck(s1, p, q, sid0) = rck(s2, q, p, sid0) . 
+  red rck(s1, p, q, sid0) = sck(s2, q, p, sid0) . 
 
-  -- -- asym state after init
-  red selfEcdhPK(s1, p, q, sidInit) = ecdhk-keygen(ec2) .
-  red selfMlkPK(s1, p, q, sidInit) = mlk-keygen(ml2) .    
+  -- -- -- asym state after init
+  -- red selfEcdhPK(s1, p, q, sid0) = ecdhk-keygen(ec2) .
+  -- red selfMlkPK(s1, p, q, sid0) = mlk-keygen(ml2) .    
 
-  -- -- receiver learns sender's fresh ephemeral public keys from InitBody
-  red peerEcdhPK(s2, q, p, sidInit) = ecdhk-keygen(ec2) . 
-  red peerMlkPK(s2, q, p, sidInit) = mlk-keygen(ml2) .    
+  -- -- -- receiver learns sender's fresh ephemeral public keys from InitBody
+  -- red peerEcdhPK(s2, q, p, sid0) = ecdhk-keygen(ec2) . 
+  -- red peerMlkPK(s2, q, p, sid0) = mlk-keygen(ml2) .    
 close

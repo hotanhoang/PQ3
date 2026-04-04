@@ -1,4 +1,4 @@
-in pq3-imessage.cafe .
+in pq3-imessage-clean.cafe .
 
 
 
@@ -31,8 +31,8 @@ open PQ3 .
   red idsServer(s1) .
   red time(s1) .
 
-  red lecdhsk(s1, p) .
-  red lmlksk(s1, p) .
+  red preEcdhsk(s1, p) .
+  red preMlksk(s1, p) .
 
   red c-register(s1, q, sk(q), ec, ml) .
 

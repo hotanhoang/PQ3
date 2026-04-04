@@ -1,77 +1,106 @@
-in pq3-imessage.cafe
+in pq3-imessage-clean.cafe
 
 open PQ3 .
   ops p q : -> Prin .
-  ops id id1 : -> ID-SecretK .
   ops ec ec1 ec2 ec3 : -> ECDHK-SecretK .
   ops ml ml1 ml2 ml3 : -> MLK-SecretK .
 
-  op rm0 : -> RawMsg .
+  op sid0 : -> SessId .
+  op rm0  : -> RawMsg .
+
   ops s0 s1 s2 s3 s4 : -> Sys .
-  op ct0 : -> CipherT .
+
+  op ib0 : -> InitBody .
+  op ab0 : -> AsymBody .
 
   eq (p = q) = false .
-  eq (id = id1) = false .
+
   eq (ec = ec1) = false .
   eq (ec = ec2) = false .
-  eq (ec1 = ec2) = false .
   eq (ec = ec3) = false .
+  eq (ec1 = ec2) = false .
   eq (ec1 = ec3) = false .
   eq (ec2 = ec3) = false .
+
   eq (ml = ml1) = false .
   eq (ml = ml2) = false .
-  eq (ml1 = ml2) = false .
   eq (ml = ml3) = false .
+  eq (ml1 = ml2) = false .
   eq (ml1 = ml3) = false .
   eq (ml2 = ml3) = false .
 
+  -- register bundle keys of p and q on IDS server
+  eq s0 = register(register(init, p, sk(p), ec, ml), q, sk(q), ec1, ml1) .
 
-  -- register bundle keys of q and p on IDS server
-  eq s0 = 
-    register(
-        register(init, p, id, ec, ml),
-        q, id1, ec1, ml1
+  -- init body
+  eq ib0 =
+     mkInitBody(
+      p,
+      sid0,
+      ct-ecdh(s0, q, ec2),
+      ct-mlk(s0, q, ml2),
+      ecdhk-keygen(ec2),
+      mlk-keygen(ml2),
+      hash(ecdhk-keygen(ec2), mlk-keygen(ml2))
     ) .
-  -- init
-  eq s1 = send-init(s0, p, q, ec2, ml2) .
-  eq s2 = recv-init(
-    s1,
-    p, q,
-    sid(p, q, time(s0)),
-    ct-ecdh(s0, q, ec2),
-    ct-mlk(s0, q, ml2),
-    time(s0)        
-  ) .
+
+  -- send / receive init
+  eq s1 = send-init(s0, p, q, sid0, ec2, ml2) .
+
+  eq s2 =
+    recv-init(
+      s1,
+      p, q,
+      sid0,
+      ib0,
+      time(s0)) .
+
+  -- asym body exactly as sender constructs it at s2
+  eq ab0 =
+    mkAsymBody(
+      p, q, sid0,
+      ns(s2, p, q, sid0),
+      ar-ct-ecdh-send(s2, p, q, sid0, ec3),
+      ar-ct-mlk-send(s2, p, q, sid0, ml3),
+      aenc(ar-msgk-send(s2, p, q, sid0, ec3, ml3), rm0)
+    ) .
 
   -- asym sender side
-  eq s3 = send-ar(s2, p, q, sid(p, q, time(s0)), ec3, ml3) .
+  eq s3 = send-ar(s2, p, q, sid0, ec3, ml3, rm0) .
 
-  -- red active(s2, q, p, sid(p, q, time(s0))) .
-  -- red c-send-ar(s2, p, q, sid(p, q, time(s0)), ec3, ml3) .
-  -- red active(s3, q, p, sid(p, q, time(s0))) .
-  -- red rk(s3, p, q, sid(p, q, time(s0))) .
-  -- red sck(s3, p, q, sid(p, q, time(s0))) .
-  -- red pn(s3, p, q, sid(p, q, time(s0))) .
-  -- red pn(s3, p, q, sid(p, q, time(s0))) = ns(s1, p, q, sid(p, q, time(s0))) .
-  -- red ns(s3, p, q, sid(p, q, time(s0))) .
-  
---   asym receiver side
-  eq s4 = recv-ar(s3, p, q, sid(p, q, time(s0)), ar-ct-ecdh-send(s2, p, q, sid(p, q, time(s0)), ec3), ar-ct-mlk-send(s2, p, q, sid(p, q, time(s0)), ml3), time(s2)) .
+  -- asym receiver side
+  eq s4 =
+    recv-ar(
+      s3,
+      p, q,
+      sid0,
+      ab0,
+      time(s2)
+    ) .
 
-  -- red c-recv-ar(
-  --       s3, p, q, sid(p, q, time(s0)),
-  --       ar-ct-ecdh-send(s2, p, q, sid(p, q, time(s0)), ec3),
-  --       ar-ct-mlk-send(s2, p, q, sid(p, q, time(s0)), ml3),
-  --       time(s2)
-  --     ) .   
-  
-  -- red nw(s4) .
-  -- red rk(s4, p, q, sid(p, q, time(s0))) .
-  -- red rck(s4, p, q, sid(p, q, time(s0))) .
-  -- red nr(s4, p, q, sid(p, q, time(s0))) .
-  -- red peerEcdhPK(s4, q, p, sid(p, q, time(s0))) = ecdhk-keygen(ec3) .
-  -- red peerMlkPK(s4, q, p, sid(p, q, time(s0))) = mlk-keygen(ml3) .
+  -- sender-side AR checks
+  red c-send-ar(s2, p, q, sid0, ec3, ml3, rm0) .
+  red validAsymBody(p, q, ab0) .
+  red msg(p, p, q, ab0, time(s2)) \in nw(s3) .
 
-  red rk(s3, p, q, sid(p, q, time(s0))) = rk(s4, q, p, sid(p, q, time(s0))) .
+  -- -- receiver-side AR check
+  red c-recv-ar(s3, p, q, sid0, ab0, time(s2)) .
+
+  -- -- sender state after send-ar
+  red rk(s3, p, q, sid0) .
+  -- red sck(s3, p, q, sid0) .
+  -- red ns(s3, p, q, sid0) .
+  -- red existSelfSK(p, q, sid0, selfSKS(s3)) .
+  -- red findSelfEcdhSK(p, q, sid0, selfSKS(s3)) = ec3 .
+  -- red findSelfMlkSK(p, q, sid0, selfSKS(s3)) = ml3 .
+
+  -- -- receiver state after recv-ar
+  red rk(s4, q, p, sid0) .
+  -- red rck(s4, q, p, sid0) .
+  -- red nr(s4, q, p, sid0) .
+
+  -- -- agreement of root key after AR
+  red rk(s3, p, q, sid0) = rk(s4, p, q, sid0) .
+
 
 close
