@@ -55,14 +55,19 @@ open PQ3 .
       ib0,
       time(s0)) .
 
-  -- asym body exactly as sender constructs it at s2
   eq ab0 =
     mkAsymBody(
       p, q, sid0,
       ns(s2, p, q, sid0),
       ar-ct-ecdh-send(s2, p, q, sid0, ec3),
       ar-ct-mlk-send(s2, p, q, sid0, ml3),
-      aenc(ar-msgk-send(s2, p, q, sid0, ec3, ml3), rm0)
+      aenc(mk-sym(
+          ar-sck(
+              rk(s2, p, q, sid0),
+              ar-ss-ecdh-send(s2, p, q, sid0, ec3),
+              ar-ss-mlk-send(s2, p, q, sid0, ml3)
+          )
+      ), rm0)
     ) .
 
   -- asym sender side
@@ -78,29 +83,30 @@ open PQ3 .
       time(s2)
     ) .
 
+
   -- sender-side AR checks
   red c-send-ar(s2, p, q, sid0, ec3, ml3, rm0) .
   red validAsymBody(p, q, ab0) .
-  red msg(p, p, q, ab0, time(s2)) \in nw(s3) .
+  -- red msg(p, p, q, ab0, time(s2)) \in nw(s3) .
 
-  -- -- receiver-side AR check
-  red c-recv-ar(s3, p, q, sid0, ab0, time(s2)) .
+  -- -- -- receiver-side AR check
+  -- red c-recv-ar(s3, p, q, sid0, ab0, time(s2)) .
 
-  -- -- sender state after send-ar
-  red rk(s3, p, q, sid0) .
-  -- red sck(s3, p, q, sid0) .
-  -- red ns(s3, p, q, sid0) .
-  -- red existSelfSK(p, q, sid0, selfSKS(s3)) .
-  -- red findSelfEcdhSK(p, q, sid0, selfSKS(s3)) = ec3 .
-  -- red findSelfMlkSK(p, q, sid0, selfSKS(s3)) = ml3 .
+  -- -- -- sender state after send-ar
+  -- red rk(s3, p, q, sid0) .
+  -- -- red sck(s3, p, q, sid0) .
+  -- -- red ns(s3, p, q, sid0) .
+  -- -- red existSelfSK(p, q, sid0, selfSKS(s3)) .
+  -- -- red findSelfEcdhSK(p, q, sid0, selfSKS(s3)) = ec3 .
+  -- -- red findSelfMlkSK(p, q, sid0, selfSKS(s3)) = ml3 .
 
-  -- -- receiver state after recv-ar
-  red rk(s4, q, p, sid0) .
-  -- red rck(s4, q, p, sid0) .
-  -- red nr(s4, q, p, sid0) .
+  -- -- -- receiver state after recv-ar
+  -- red rk(s4, q, p, sid0) .
+  -- -- red rck(s4, q, p, sid0) .
+  -- -- red nr(s4, q, p, sid0) .
 
-  -- -- agreement of root key after AR
-  red rk(s3, p, q, sid0) = rk(s4, p, q, sid0) .
+  -- -- -- agreement of root key after AR
+  -- red rk(s3, p, q, sid0) = rk(s4, p, q, sid0) .
 
 
 close

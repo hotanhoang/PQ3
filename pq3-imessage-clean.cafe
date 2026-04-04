@@ -1034,7 +1034,7 @@ mod* PQ3 {
     -- *****************************************************************************************************
 
     eq c-send-ar(S, P, Q, SID, ESK, MSK, ARM) =
-        (SID \in usedSession(S)
+        ((SID \in usedSession(S))
         and not (ESK \in usedSecret(S))
         and not (MSK \in usedSecret(S))
         and existPeerPK(P, Q, SID, peerPKS(S))
