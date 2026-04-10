@@ -1,0 +1,70 @@
+in pq3.cafe .
+
+
+open PQ3 .
+  ops p q : -> Prin .
+  ops ec ec1 ec2 : -> ECDHK-SecretK .
+  ops ml ml1 ml2 : -> MLK-SecretK .
+
+  op s0 : -> Sys .
+  op s1 : -> Sys .
+  op s2 : -> Sys .
+
+  op sid0 : -> SessId .
+  op ibInit : -> InitBody .
+
+  eq (p = q) = false .
+
+  eq (ec = ec1) = false .
+  eq (ec = ec2) = false .
+  eq (ec1 = ec2) = false .
+  eq (ec1 = ECDHK-PriK(p)) = false .
+  eq (ec2 = ECDHK-PriK(p)) = false .
+  eq (ec = ECDHK-PriK(p)) = false .
+  eq (ec1 = ECDHK-PriK(q)) = false .
+  eq (ec2 = ECDHK-PriK(q)) = false .
+  eq (ec = ECDHK-PriK(q)) = false .
+
+  eq (ml = ml1) = false .
+  eq (ml = ml2) = false .
+  eq (ml1 = ml2) = false .
+  eq (ml1 = MLK-PriK(p)) = false .
+  eq (ml2 = MLK-PriK(p)) = false .
+  eq (ml = MLK-PriK(p)) = false .
+  eq (ml1 = MLK-PriK(q)) = false .
+  eq (ml2 = MLK-PriK(q)) = false .
+  eq (ml = MLK-PriK(q)) = false .
+
+
+  -- register bundle keys of p and q on IDS server
+  eq s0 = register(register(init, p), q) .
+
+  eq ibInit =
+    mkInitBody(
+      p,
+      sid0,
+      ct-ecdh(q, ec2),
+      ct-mlk(q, ml2),
+      ecdhk-keygen(ec2),
+      mlk-keygen(ml2),
+      hash(ecdhk-keygen(ec2), mlk-keygen(ml2))
+    ) .
+  red c-send-init(s0, p, q, sid0, ec2, ml2) .
+  eq s1 = send-init(s0, p, q, sid0, ec2, ml2) .
+
+
+  eq s2 =
+    recv-init(
+      s1,
+      p, q,
+      sid0,
+      ibInit,
+      time(s0)
+    ) .
+  -- -- -- sender/receiver key agreement checks
+  red rk(s1, p, q, sid0) = rk(s2, p, q, sid0) .   
+  red ck(s1, p, q, sid0) . 
+  red ck(s2, p, q, sid0) . 
+  red ck(s1, p, q, sid0) = ck(s2, p, q, sid0) . 
+
+close

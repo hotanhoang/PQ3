@@ -1,0 +1,8 @@
+ipsgopen INV .
+  generate inv2(S:Sys, MSK:MLK-SecretK)
+  induction on S:Sys .
+close
+set-output examples/pq3/inv/inv-2.cafe .
+:save-proof .
+
+eof

@@ -1,0 +1,144 @@
+in pq3.cafe
+
+open PQ3 .
+  ops p q : -> Prin .
+  ops ec ec1 ec2 ec3 : -> ECDHK-SecretK .
+  ops ml ml1 ml2 ml3 : -> MLK-SecretK .
+
+  op sid0 : -> SessId .
+  op rm0  : -> RawMsg .
+
+  ops s0 s1 s2 s3 s4 s5 s6 s7 s8 s9 s10 : -> Sys .
+
+  op ib0 : -> InitBody .
+  op ab0 : -> AsymBody .
+  ops ct0 ct1 : -> CipherT .
+  ops sb0 sb1 : -> SymBody .
+
+  eq (rm0 = noRawMsg) = false .
+  eq (p = q) = false .
+
+  eq (ec = ec1) = false .
+  eq (ec = ec2) = false .
+  eq (ec = ec3) = false .
+  eq (ec1 = ec2) = false .
+  eq (ec1 = ec3) = false .
+  eq (ec2 = ec3) = false .
+  eq (ec1 = ECDHK-PriK(p)) = false .
+  eq (ec2 = ECDHK-PriK(p)) = false .
+  eq (ec3 = ECDHK-PriK(p)) = false .
+  eq (ec1 = ECDHK-PriK(q)) = false .
+  eq (ec2 = ECDHK-PriK(q)) = false .
+  eq (ec3 = ECDHK-PriK(q)) = false .
+
+  eq (ml = ml1) = false .
+  eq (ml = ml2) = false .
+  eq (ml = ml3) = false .
+  eq (ml1 = ml2) = false .
+  eq (ml1 = ml3) = false .
+  eq (ml2 = ml3) = false .
+  eq (ml1 = MLK-PriK(p)) = false .
+  eq (ml2 = MLK-PriK(p)) = false .
+  eq (ml3 = MLK-PriK(p)) = false .
+  eq (ml1 = MLK-PriK(q)) = false .
+  eq (ml2 = MLK-PriK(q)) = false .
+  eq (ml3 = MLK-PriK(q)) = false .
+
+  -- register bundle keys of p and q on IDS server
+  eq s0 = register(register(init, p), q) .
+  -- init body
+  eq ib0 =
+     mkInitBody(
+      p,
+      sid0,
+      ct-ecdh(q, ec2),
+      ct-mlk(q, ml2),
+      ecdhk-keygen(ec2),
+      mlk-keygen(ml2),
+      hash(ecdhk-keygen(ec2), mlk-keygen(ml2))
+    ) .
+
+  -- send / receive init
+  eq s1 = send-init(s0, p, q, sid0, ec2, ml2) .
+  eq s2 =
+    recv-init(
+      s1,
+      p, q,
+      sid0,
+      ib0,
+      time(s0)) .
+  red rk(s1, p, q, sid0) = rk(s2, p, q, sid0) .
+  -- sym1
+  eq ct0 = senc(mk-sym(ck(s2, p, q, sid0)), rm0) .
+  eq sb0 = mkSymBody(p, q, sid0, ns(s2, p, q, sid0), ct0) .  
+  eq s3 = send-sym(s2, p, q, sid0, rm0) .
+  eq s4 = recv-sym(s3, p, q, sid0, sb0, time(s2)) .
+  red rk(s4, q, p, sid0) = rk(s3, q, p, sid0) .
+  -- sym2
+  eq sb1 = mkSymBody(p, q, sid0, ns(s4, p, q, sid0), senc(mk-sym(ck(s4, p, q, sid0)), rm0)) .
+  eq s5 = send-sym(s4, p, q, sid0, rm0) .
+  eq s6 = recv-sym(s5, p, q, sid0, sb1, time(s4)) .
+  red rk(s6, q, p, sid0) = rk(s5, q, p, sid0) .
+
+
+  -- asym
+
+  -- eq ab0 = mkAsymBody(
+  --     q, p, sid0,
+  --     ns(s4, q, p, sid0),
+  --     ar-ct-ecdh-send(s4, q, p, sid0, ec3),
+  --     ar-ct-mlk-send(s4, q, p, sid0, ml3),
+  --     aenc(mk-sym(
+  --         ar-ck(
+  --             rk(s4, q, p, sid0),
+  --             ar-ss-ecdh-send(s4, q, p, sid0, ec3),
+  --             ar-ss-mlk-send(s4, q, p, sid0, ml3)
+  --         )
+  --     ), rm0)
+  --   ) .
+
+  -- eq s5 = send-ar(s4, q, p, sid0, ec3, ml3, rm0) .
+
+  -- red asymSid(ab0) = sid0 .
+  -- red validAsymBody(q, p, ab0) .
+  -- red c-recv-ar(s5, q, p, sid0, ab0, time(s4)) .
+  -- eq s6 = 
+  --   recv-ar(
+  --     s5,
+  --     q, p,
+  --     sid0,
+  --     ab0,
+  --     time(s4)
+  --   ) .
+
+
+  -- red c-send-ar(s3, q, p, sid0, ec3, ml3, rm0) .
+  -- red rk(s5, q, p, sid0) = rk(s6, q, p, sid0) .
+
+
+  -- -- sender-side AR checks
+  -- red c-send-ar(s2, p, q, sid0, ec3, ml3, rm0) .
+  -- red validAsymBody(p, q, ab0) .
+  -- red msg(p, p, q, ab0, time(s2)) \in nw(s3) .
+
+  -- -- -- receiver-side AR check
+  -- red c-recv-ar(s3, p, q, sid0, ab0, time(s2)) .
+
+  -- -- -- sender state after send-ar
+  -- red rk(s3, p, q, sid0) .
+  -- -- red sck(s3, p, q, sid0) .
+  -- -- red ns(s3, p, q, sid0) .
+  -- -- red existSelfSK(p, q, sid0, selfSKS(s3)) .
+  -- -- red findSelfEcdhSK(p, q, sid0, selfSKS(s3)) = ec3 .
+  -- -- red findSelfMlkSK(p, q, sid0, selfSKS(s3)) = ml3 .
+
+  -- -- -- receiver state after recv-ar
+  -- -- red rk(s4, q, p, sid0) .
+  -- -- red rck(s4, q, p, sid0) .
+  -- -- red nr(s4, q, p, sid0) .
+
+  -- -- -- -- agreement of root key after AR
+  -- red rk(s3, p, q, sid0) = rk(s4, q, p, sid0) .
+
+
+close

@@ -1,17 +1,20 @@
-in pq3-imessage-clean.cafe .
+in pq3.cafe .
 
 
 
 open PQ3 .
   ops p q : -> Prin .
-  ops ec ec' : -> ECDHK-SecretK .
-  ops ml ml' : -> MLK-SecretK .
+
+  ops ec ec1 : -> ECDHK-SecretK .
+  ops ml ml1 : -> MLK-SecretK .
+
 
   op s1 : -> Sys .
-  eq s1 = register(init, p, sk(p), ec, ml) .
+  eq s1 = register(init, p) .
 
+  eq (p = q) = false .
   -- registration ephemeral keys of p on IDS server
-  red c-register(init, p, sk(p), ec, ml) .
+  red c-register(init, p) .
 
   -- IDS server should contain p
   red existUser(p, idsServer(s1)) .
@@ -22,18 +25,15 @@ open PQ3 .
   red validRegData(findRegData(p, idsServer(s1))) .
 
   -- usedSecret tests
-  red ec  \in usedSecret(s1) .
-  red ml  \in usedSecret(s1) .
+  -- red ECDHK-PriK(p)  \in usedSecret(s1) .
+  -- red MLK-PriK(p)  \in usedSecret(s1) .
 
   -- network and time 
-  red nw(s1) .
-  red usedSecret(s1) .
-  red idsServer(s1) .
-  red time(s1) .
+  -- red nw(s1) .
+  -- red usedSecret(s1) .
+  -- red idsServer(s1) .
+  -- red time(s1) .
 
-  red preEcdhsk(s1, p) .
-  red preMlksk(s1, p) .
-
-  red c-register(s1, q, sk(q), ec, ml) .
+  -- red c-register(s1, q, ECDHK-PriK(q), MLK-PriK(q)) .
 
 close

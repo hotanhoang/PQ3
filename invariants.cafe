@@ -1,0 +1,45 @@
+mod INV {
+    pr(PQ3)
+
+    vars S  : Sys .
+    vars A2 A B : Prin .
+    vars SID : SessId .
+    vars ESK : ECDHK-SecretK .
+    vars MSK MSK2 : MLK-SecretK .
+    var MPK : MLK-PublicK .
+    vars IB  : InitBody .
+    vars AB  : AsymBody .
+    vars N   : Nat .
+
+    -- secrecy of the initial KEM shared-secret pair
+    op keyPairSe : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK InitBody Nat -> Bool .
+    eq keyPairSe(S, A2, A, B, SID, ESK, MSK, IB, N) =
+        (   
+            not (A = intru or B = intru) and
+            not (A = B) and
+            existUser(B, idsServer(S)) and
+            validRegData(findRegData(B, idsServer(S))) and
+            SID = initSid(IB) and
+            validInitBody(A, SID, IB) and
+            initMlkPkEph(IB) = mlk-keygen(MSK) and
+            initMlkCt(IB) = ct-mlk(B, MSK) and
+            msg(A2, A, B, IB, N) \in nw(S) and 
+            not (MLK-PriK(B) \in leakscr(S)) and
+            not (MSK \in leakscr(S)) and
+            not (sk(A) \in leakscr(S)) and
+            not (ss-mlk(B, MSK) \in leakscr(S))
+        )
+        implies
+        (
+            not (ss-mlk(B, MSK) \in knl(S))
+        ) .
+
+
+    -- lemma 2
+    op inv1 : Sys MLK-SecretK MLK-SecretK -> Bool .
+    eq inv1(S, MSK, MSK2) = (not (MSK \in leakscr(S)) and not (MSK2 \in leakscr(S))) implies (not ((MSK & MSK2) \in knl(S))) .
+
+    -- no lemma
+    op inv2 : Sys MLK-SecretK -> Bool .
+    eq inv2(S, MSK) = not(MSK \in leakscr(S)) implies not(MSK \in knl(S)) .
+}
