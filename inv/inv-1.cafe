@@ -180,6 +180,28 @@ close
 open INV .
   op msk : -> MLK-SecretK .
   op msk2 : -> MLK-SecretK .
+  op r1 : -> ECDHK-SecretK .
+  op r2 : -> ECDHK-Cipher .
+  op s : -> Sys .
+  eq (ecdhk-decaps(r2,r1) \in leakscr(s)) = true .
+  red inv1(s,msk,msk2) implies inv1(intruComECDHKDecaps(s,r1,r2),msk,msk2) .
+close
+
+--> true
+open INV .
+  op msk : -> MLK-SecretK .
+  op msk2 : -> MLK-SecretK .
+  op r1 : -> ECDHK-SecretK .
+  op r2 : -> ECDHK-Cipher .
+  op s : -> Sys .
+  eq (ecdhk-decaps(r2,r1) \in leakscr(s)) = false .
+  red inv1(s,msk,msk2) implies inv1(intruComECDHKDecaps(s,r1,r2),msk,msk2) .
+close
+
+--> true
+open INV .
+  op msk : -> MLK-SecretK .
+  op msk2 : -> MLK-SecretK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -187,6 +209,38 @@ open INV .
   op r5 : -> MLK-SecretK .
   op r6 : -> Nat .
   op s : -> Sys .
+  eq (msg(r1,r1,r2,initBody(r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5)),sign(sk(r1),signedData(r1,r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5))))),r6) \in nw(s)) = true .
+  red inv1(s,msk,msk2) implies inv1(intruComECDHKEMSS(s,r1,r2,r3,r4,r5,r6),msk,msk2) .
+close
+
+--> true
+open INV .
+  op msk : -> MLK-SecretK .
+  op msk2 : -> MLK-SecretK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> Nat .
+  op s : -> Sys .
+  eq (msg(r1,r1,r2,initBody(r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5)),sign(sk(r1),signedData(r1,r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5))))),r6) \in nw(s)) = false .
+  red inv1(s,msk,msk2) implies inv1(intruComECDHKEMSS(s,r1,r2,r3,r4,r5,r6),msk,msk2) .
+close
+
+--> true
+open INV .
+  op msk : -> MLK-SecretK .
+  op msk2 : -> MLK-SecretK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> Nat .
+  op s : -> Sys .
+  eq (r4 \in usedSecret(s)) = true .
+  eq (r5 \in usedSecret(s)) = true .
   eq (msg(r1,r1,r2,initBody(r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5)),sign(sk(r1),signedData(r1,r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5))))),r6) \in nw(s)) = true .
   red inv1(s,msk,msk2) implies inv1(intruComInitKEM(s,r1,r2,r3,r4,r5,r6),msk,msk2) .
 close
@@ -202,7 +256,40 @@ open INV .
   op r5 : -> MLK-SecretK .
   op r6 : -> Nat .
   op s : -> Sys .
+  eq (r4 \in usedSecret(s)) = true .
+  eq (r5 \in usedSecret(s)) = true .
   eq (msg(r1,r1,r2,initBody(r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5)),sign(sk(r1),signedData(r1,r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5))))),r6) \in nw(s)) = false .
+  red inv1(s,msk,msk2) implies inv1(intruComInitKEM(s,r1,r2,r3,r4,r5,r6),msk,msk2) .
+close
+
+--> true
+open INV .
+  op msk : -> MLK-SecretK .
+  op msk2 : -> MLK-SecretK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> Nat .
+  op s : -> Sys .
+  eq (r4 \in usedSecret(s)) = true .
+  eq (r5 \in usedSecret(s)) = false .
+  red inv1(s,msk,msk2) implies inv1(intruComInitKEM(s,r1,r2,r3,r4,r5,r6),msk,msk2) .
+close
+
+--> true
+open INV .
+  op msk : -> MLK-SecretK .
+  op msk2 : -> MLK-SecretK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> Nat .
+  op s : -> Sys .
+  eq (r4 \in usedSecret(s)) = false .
   red inv1(s,msk,msk2) implies inv1(intruComInitKEM(s,r1,r2,r3,r4,r5,r6),msk,msk2) .
 close
 
@@ -232,6 +319,7 @@ open INV .
   op msk2 : -> MLK-SecretK .
   op r1 : -> Prin .
   op s : -> Sys .
+  eq (MLK-PriK(r1) \in usedSecret(s)) = true .
   eq (MLK-PriK(r1) \in leakscr(s)) = true .
   red inv1(s,msk,msk2) implies inv1(intruComLongTermMlkSK(s,r1),msk,msk2) .
 close
@@ -242,7 +330,18 @@ open INV .
   op msk2 : -> MLK-SecretK .
   op r1 : -> Prin .
   op s : -> Sys .
+  eq (MLK-PriK(r1) \in usedSecret(s)) = true .
   eq (MLK-PriK(r1) \in leakscr(s)) = false .
+  red inv1(s,msk,msk2) implies inv1(intruComLongTermMlkSK(s,r1),msk,msk2) .
+close
+
+--> true
+open INV .
+  op msk : -> MLK-SecretK .
+  op msk2 : -> MLK-SecretK .
+  op r1 : -> Prin .
+  op s : -> Sys .
+  eq (MLK-PriK(r1) \in usedSecret(s)) = false .
   red inv1(s,msk,msk2) implies inv1(intruComLongTermMlkSK(s,r1),msk,msk2) .
 close
 
@@ -1109,6 +1208,22 @@ open INV .
   op r5 : -> MLK-SecretK .
   op r6 : -> RawMsg .
   op s : -> Sys .
+  eq r1 = r2 .
+  red inv1(s,msk,msk2) implies inv1(send-ar(s,r1,r2,r3,r4,r5,r6),msk,msk2) .
+close
+
+--> true
+open INV .
+  op msk : -> MLK-SecretK .
+  op msk2 : -> MLK-SecretK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  eq (r1 = r2) = false .
   eq ck(s,r1,r2,r3) = noChainK .
   red inv1(s,msk,msk2) implies inv1(send-ar(s,r1,r2,r3,r4,r5,r6),msk,msk2) .
 close
@@ -1124,6 +1239,7 @@ open INV .
   op r5 : -> MLK-SecretK .
   op r6 : -> RawMsg .
   op s : -> Sys .
+  eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq rk(s,r1,r2,r3) = noRootK .
   red inv1(s,msk,msk2) implies inv1(send-ar(s,r1,r2,r3,r4,r5,r6),msk,msk2) .
@@ -1140,6 +1256,7 @@ open INV .
   op r5 : -> MLK-SecretK .
   op r6 : -> RawMsg .
   op s : -> Sys .
+  eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSession(s)) = true .
@@ -1158,6 +1275,7 @@ open INV .
   op r5 : -> MLK-SecretK .
   op r6 : -> RawMsg .
   op s : -> Sys .
+  eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSession(s)) = true .
@@ -1177,6 +1295,7 @@ open INV .
   op r5 : -> MLK-SecretK .
   op r6 : -> RawMsg .
   op s : -> Sys .
+  eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSession(s)) = true .
@@ -1197,6 +1316,7 @@ open INV .
   op r5 : -> MLK-SecretK .
   op r6 : -> RawMsg .
   op s : -> Sys .
+  eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSession(s)) = true .
@@ -1217,6 +1337,7 @@ open INV .
   op r5 : -> MLK-SecretK .
   op r6 : -> RawMsg .
   op s : -> Sys .
+  eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSession(s)) = false .
@@ -1436,4 +1557,4 @@ open INV .
   red inv1(s,msk,msk2) implies inv1(send-sym(s,r1,r2,r3,r4),msk,msk2) .
 close
 
---> Time taken is 1875ms
+--> Time taken is 2155ms

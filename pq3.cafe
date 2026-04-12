@@ -732,10 +732,10 @@ mod! ASYM-PACKAGE {
     op asymDec : MsgK AsymBody -> RawMsg
 
     -- signed transcript for asymmetric message
-    op asymSignedData : Prin Prin SessId Nat ECDHK-Cipher MLK-Cipher AsymCipherT -> SignedData {constr}
+    op asymSignedData : Prin Prin SessId Nat ECDHK-Cipher MLK-Cipher ECDHK-PublicK MLK-PublicK AsymCipherT -> SignedData {constr}
 
     -- sid + message index + 2 ratchet ciphertexts + encrypted payload + signature
-    op asymBody : SessId Nat ECDHK-Cipher MLK-Cipher AsymCipherT Signature -> AsymBody {constr}
+    op asymBody : SessId Nat ECDHK-Cipher MLK-Cipher ECDHK-PublicK MLK-PublicK AsymCipherT Signature -> AsymBody {constr}
 
     op asymSid    : AsymBody -> SessId
     op asymN      : AsymBody -> Nat
@@ -743,9 +743,11 @@ mod! ASYM-PACKAGE {
     op asymMlkCt  : AsymBody -> MLK-Cipher
     op asymCt     : AsymBody -> AsymCipherT
     op asymSig    : AsymBody -> Signature
+    op asymEcdhPkEph : AsymBody -> ECDHK-PublicK
+    op asymMlkPkEph  : AsymBody -> MLK-PublicK
 
     -- make asym body
-    op mkAsymBody : Prin Prin SessId Nat ECDHK-Cipher MLK-Cipher AsymCipherT -> AsymBody
+    op mkAsymBody : Prin Prin SessId Nat ECDHK-Cipher MLK-Cipher ECDHK-PublicK MLK-PublicK AsymCipherT -> AsymBody
 
     op validAsymBody : Prin Prin AsymBody -> Bool
 
@@ -758,20 +760,24 @@ mod! ASYM-PACKAGE {
     vars SG SG2 : Signature
     vars MK MK2 : MsgK
     vars RM RM2 : RawMsg
+    vars EPK1 EPK1' : ECDHK-PublicK
+    vars MPK1 MPK1' : MLK-PublicK
 
-    eq asymSid(asymBody(SID, I, C1, C2, CT, SG)) = SID .
-    eq asymN(asymBody(SID, I, C1, C2, CT, SG)) = I .
-    eq asymEcdhCt(asymBody(SID, I, C1, C2, CT, SG)) = C1 .
-    eq asymMlkCt(asymBody(SID, I, C1, C2, CT, SG)) = C2 .
-    eq asymCt(asymBody(SID, I, C1, C2, CT, SG)) = CT .
-    eq asymSig(asymBody(SID, I, C1, C2, CT, SG)) = SG .
+    eq asymSid(asymBody(SID, I, C1, C2, EPK1, MPK1, CT, SG)) = SID .
+    eq asymN(asymBody(SID, I, C1, C2, EPK1, MPK1, CT, SG)) = I .
+    eq asymEcdhCt(asymBody(SID, I, C1, C2, EPK1, MPK1, CT, SG)) = C1 .
+    eq asymMlkCt(asymBody(SID, I, C1, C2, EPK1, MPK1, CT, SG)) = C2 .
+    eq asymCt(asymBody(SID, I, C1, C2, EPK1, MPK1, CT, SG)) = CT .
+    eq asymSig(asymBody(SID, I, C1, C2, EPK1, MPK1, CT, SG)) = SG .
+    eq asymEcdhPkEph(asymBody(SID, I, C1, C2, EPK1, MPK1, CT, SG)) = EPK1 .
+    eq asymMlkPkEph(asymBody(SID, I, C1, C2, EPK1, MPK1, CT, SG)) = MPK1 .
 
-    eq mkAsymBody(P, Q, SID, I, C1, C2, CT) = asymBody(SID, I, C1, C2, CT, sign(sk(P), asymSignedData(P, Q, SID, I, C1, C2, CT))) .
-    eq validAsymBody(P, Q, asymBody(SID, I, C1, C2, CT, SG)) = verify(pk(P), asymSignedData(P, Q, SID, I, C1, C2, CT), SG) .
-    eq (asymBody(SID, I, C1, C2, CT, SG) = asymBody(SID2, I2, C1', C2', CT2, SG2)) = (SID = SID2 and I = I2 and C1 = C1' and C2 = C2' and CT = CT2 and SG = SG2) .
+    eq mkAsymBody(P, Q, SID, I, C1, C2, EPK1, MPK1, CT) = asymBody(SID, I, C1, C2, EPK1, MPK1, CT, sign(sk(P), asymSignedData(P, Q, SID, I, C1, C2, EPK1, MPK1, CT))) .
+    eq validAsymBody(P, Q, asymBody(SID, I, C1, C2, EPK1, MPK1, CT, SG)) = verify(pk(P), asymSignedData(P, Q, SID, I, C1, C2, EPK1, MPK1, CT), SG) .
+    eq (asymBody(SID, I, C1, C2, EPK1, MPK1, CT, SG) = asymBody(SID2, I2, C1', C2', EPK1', MPK1', CT2, SG2)) = (SID = SID2 and I = I2 and C1 = C1' and C2 = C2' and EPK1 = EPK1' and MPK1 = MPK1' and CT = CT2 and SG = SG2) .
 
-    eq asymDec(MK, asymBody(SID, I, C1, C2, aenc(MK, RM), SG)) = RM .
-    ceq asymDec(MK, asymBody(SID, I, C1, C2, aenc(MK2, RM), SG)) = noRawMsg if not (MK = MK2) .
+    eq asymDec(MK, asymBody(SID, I, C1, C2, EPK1, MPK1, aenc(MK, RM), SG)) = RM .
+    ceq asymDec(MK, asymBody(SID, I, C1, C2, EPK1, MPK1, aenc(MK2, RM), SG)) = noRawMsg if not (MK = MK2) .
 }
 
 mod! PACKAGE {
@@ -1057,11 +1063,11 @@ mod* PQ3 {
     eq nr(init, A, B, SID) = 0 .
 
     -- trivial lemmas 
-    eq (ecdhk-getSecret(noREcdhPK) = E) = false .
-    eq (E = ecdhk-getSecret(noREcdhPK)) = false .
+    -- eq (ecdhk-getSecret(noREcdhPK) = E) = false .
+    -- eq (E = ecdhk-getSecret(noREcdhPK)) = false .
 
-    eq (mlk-getSecret(noRMlkPK) = M) = false .
-    eq (M = mlk-getSecret(noRMlkPK)) = false .
+    -- eq (mlk-getSecret(noRMlkPK) = M) = false .
+    -- eq (M = mlk-getSecret(noRMlkPK)) = false .
 
     -- *****************************************************************************************************
     -- Registration
@@ -1131,24 +1137,15 @@ mod* PQ3 {
         if c-send-init(S, P, Q, SID, ESK, MSK) .
     ceq idsServer(send-init(S, P, Q, SID, ESK, MSK)) = idsServer(S) if c-send-init(S, P, Q, SID, ESK, MSK) . 
     ceq time(send-init(S, P, Q, SID, ESK, MSK)) = s(time(S)) if c-send-init(S, P, Q, SID, ESK, MSK) . 
-
     
     ceq rk(send-init(S, P, Q, SID, ESK, MSK), A, B, SID2) = (if A = P and B = Q and SID2 = SID then init-rk(ss-ecdh(Q, ESK), ss-mlk(Q, MSK)) else rk(S, A, B, SID2) fi) if c-send-init(S, P, Q, SID, ESK, MSK) .
     ceq ck(send-init(S, P, Q, SID, ESK, MSK), A, B, SID2) = (if A = P and B = Q and SID2 = SID then init-ck(ss-ecdh(Q, ESK), ss-mlk(Q, MSK)) else ck(S, A, B, SID2) fi) if c-send-init(S, P, Q, SID, ESK, MSK) .
     ceq ns(send-init(S, P, Q, SID, ESK, MSK), A, B, SID2) = (if A = P and B = Q and SID2 = SID then 0 else ns(S, A, B, SID2) fi) if c-send-init(S, P, Q, SID, ESK, MSK) .
     ceq nr(send-init(S, P, Q, SID, ESK, MSK), A, B, SID2) = (if A = P and B = Q and SID2 = SID then 0 else nr(S, A, B, SID2) fi) if c-send-init(S, P, Q, SID, ESK, MSK) .
-
-    ceq peerPKS(send-init(S, P, Q, SID, ESK, MSK))
-        = peerPKRec(
-            P, Q, SID,
-            ECDHK-PubK(Q),
-            MLK-PubK(Q)
-            )
-            removePeerPK(P, Q, SID, peerPKS(S))
-        if c-send-init(S, P, Q, SID, ESK, MSK) .
+    ceq peerPKS(send-init(S, P, Q, SID, ESK, MSK)) = peerPKS(S) if c-send-init(S, P, Q, SID, ESK, MSK) .
     ceq selfSKS(send-init(S, P, Q, SID, ESK, MSK)) = selfSKRec(P, Q, SID, ESK, MSK) removeSelfSK(P, Q, SID, selfSKS(S)) if c-send-init(S, P, Q, SID, ESK, MSK) .
     ceq leakscr(send-init(S, P, Q, SID, ESK, MSK)) = leakscr(S) if c-send-init(S, P, Q, SID, ESK, MSK) .
-    ceq knl(send-init(S, P, Q, SID, ESK, MSK)) = ct-ecdh(Q, ESK) || ct-mlk(Q, MSK) || ecdhk-keygen(ESK) || mlk-keygen(MSK) || hash(ecdhk-keygen(ESK), mlk-keygen(MSK)) || knl(S) if c-send-init(S, P, Q, SID, ESK, MSK) .
+    ceq knl(send-init(S, P, Q, SID, ESK, MSK)) = ct-ecdh(Q, ESK) || ct-mlk(Q, MSK) || hash(ecdhk-keygen(ESK), mlk-keygen(MSK)) || ecdhk-keygen(ESK) || mlk-keygen(MSK) || knl(S) if c-send-init(S, P, Q, SID, ESK, MSK) .
     ceq send-init(S, P, Q, SID, ESK, MSK) = S if not c-send-init(S, P, Q, SID, ESK, MSK) .
 
     -- *****************************************************************************************************
@@ -1174,22 +1171,8 @@ mod* PQ3 {
     ceq ck(recv-init(S, P, Q, SID, IB, N), A, B, SID2) = (if A = Q and B = P and SID2 = SID then init-ck(rs-ecdh(Q, initEcdhCt(IB)), rs-mlk(Q, initMlkCt(IB))) else ck(S, A, B, SID2) fi) if c-recv-init(S, P, Q, SID, IB, N) .
     ceq ns(recv-init(S, P, Q, SID, IB, N), A, B, SID2) = (if A = Q and B = P and SID2 = SID then 0 else ns(S, A, B, SID2) fi) if c-recv-init(S, P, Q, SID, IB, N) .
     ceq nr(recv-init(S, P, Q, SID, IB, N), A, B, SID2) = (if A = Q and B = P and SID2 = SID then 0 else nr(S, A, B, SID2) fi) if c-recv-init(S, P, Q, SID, IB, N) .
-    ceq peerPKS(recv-init(S, P, Q, SID, IB, N))
-        = peerPKRec(
-            Q, P, SID,
-            initEcdhPkEph(IB),
-            initMlkPkEph(IB)
-        )
-        removePeerPK(Q, P, SID, peerPKS(S))
-        if c-recv-init(S, P, Q, SID, IB, N) .
-    ceq selfSKS(recv-init(S, P, Q, SID, IB, N))
-        = selfSKRec(
-            Q, P, SID,
-            ECDHK-PriK(Q),
-            MLK-PriK(Q)
-        )
-        removeSelfSK(Q, P, SID, selfSKS(S))
-        if c-recv-init(S, P, Q, SID, IB, N) .
+    ceq peerPKS(recv-init(S, P, Q, SID, IB, N)) = peerPKRec(Q, P, SID, initEcdhPkEph(IB), initMlkPkEph(IB)) removePeerPK(Q, P, SID, peerPKS(S)) if c-recv-init(S, P, Q, SID, IB, N) .
+    ceq selfSKS(recv-init(S, P, Q, SID, IB, N)) = selfSKS(S) if c-recv-init(S, P, Q, SID, IB, N) .
     ceq leakscr(recv-init(S, P, Q, SID, IB, N)) = leakscr(S) if c-recv-init(S, P, Q, SID, IB, N) .
     ceq knl(recv-init(S, P, Q, SID, IB, N)) = knl(S) if c-recv-init(S, P, Q, SID, IB, N) .
     ceq recv-init(S, P, Q, SID, IB, N) = S if not c-recv-init(S, P, Q, SID, IB, N) .
@@ -1226,7 +1209,6 @@ mod* PQ3 {
     ceq peerPKS(send-sym(S, P, Q, SID, RM)) = peerPKS(S) if c-send-sym(S, P, Q, SID, RM) .
     ceq selfSKS(send-sym(S, P, Q, SID, RM)) = selfSKS(S)if c-send-sym(S, P, Q, SID, RM) .
     ceq leakscr(send-sym(S, P, Q, SID, RM)) = leakscr(S) if c-send-sym(S, P, Q, SID, RM) .
-    -- ceq knl(send-sym(S, P, Q, SID, RM)) = mkSymBody(P, Q, SID, ns(S, P, Q, SID), senc(mk-sym(ck(S, P, Q, SID)), RM)) || knl(S) if c-send-sym(S, P, Q, SID, RM) .
     ceq knl(send-sym(S, P, Q, SID, RM)) = knl(S) if c-send-sym(S, P, Q, SID, RM) .
     ceq send-sym(S, P, Q, SID, RM) = S if not c-send-sym(S, P, Q, SID, RM) .
 
@@ -1264,7 +1246,8 @@ mod* PQ3 {
     -- *****************************************************************************************************
 
     eq c-send-ar(S, P, Q, SID, ESK, MSK, ARM) =
-        ((SID \in usedSession(S))
+        (SID \in usedSession(S)
+        and not (P = Q)
         and not (ESK \in usedSecret(S))
         and not (MSK \in usedSecret(S))
         and existPeerPK(P, Q, SID, peerPKS(S))
@@ -1280,6 +1263,8 @@ mod* PQ3 {
                 ns(S, P, Q, SID),
                 ar-ct-ecdh-send(S, P, Q, SID, ESK),
                 ar-ct-mlk-send(S, P, Q, SID, MSK),
+                ecdhk-keygen(ESK),
+                mlk-keygen(MSK),
                 aenc(mk-sym(
                     ar-ck(
                         rk(S, P, Q, SID),
@@ -1309,25 +1294,18 @@ mod* PQ3 {
                     ar-ss-ecdh-send(S, P, Q, SID, ESK),
                     ar-ss-mlk-send(S, P, Q, SID, MSK)
                 )
-                else ck(S, A, B, SID2)
+            else ck(S, A, B, SID2)
             fi)
         if c-send-ar(S, P, Q, SID, ESK, MSK, ARM) .
     ceq ns(send-ar(S, P, Q, SID, ESK, MSK, ARM), A, B, SID2) = (if A = P and B = Q and SID2 = SID then 0 else ns(S, A, B, SID2) fi) if c-send-ar(S, P, Q, SID, ESK, MSK, ARM) .
     ceq nr(send-ar(S, P, Q, SID, ESK, MSK, ARM), A, B, SID2) = nr(S, A, B, SID2) if c-send-ar(S, P, Q, SID, ESK, MSK, ARM) .
-    ceq peerPKS(send-ar(S, P, Q, SID, ESK, MSK, ARM))
-        = peerPKRec(
-            P, Q, SID,
-            ecdhk-keygen(ESK),
-            mlk-keygen(MSK)
-            )
-            removePeerPK(P, Q, SID, peerPKS(S))
-        if c-send-ar(S, P, Q, SID, ESK, MSK, ARM) .
+    ceq peerPKS(send-ar(S, P, Q, SID, ESK, MSK, ARM)) = peerPKS(S) if c-send-ar(S, P, Q, SID, ESK, MSK, ARM) .
     ceq selfSKS(send-ar(S, P, Q, SID, ESK, MSK, ARM))
         = selfSKRec(P, Q, SID, ESK, MSK)
             removeSelfSK(P, Q, SID, selfSKS(S))
         if c-send-ar(S, P, Q, SID, ESK, MSK, ARM) .
     ceq leakscr(send-ar(S, P, Q, SID, ESK, MSK, ARM)) = leakscr(S) if c-send-ar(S, P, Q, SID, ESK, MSK, ARM) .
-    ceq knl(send-ar(S, P, Q, SID, ESK, MSK, ARM)) = ar-ct-ecdh-send(S, P, Q, SID, ESK) || ar-ct-mlk-send(S, P, Q, SID, MSK) || ecdhk-keygen(ESK) || mlk-keygen(MSK)  || knl(S) if c-send-ar(S, P, Q, SID, ESK, MSK, ARM) . 
+    ceq knl(send-ar(S, P, Q, SID, ESK, MSK, ARM)) = ar-ct-ecdh-send(S, P, Q, SID, ESK) || ar-ct-mlk-send(S, P, Q, SID, MSK) || ecdhk-keygen(ESK) || mlk-keygen(MSK) || knl(S) if c-send-ar(S, P, Q, SID, ESK, MSK, ARM) . 
     ceq send-ar(S, P, Q, SID, ESK, MSK, ARM) = S if not c-send-ar(S, P, Q, SID, ESK, MSK, ARM) .
 
     -- *****************************************************************************************************
@@ -1381,7 +1359,7 @@ mod* PQ3 {
         if c-recv-ar(S, P, Q, SID, AB, N) .
     ceq nr(recv-ar(S, P, Q, SID, AB, N), A, B, SID2) = (if A = Q and B = P and SID2 = SID then 0 else nr(S, A, B, SID2) fi) if c-recv-ar(S, P, Q, SID, AB, N) .
     ceq ns(recv-ar(S, P, Q, SID, AB, N), A, B, SID2) = ns(S, A, B, SID2) if c-recv-ar(S, P, Q, SID, AB, N) .
-    ceq peerPKS(recv-ar(S, P, Q, SID, AB, N)) = peerPKS(S) if c-recv-ar(S, P, Q, SID, AB, N) .
+    ceq peerPKS(recv-ar(S, P, Q, SID, AB, N)) = peerPKRec(Q, P, SID, asymEcdhPkEph(AB), asymMlkPkEph(AB)) removePeerPK(Q, P, SID, peerPKS(S)) if c-recv-ar(S, P, Q, SID, AB, N) .
     ceq selfSKS(recv-ar(S, P, Q, SID, AB, N)) = selfSKS(S) if c-recv-ar(S, P, Q, SID, AB, N) .
     ceq leakscr(recv-ar(S, P, Q, SID, AB, N)) = leakscr(S) if c-recv-ar(S, P, Q, SID, AB, N) .
     ceq knl(recv-ar(S, P, Q, SID, AB, N)) = knl(S) if c-recv-ar(S, P, Q, SID, AB, N) .
@@ -1529,12 +1507,10 @@ mod* PQ3 {
     ceq knl(intruECDHKDecaps(S, ESK, Ecdhk-Ci)) = (ecdhk-decaps(Ecdhk-Ci, ESK) || knl(S)) if c-intruECDHKDecaps(S, ESK, Ecdhk-Ci) .
     ceq intruECDHKDecaps(S, ESK, Ecdhk-Ci) = S if not c-intruECDHKDecaps(S, ESK, Ecdhk-Ci) .
 
-    
-
-    -- compromise of KEM secret key 
-    op intruComInitKEM : Sys Prin Prin SessId ECDHK-SecretK MLK-SecretK Nat -> Sys {constr}
-    op c-intruComInitKEM : Sys Prin Prin SessId ECDHK-SecretK MLK-SecretK Nat -> Bool
-    eq c-intruComInitKEM(S, A, B, SID, ESK, MSK, N) = 
+    -- compromise of shared secrets
+    op intruComECDHKEMSS : Sys Prin Prin SessId ECDHK-SecretK MLK-SecretK Nat -> Sys {constr}
+    op c-intruComECDHKEMSS : Sys Prin Prin SessId ECDHK-SecretK MLK-SecretK Nat -> Bool
+    eq c-intruComECDHKEMSS(S, A, B, SID, ESK, MSK, N) = 
             msg(A, A, B, 
                 mkInitBody(A, SID,
                     ct-ecdh(B, ESK),
@@ -1543,6 +1519,37 @@ mod* PQ3 {
                     mlk-keygen(MSK),
                     hash(ecdhk-keygen(ESK), mlk-keygen(MSK))), 
                 N) \in nw(S) .
+    eq usedSecret(intruComECDHKEMSS(S, A, B, SID, ESK, MSK, N)) = usedSecret(S) .
+    eq usedSession(intruComECDHKEMSS(S, A, B, SID, ESK, MSK, N)) = usedSession(S) .
+    eq nw(intruComECDHKEMSS(S, A, B, SID, ESK, MSK, N)) = nw(S) .
+    eq idsServer(intruComECDHKEMSS(S, A, B, SID, ESK, MSK, N)) = idsServer(S) .
+    ceq time(intruComECDHKEMSS(S, A, B, SID, ESK, MSK, N)) = s(time(S)) if c-intruComECDHKEMSS(S, A, B, SID, ESK, MSK, N) .
+    eq rk(intruComECDHKEMSS(S, A, B, SID, ESK, MSK, N), P, Q, SID) = rk(S, P, Q, SID) .
+    eq ck(intruComECDHKEMSS(S, A, B, SID, ESK, MSK, N), P, Q, SID) = ck(S, P, Q, SID) .
+    eq ns(intruComECDHKEMSS(S, A, B, SID, ESK, MSK, N), P, Q, SID) = ns(S, P, Q, SID) .
+    eq nr(intruComECDHKEMSS(S, A, B, SID, ESK, MSK, N), P, Q, SID) = nr(S, P, Q, SID) .
+    eq peerPKS(intruComECDHKEMSS(S, A, B, SID, ESK, MSK, N)) = peerPKS(S) .
+    eq selfSKS(intruComECDHKEMSS(S, A, B, SID, ESK, MSK, N)) = selfSKS(S) .
+    ceq leakscr(intruComECDHKEMSS(S, A, B, SID, ESK, MSK, N)) = (ECDHK-PriK(B) & ESK) leakscr(S) if c-intruComECDHKEMSS(S, A, B, SID, ESK, MSK, N) .
+    ceq knl(intruComECDHKEMSS(S, A, B, SID, ESK, MSK, N)) = (ECDHK-PriK(B) & ESK) || knl(S) if c-intruComECDHKEMSS(S, A, B, SID, ESK, MSK, N) .
+    ceq intruComECDHKEMSS(S, A, B, SID, ESK, MSK, N) = S if not c-intruComECDHKEMSS(S, A, B, SID, ESK, MSK, N) .
+    
+
+    -- compromise of KEM secret key 
+    op intruComInitKEM : Sys Prin Prin SessId ECDHK-SecretK MLK-SecretK Nat -> Sys {constr}
+    op c-intruComInitKEM : Sys Prin Prin SessId ECDHK-SecretK MLK-SecretK Nat -> Bool
+    eq c-intruComInitKEM(S, A, B, SID, ESK, MSK, N) = 
+            (
+                ESK \in usedSecret(S) and MSK \in usedSecret(S) and
+                msg(A, A, B, 
+                mkInitBody(A, SID,
+                    ct-ecdh(B, ESK),
+                    ct-mlk(B, MSK),
+                    ecdhk-keygen(ESK),
+                    mlk-keygen(MSK),
+                    hash(ecdhk-keygen(ESK), mlk-keygen(MSK))), 
+                N) \in nw(S)
+            ) .
     eq usedSecret(intruComInitKEM(S, A, B, SID, ESK, MSK, N)) = usedSecret(S) .
     eq usedSession(intruComInitKEM(S, A, B, SID, ESK, MSK, N)) = usedSession(S) .
     eq nw(intruComInitKEM(S, A, B, SID, ESK, MSK, N)) = nw(S) .
@@ -1579,7 +1586,7 @@ mod* PQ3 {
 
     op intruComLongTermMlkSK : Sys Prin -> Sys {constr}
     op c-intruComLongTermMlkSK : Sys Prin -> Bool
-    eq c-intruComLongTermMlkSK(S, A) = not(MLK-PriK(A) \in leakscr(S)) .
+    eq c-intruComLongTermMlkSK(S, A) = not(MLK-PriK(A) \in leakscr(S)) and (MLK-PriK(A) \in usedSecret(S)) .
     eq usedSecret(intruComLongTermMlkSK(S, A)) = usedSecret(S) .
     eq usedSession(intruComLongTermMlkSK(S, A)) = usedSession(S) .
     eq nw(intruComLongTermMlkSK(S, A)) = nw(S) .
@@ -1595,6 +1602,25 @@ mod* PQ3 {
     ceq knl(intruComLongTermMlkSK(S, A)) = MLK-PriK(A) || knl(S) if c-intruComLongTermMlkSK(S, A) .
     ceq intruComLongTermMlkSK(S, A) = S if not c-intruComLongTermMlkSK(S, A) .
 
+
+    
+    op intruComECDHKDecaps : Sys ECDHK-SecretK ECDHK-Cipher -> Sys {constr}
+    op c-intruComECDHKDecaps : Sys ECDHK-SecretK ECDHK-Cipher -> Bool
+    eq c-intruComECDHKDecaps(S, ESK, Ecdhk-Ci) = not(ecdhk-decaps(Ecdhk-Ci,ESK) \in leakscr(S)) .
+    eq usedSecret(intruComECDHKDecaps(S, ESK, Ecdhk-Ci)) = usedSecret(S) .
+    eq usedSession(intruComECDHKDecaps(S, ESK, Ecdhk-Ci)) = usedSession(S) .
+    eq nw(intruComECDHKDecaps(S, ESK, Ecdhk-Ci)) = nw(S) .
+    eq idsServer(intruComECDHKDecaps(S, ESK, Ecdhk-Ci)) = idsServer(S) .    
+    ceq time(intruComECDHKDecaps(S, ESK, Ecdhk-Ci)) = s(time(S)) if c-intruComECDHKDecaps(S, ESK, Ecdhk-Ci) .
+    eq rk(intruComECDHKDecaps(S, ESK, Ecdhk-Ci), A, B, SID) = rk(S, A, B, SID) .
+    eq ck(intruComECDHKDecaps(S, ESK, Ecdhk-Ci), A, B, SID) = ck(S, A, B, SID) .
+    eq ns(intruComECDHKDecaps(S, ESK, Ecdhk-Ci), A, B, SID) = ns(S, A, B, SID) .
+    eq nr(intruComECDHKDecaps(S, ESK, Ecdhk-Ci), A, B, SID) = nr(S, A, B, SID) .
+    eq peerPKS(intruComECDHKDecaps(S, ESK, Ecdhk-Ci)) = peerPKS(S) .
+    eq selfSKS(intruComECDHKDecaps(S, ESK, Ecdhk-Ci)) = selfSKS(S) .
+    ceq leakscr(intruComECDHKDecaps(S, ESK, Ecdhk-Ci)) = ecdhk-decaps(Ecdhk-Ci, ESK) leakscr(S) if c-intruComECDHKDecaps(S, ESK, Ecdhk-Ci) .
+    ceq knl(intruComECDHKDecaps(S, ESK, Ecdhk-Ci)) = ecdhk-decaps(Ecdhk-Ci, ESK) || knl(S) if c-intruComECDHKDecaps(S, ESK, Ecdhk-Ci) .
+    ceq intruComECDHKDecaps(S, ESK, Ecdhk-Ci) = S if not c-intruComECDHKDecaps(S, ESK, Ecdhk-Ci) .
 
 
     -- break ECDH pk, derive private keys from public keys
@@ -1634,7 +1660,9 @@ mod* PQ3 {
     eq selfSKS(intruGetPubInfo(S, P)) = selfSKS(S) .
     eq leakscr(intruGetPubInfo(S, P)) = leakscr(S) .
     eq knl(intruGetPubInfo(S, P)) = (P || knl(S)) .
-    
+
+
+ 
     -- forge message
     op intruForgeInitMsg : Sys Prin Prin SessId ECDHK-Cipher MLK-Cipher ECDHK-PublicK MLK-PublicK -> Sys {constr}
     op c-intruForgeInitMsg : Sys Prin Prin SessId ECDHK-Cipher MLK-Cipher ECDHK-PublicK MLK-PublicK -> Bool

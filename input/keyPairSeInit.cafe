@@ -1,0 +1,10 @@
+ipsgopen INV .
+  inv inv1(S:Sys, MSK:MLK-SecretK, MSK2:MLK-SecretK) .
+  inv inv2(S:Sys, MSK:MLK-SecretK) .
+  generate keyPairSeInit(S:Sys, A2:Prin, A:Prin, B:Prin, SID:SessId, ESK:ECDHK-SecretK, MSK:MLK-SecretK, IB:InitBody, N:Nat)
+  induction on S:Sys .
+close
+set-output examples/pq3/inv/keyPairSeInit.cafe .
+:save-proof .
+
+eof

@@ -1,0 +1,3801 @@
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  red keyPairSeAsym(init,a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (ecdhk-keygen(ECDHK-PriK(r1)) \in knl(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruBreakECDH(s,r1),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (ecdhk-keygen(ECDHK-PriK(r1)) \in knl(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruBreakECDH(s,r1),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> ECDHK-SecretK .
+  op r2 : -> ECDHK-PublicK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruCalcECDHKEMInfo(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> ECDHK-SecretK .
+  op r2 : -> ECDHK-PublicK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruCalcECDHKEMInfo(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> ECDHK-SecretK .
+  op r2 : -> ECDHK-PublicK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruCalcECDHKEMInfo(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-PublicK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq msk = r1 .
+  eq a = b .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruCalcMLKKEMInfo(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-PublicK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq msk = r1 .
+  eq (a = b) = false .
+  eq a = intru .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruCalcMLKKEMInfo(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-PublicK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq msk = r1 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq b = intru .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruCalcMLKKEMInfo(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-PublicK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq msk = r1 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq mlk-getSecret(asymMlkPkEph(ab)) = r1 .
+  eq asymSid(ab) = sid .
+  eq validAsymBody(a,b,ab) = true .
+  eq (r1 \in leakscr(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruCalcMLKKEMInfo(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-PublicK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq msk = r1 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq mlk-getSecret(asymMlkPkEph(ab)) = r1 .
+  eq asymSid(ab) = sid .
+  eq validAsymBody(a,b,ab) = true .
+  eq (r1 \in leakscr(s)) = false .
+  eq (msg(a2,a,b,ab,n) \in nw(s)) = true .
+  eq asymMlkCt(ab) = mlk-encapsC(mpk,r1) .
+  eq (mlk-getSecret(mpk) \in leakscr(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruCalcMLKKEMInfo(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-PublicK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq msk = r1 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq mlk-getSecret(asymMlkPkEph(ab)) = r1 .
+  eq asymSid(ab) = sid .
+  eq validAsymBody(a,b,ab) = true .
+  eq (r1 \in leakscr(s)) = false .
+  eq (msg(a2,a,b,ab,n) \in nw(s)) = true .
+  eq asymMlkCt(ab) = mlk-encapsC(mpk,r1) .
+  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
+  eq (sk(a) \in leakscr(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruCalcMLKKEMInfo(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-PublicK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq msk = r1 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq mlk-getSecret(asymMlkPkEph(ab)) = r1 .
+  eq asymSid(ab) = sid .
+  eq validAsymBody(a,b,ab) = true .
+  eq (r1 \in leakscr(s)) = false .
+  eq (msg(a2,a,b,ab,n) \in nw(s)) = true .
+  eq asymMlkCt(ab) = mlk-encapsC(mpk,r1) .
+  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
+  eq (sk(a) \in leakscr(s)) = false .
+  eq mlk-getSecret(r2) = mlk-getSecret(mpk) .
+  eq ((mlk-getSecret(mpk) & r1) \in knl(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruCalcMLKKEMInfo(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-PublicK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq msk = r1 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq mlk-getSecret(asymMlkPkEph(ab)) = r1 .
+  eq asymSid(ab) = sid .
+  eq validAsymBody(a,b,ab) = true .
+  eq (r1 \in leakscr(s)) = false .
+  eq (msg(a2,a,b,ab,n) \in nw(s)) = true .
+  eq asymMlkCt(ab) = mlk-encapsC(mpk,r1) .
+  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
+  eq (sk(a) \in leakscr(s)) = false .
+  eq mlk-getSecret(r2) = mlk-getSecret(mpk) .
+  eq ((mlk-getSecret(mpk) & r1) \in knl(s)) = false .
+  eq ((mlk-getSecret(mpk) & r1) \in leakscr(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruCalcMLKKEMInfo(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true, use inv2 as a lemma
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-PublicK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq msk = r1 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq mlk-getSecret(asymMlkPkEph(ab)) = r1 .
+  eq asymSid(ab) = sid .
+  eq validAsymBody(a,b,ab) = true .
+  eq (r1 \in leakscr(s)) = false .
+  eq (msg(a2,a,b,ab,n) \in nw(s)) = true .
+  eq asymMlkCt(ab) = mlk-encapsC(mpk,r1) .
+  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
+  eq (sk(a) \in leakscr(s)) = false .
+  eq mlk-getSecret(r2) = mlk-getSecret(mpk) .
+  eq ((mlk-getSecret(mpk) & r1) \in knl(s)) = false .
+  eq ((mlk-getSecret(mpk) & r1) \in leakscr(s)) = false .
+  red inv2(s,r1) implies (keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruCalcMLKKEMInfo(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n)) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-PublicK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq msk = r1 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq mlk-getSecret(asymMlkPkEph(ab)) = r1 .
+  eq asymSid(ab) = sid .
+  eq validAsymBody(a,b,ab) = true .
+  eq (r1 \in leakscr(s)) = false .
+  eq (msg(a2,a,b,ab,n) \in nw(s)) = true .
+  eq asymMlkCt(ab) = mlk-encapsC(mpk,r1) .
+  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
+  eq (sk(a) \in leakscr(s)) = false .
+  eq (mlk-getSecret(r2) = mlk-getSecret(mpk)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruCalcMLKKEMInfo(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-PublicK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq msk = r1 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq mlk-getSecret(asymMlkPkEph(ab)) = r1 .
+  eq asymSid(ab) = sid .
+  eq validAsymBody(a,b,ab) = true .
+  eq (r1 \in leakscr(s)) = false .
+  eq (msg(a2,a,b,ab,n) \in nw(s)) = true .
+  eq (asymMlkCt(ab) = mlk-encapsC(mpk,r1)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruCalcMLKKEMInfo(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-PublicK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq msk = r1 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq mlk-getSecret(asymMlkPkEph(ab)) = r1 .
+  eq asymSid(ab) = sid .
+  eq validAsymBody(a,b,ab) = true .
+  eq (r1 \in leakscr(s)) = false .
+  eq (msg(a2,a,b,ab,n) \in nw(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruCalcMLKKEMInfo(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-PublicK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq msk = r1 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq mlk-getSecret(asymMlkPkEph(ab)) = r1 .
+  eq asymSid(ab) = sid .
+  eq validAsymBody(a,b,ab) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruCalcMLKKEMInfo(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-PublicK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq msk = r1 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq mlk-getSecret(asymMlkPkEph(ab)) = r1 .
+  eq (asymSid(ab) = sid) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruCalcMLKKEMInfo(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-PublicK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq msk = r1 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (mlk-getSecret(asymMlkPkEph(ab)) = r1) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruCalcMLKKEMInfo(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-PublicK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq (msk = r1) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruCalcMLKKEMInfo(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-PublicK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruCalcMLKKEMInfo(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-PublicK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruCalcMLKKEMInfo(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> ECDHK-SecretK .
+  op r2 : -> ECDHK-Cipher .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (ecdhk-decaps(r2,r1) \in leakscr(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruComECDHKDecaps(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> ECDHK-SecretK .
+  op r2 : -> ECDHK-Cipher .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (ecdhk-decaps(r2,r1) \in leakscr(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruComECDHKDecaps(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (msg(r1,r1,r2,initBody(r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5)),sign(sk(r1),signedData(r1,r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5))))),r6) \in nw(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruComECDHKEMSS(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (msg(r1,r1,r2,initBody(r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5)),sign(sk(r1),signedData(r1,r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5))))),r6) \in nw(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruComECDHKEMSS(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r4 \in usedSecret(s)) = true .
+  eq (r5 \in usedSecret(s)) = true .
+  eq (msg(r1,r1,r2,initBody(r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5)),sign(sk(r1),signedData(r1,r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5))))),r6) \in nw(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruComInitKEM(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r4 \in usedSecret(s)) = true .
+  eq (r5 \in usedSecret(s)) = true .
+  eq (msg(r1,r1,r2,initBody(r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5)),sign(sk(r1),signedData(r1,r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5))))),r6) \in nw(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruComInitKEM(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r4 \in usedSecret(s)) = true .
+  eq (r5 \in usedSecret(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruComInitKEM(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r4 \in usedSecret(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruComInitKEM(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (ECDHK-PriK(r1) \in leakscr(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruComLongTermEcdhSK(s,r1),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (ECDHK-PriK(r1) \in leakscr(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruComLongTermEcdhSK(s,r1),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (MLK-PriK(r1) \in usedSecret(s)) = true .
+  eq (MLK-PriK(r1) \in leakscr(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruComLongTermMlkSK(s,r1),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (MLK-PriK(r1) \in usedSecret(s)) = true .
+  eq (MLK-PriK(r1) \in leakscr(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruComLongTermMlkSK(s,r1),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (MLK-PriK(r1) \in usedSecret(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruComLongTermMlkSK(s,r1),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> ECDHK-SecretK .
+  op r2 : -> ECDHK-Cipher .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruECDHKDecaps(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> ECDHK-SecretK .
+  op r2 : -> ECDHK-Cipher .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruECDHKDecaps(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> ECDHK-SecretK .
+  op r2 : -> ECDHK-Cipher .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruECDHKDecaps(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in knl(s)) = true .
+  eq (hash(r6,r7) \in knl(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruForgeInitMsg(s,r1,r2,r3,r4,r5,r6,r7),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in knl(s)) = true .
+  eq (hash(r6,r7) \in knl(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruForgeInitMsg(s,r1,r2,r3,r4,r5,r6,r7),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in knl(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruForgeInitMsg(s,r1,r2,r3,r4,r5,r6,r7),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruForgeInitMsg(s,r1,r2,r3,r4,r5,r6,r7),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruForgeInitMsg(s,r1,r2,r3,r4,r5,r6,r7),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruForgeInitMsg(s,r1,r2,r3,r4,r5,r6,r7),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op s : -> Sys .
+  op sid : -> SessId .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruGetPubInfo(s,r1),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-Cipher .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq a = b .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruMLKDecaps(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-Cipher .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq (a = b) = false .
+  eq a = intru .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruMLKDecaps(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-Cipher .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq b = intru .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruMLKDecaps(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-Cipher .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq mlk-getSecret(asymMlkPkEph(ab)) = msk .
+  eq asymSid(ab) = sid .
+  eq validAsymBody(a,b,ab) = true .
+  eq (msk \in leakscr(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruMLKDecaps(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-Cipher .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq mlk-getSecret(asymMlkPkEph(ab)) = msk .
+  eq asymSid(ab) = sid .
+  eq validAsymBody(a,b,ab) = true .
+  eq (msk \in leakscr(s)) = false .
+  eq (msg(a2,a,b,ab,n) \in nw(s)) = true .
+  eq asymMlkCt(ab) = mlk-encapsC(mpk,msk) .
+  eq (mlk-getSecret(mpk) \in leakscr(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruMLKDecaps(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-Cipher .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq mlk-getSecret(asymMlkPkEph(ab)) = msk .
+  eq asymSid(ab) = sid .
+  eq validAsymBody(a,b,ab) = true .
+  eq (msk \in leakscr(s)) = false .
+  eq (msg(a2,a,b,ab,n) \in nw(s)) = true .
+  eq asymMlkCt(ab) = mlk-encapsC(mpk,msk) .
+  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
+  eq (sk(a) \in leakscr(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruMLKDecaps(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-Cipher .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq mlk-getSecret(asymMlkPkEph(ab)) = msk .
+  eq asymSid(ab) = sid .
+  eq validAsymBody(a,b,ab) = true .
+  eq (msk \in leakscr(s)) = false .
+  eq (msg(a2,a,b,ab,n) \in nw(s)) = true .
+  eq asymMlkCt(ab) = mlk-encapsC(mpk,msk) .
+  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
+  eq (sk(a) \in leakscr(s)) = false .
+  eq ((mlk-getSecret(mpk) & msk) \in knl(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruMLKDecaps(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-Cipher .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq mlk-getSecret(asymMlkPkEph(ab)) = msk .
+  eq asymSid(ab) = sid .
+  eq validAsymBody(a,b,ab) = true .
+  eq (msk \in leakscr(s)) = false .
+  eq (msg(a2,a,b,ab,n) \in nw(s)) = true .
+  eq asymMlkCt(ab) = mlk-encapsC(mpk,msk) .
+  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
+  eq (sk(a) \in leakscr(s)) = false .
+  eq ((mlk-getSecret(mpk) & msk) \in knl(s)) = false .
+  eq ((mlk-getSecret(mpk) & msk) \in leakscr(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruMLKDecaps(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-Cipher .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq mlk-getSecret(asymMlkPkEph(ab)) = msk .
+  eq asymSid(ab) = sid .
+  eq validAsymBody(a,b,ab) = true .
+  eq (msk \in leakscr(s)) = false .
+  eq (msg(a2,a,b,ab,n) \in nw(s)) = true .
+  eq asymMlkCt(ab) = mlk-encapsC(mpk,msk) .
+  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
+  eq (sk(a) \in leakscr(s)) = false .
+  eq ((mlk-getSecret(mpk) & msk) \in knl(s)) = false .
+  eq ((mlk-getSecret(mpk) & msk) \in leakscr(s)) = false .
+  eq mlk-getSecret(mpk) = r1 .
+  eq (r1 \in leakscr(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruMLKDecaps(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-Cipher .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq mlk-getSecret(asymMlkPkEph(ab)) = msk .
+  eq asymSid(ab) = sid .
+  eq validAsymBody(a,b,ab) = true .
+  eq (msk \in leakscr(s)) = false .
+  eq (msg(a2,a,b,ab,n) \in nw(s)) = true .
+  eq asymMlkCt(ab) = mlk-encapsC(mpk,msk) .
+  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
+  eq (sk(a) \in leakscr(s)) = false .
+  eq ((mlk-getSecret(mpk) & msk) \in knl(s)) = false .
+  eq ((mlk-getSecret(mpk) & msk) \in leakscr(s)) = false .
+  eq mlk-getSecret(mpk) = r1 .
+  eq (r1 \in leakscr(s)) = false .
+  eq ((r1 & msk) \in knl(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruMLKDecaps(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-Cipher .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq mlk-getSecret(asymMlkPkEph(ab)) = msk .
+  eq asymSid(ab) = sid .
+  eq validAsymBody(a,b,ab) = true .
+  eq (msk \in leakscr(s)) = false .
+  eq (msg(a2,a,b,ab,n) \in nw(s)) = true .
+  eq asymMlkCt(ab) = mlk-encapsC(mpk,msk) .
+  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
+  eq (sk(a) \in leakscr(s)) = false .
+  eq ((mlk-getSecret(mpk) & msk) \in knl(s)) = false .
+  eq ((mlk-getSecret(mpk) & msk) \in leakscr(s)) = false .
+  eq mlk-getSecret(mpk) = r1 .
+  eq (r1 \in leakscr(s)) = false .
+  eq ((r1 & msk) \in knl(s)) = false .
+  eq ((r1 & msk) \in leakscr(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruMLKDecaps(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true, use inv2 as a lemma
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-Cipher .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq mlk-getSecret(asymMlkPkEph(ab)) = msk .
+  eq asymSid(ab) = sid .
+  eq validAsymBody(a,b,ab) = true .
+  eq (msk \in leakscr(s)) = false .
+  eq (msg(a2,a,b,ab,n) \in nw(s)) = true .
+  eq asymMlkCt(ab) = mlk-encapsC(mpk,msk) .
+  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
+  eq (sk(a) \in leakscr(s)) = false .
+  eq ((mlk-getSecret(mpk) & msk) \in knl(s)) = false .
+  eq ((mlk-getSecret(mpk) & msk) \in leakscr(s)) = false .
+  eq mlk-getSecret(mpk) = r1 .
+  eq (r1 \in leakscr(s)) = false .
+  eq ((r1 & msk) \in knl(s)) = false .
+  eq ((r1 & msk) \in leakscr(s)) = false .
+  eq mlk-getSecret(r2) = msk .
+  eq mlk-decaps(r2,r1) = (r1 & msk) .
+  red inv2(s,r1) implies (keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruMLKDecaps(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n)) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-Cipher .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq mlk-getSecret(asymMlkPkEph(ab)) = msk .
+  eq asymSid(ab) = sid .
+  eq validAsymBody(a,b,ab) = true .
+  eq (msk \in leakscr(s)) = false .
+  eq (msg(a2,a,b,ab,n) \in nw(s)) = true .
+  eq asymMlkCt(ab) = mlk-encapsC(mpk,msk) .
+  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
+  eq (sk(a) \in leakscr(s)) = false .
+  eq ((mlk-getSecret(mpk) & msk) \in knl(s)) = false .
+  eq ((mlk-getSecret(mpk) & msk) \in leakscr(s)) = false .
+  eq mlk-getSecret(mpk) = r1 .
+  eq (r1 \in leakscr(s)) = false .
+  eq ((r1 & msk) \in knl(s)) = false .
+  eq ((r1 & msk) \in leakscr(s)) = false .
+  eq mlk-getSecret(r2) = msk .
+  eq (mlk-decaps(r2,r1) = (r1 & msk)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruMLKDecaps(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-Cipher .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq mlk-getSecret(asymMlkPkEph(ab)) = msk .
+  eq asymSid(ab) = sid .
+  eq validAsymBody(a,b,ab) = true .
+  eq (msk \in leakscr(s)) = false .
+  eq (msg(a2,a,b,ab,n) \in nw(s)) = true .
+  eq asymMlkCt(ab) = mlk-encapsC(mpk,msk) .
+  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
+  eq (sk(a) \in leakscr(s)) = false .
+  eq ((mlk-getSecret(mpk) & msk) \in knl(s)) = false .
+  eq ((mlk-getSecret(mpk) & msk) \in leakscr(s)) = false .
+  eq mlk-getSecret(mpk) = r1 .
+  eq (r1 \in leakscr(s)) = false .
+  eq ((r1 & msk) \in knl(s)) = false .
+  eq ((r1 & msk) \in leakscr(s)) = false .
+  eq (mlk-getSecret(r2) = msk) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruMLKDecaps(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-Cipher .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq mlk-getSecret(asymMlkPkEph(ab)) = msk .
+  eq asymSid(ab) = sid .
+  eq validAsymBody(a,b,ab) = true .
+  eq (msk \in leakscr(s)) = false .
+  eq (msg(a2,a,b,ab,n) \in nw(s)) = true .
+  eq asymMlkCt(ab) = mlk-encapsC(mpk,msk) .
+  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
+  eq (sk(a) \in leakscr(s)) = false .
+  eq ((mlk-getSecret(mpk) & msk) \in knl(s)) = false .
+  eq ((mlk-getSecret(mpk) & msk) \in leakscr(s)) = false .
+  eq (mlk-getSecret(mpk) = r1) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruMLKDecaps(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-Cipher .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq mlk-getSecret(asymMlkPkEph(ab)) = msk .
+  eq asymSid(ab) = sid .
+  eq validAsymBody(a,b,ab) = true .
+  eq (msk \in leakscr(s)) = false .
+  eq (msg(a2,a,b,ab,n) \in nw(s)) = true .
+  eq (asymMlkCt(ab) = mlk-encapsC(mpk,msk)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruMLKDecaps(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-Cipher .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq mlk-getSecret(asymMlkPkEph(ab)) = msk .
+  eq asymSid(ab) = sid .
+  eq validAsymBody(a,b,ab) = true .
+  eq (msk \in leakscr(s)) = false .
+  eq (msg(a2,a,b,ab,n) \in nw(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruMLKDecaps(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-Cipher .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq mlk-getSecret(asymMlkPkEph(ab)) = msk .
+  eq asymSid(ab) = sid .
+  eq validAsymBody(a,b,ab) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruMLKDecaps(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-Cipher .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq mlk-getSecret(asymMlkPkEph(ab)) = msk .
+  eq (asymSid(ab) = sid) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruMLKDecaps(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-Cipher .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (mlk-getSecret(asymMlkPkEph(ab)) = msk) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruMLKDecaps(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-Cipher .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruMLKDecaps(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-Cipher .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruMLKDecaps(s,r1,r2),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> ECDHK-SecretK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in usedSecret(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruRandECDHKEMSecret(s,r1),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> ECDHK-SecretK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in usedSecret(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruRandECDHKEMSecret(s,r1),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in usedSecret(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruRandMLKEMSecret(s,r1),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> MLK-SecretK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in usedSecret(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruRandMLKEMSecret(s,r1),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruRandMessage(s,r1),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(intruRandMessage(s,r1),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> AsymBody .
+  op r5 : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq asymSid(r4) = r3 .
+  eq ck(s,r2,r1,r3) = noChainK .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(recv-ar(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> AsymBody .
+  op r5 : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq asymSid(r4) = r3 .
+  eq (ck(s,r2,r1,r3) = noChainK) = false .
+  eq asymDec(mk-sym(kdf-ck(rk(s,r2,r1,r3),ecdhk-decaps(asymEcdhCt(r4),findSelfEcdhSK(r2,r1,r3,selfSKS(s))),mlk-decaps(asymMlkCt(r4),findSelfMlkSK(r2,r1,r3,selfSKS(s))))),r4) = noRawMsg .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(recv-ar(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> AsymBody .
+  op r5 : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq asymSid(r4) = r3 .
+  eq (ck(s,r2,r1,r3) = noChainK) = false .
+  eq (asymDec(mk-sym(kdf-ck(rk(s,r2,r1,r3),ecdhk-decaps(asymEcdhCt(r4),findSelfEcdhSK(r2,r1,r3,selfSKS(s))),mlk-decaps(asymMlkCt(r4),findSelfMlkSK(r2,r1,r3,selfSKS(s))))),r4) = noRawMsg) = false .
+  eq rk(s,r2,r1,r3) = noRootK .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(recv-ar(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> AsymBody .
+  op r5 : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq asymSid(r4) = r3 .
+  eq (ck(s,r2,r1,r3) = noChainK) = false .
+  eq (asymDec(mk-sym(kdf-ck(rk(s,r2,r1,r3),ecdhk-decaps(asymEcdhCt(r4),findSelfEcdhSK(r2,r1,r3,selfSKS(s))),mlk-decaps(asymMlkCt(r4),findSelfMlkSK(r2,r1,r3,selfSKS(s))))),r4) = noRawMsg) = false .
+  eq (rk(s,r2,r1,r3) = noRootK) = false .
+  eq validAsymBody(r1,r2,r4) = true .
+  eq existSelfSK(r2,r1,r3,selfSKS(s)) = true .
+  eq (msg(r1,r1,r2,r4,r5) \in nw(s)) = true .
+  eq asymN(r4) = nr(s,r2,r1,r3) .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(recv-ar(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> AsymBody .
+  op r5 : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq asymSid(r4) = r3 .
+  eq (ck(s,r2,r1,r3) = noChainK) = false .
+  eq (asymDec(mk-sym(kdf-ck(rk(s,r2,r1,r3),ecdhk-decaps(asymEcdhCt(r4),findSelfEcdhSK(r2,r1,r3,selfSKS(s))),mlk-decaps(asymMlkCt(r4),findSelfMlkSK(r2,r1,r3,selfSKS(s))))),r4) = noRawMsg) = false .
+  eq (rk(s,r2,r1,r3) = noRootK) = false .
+  eq validAsymBody(r1,r2,r4) = true .
+  eq existSelfSK(r2,r1,r3,selfSKS(s)) = true .
+  eq (msg(r1,r1,r2,r4,r5) \in nw(s)) = true .
+  eq (asymN(r4) = nr(s,r2,r1,r3)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(recv-ar(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> AsymBody .
+  op r5 : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq asymSid(r4) = r3 .
+  eq (ck(s,r2,r1,r3) = noChainK) = false .
+  eq (asymDec(mk-sym(kdf-ck(rk(s,r2,r1,r3),ecdhk-decaps(asymEcdhCt(r4),findSelfEcdhSK(r2,r1,r3,selfSKS(s))),mlk-decaps(asymMlkCt(r4),findSelfMlkSK(r2,r1,r3,selfSKS(s))))),r4) = noRawMsg) = false .
+  eq (rk(s,r2,r1,r3) = noRootK) = false .
+  eq validAsymBody(r1,r2,r4) = true .
+  eq existSelfSK(r2,r1,r3,selfSKS(s)) = true .
+  eq (msg(r1,r1,r2,r4,r5) \in nw(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(recv-ar(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> AsymBody .
+  op r5 : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq asymSid(r4) = r3 .
+  eq (ck(s,r2,r1,r3) = noChainK) = false .
+  eq (asymDec(mk-sym(kdf-ck(rk(s,r2,r1,r3),ecdhk-decaps(asymEcdhCt(r4),findSelfEcdhSK(r2,r1,r3,selfSKS(s))),mlk-decaps(asymMlkCt(r4),findSelfMlkSK(r2,r1,r3,selfSKS(s))))),r4) = noRawMsg) = false .
+  eq (rk(s,r2,r1,r3) = noRootK) = false .
+  eq validAsymBody(r1,r2,r4) = true .
+  eq existSelfSK(r2,r1,r3,selfSKS(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(recv-ar(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> AsymBody .
+  op r5 : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq asymSid(r4) = r3 .
+  eq (ck(s,r2,r1,r3) = noChainK) = false .
+  eq (asymDec(mk-sym(kdf-ck(rk(s,r2,r1,r3),ecdhk-decaps(asymEcdhCt(r4),findSelfEcdhSK(r2,r1,r3,selfSKS(s))),mlk-decaps(asymMlkCt(r4),findSelfMlkSK(r2,r1,r3,selfSKS(s))))),r4) = noRawMsg) = false .
+  eq (rk(s,r2,r1,r3) = noRootK) = false .
+  eq validAsymBody(r1,r2,r4) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(recv-ar(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> AsymBody .
+  op r5 : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (asymSid(r4) = r3) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(recv-ar(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> InitBody .
+  op r5 : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq r1 = r2 .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(recv-init(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> InitBody .
+  op r5 : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq initSid(r4) = r3 .
+  eq validInitBody(r1,r3,r4) = true .
+  eq (r3 \in usedSession(s)) = true .
+  eq existUser(r2,idsServer(s)) = true .
+  eq (msg(r1,r1,r2,r4,r5) \in nw(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(recv-init(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> InitBody .
+  op r5 : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq initSid(r4) = r3 .
+  eq validInitBody(r1,r3,r4) = true .
+  eq (r3 \in usedSession(s)) = true .
+  eq existUser(r2,idsServer(s)) = true .
+  eq (msg(r1,r1,r2,r4,r5) \in nw(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(recv-init(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> InitBody .
+  op r5 : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq initSid(r4) = r3 .
+  eq validInitBody(r1,r3,r4) = true .
+  eq (r3 \in usedSession(s)) = true .
+  eq existUser(r2,idsServer(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(recv-init(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> InitBody .
+  op r5 : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq initSid(r4) = r3 .
+  eq validInitBody(r1,r3,r4) = true .
+  eq (r3 \in usedSession(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(recv-init(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> InitBody .
+  op r5 : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq initSid(r4) = r3 .
+  eq validInitBody(r1,r3,r4) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(recv-init(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> InitBody .
+  op r5 : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (initSid(r4) = r3) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(recv-init(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> SymBody .
+  op r5 : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq symSid(r4) = r3 .
+  eq ck(s,r2,r1,r3) = noChainK .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(recv-sym(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> SymBody .
+  op r5 : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq symSid(r4) = r3 .
+  eq (ck(s,r2,r1,r3) = noChainK) = false .
+  eq symDec(mk-sym(ck(s,r2,r1,r3)),r4) = noRawMsg .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(recv-sym(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> SymBody .
+  op r5 : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq symSid(r4) = r3 .
+  eq (ck(s,r2,r1,r3) = noChainK) = false .
+  eq (symDec(mk-sym(ck(s,r2,r1,r3)),r4) = noRawMsg) = false .
+  eq rk(s,r2,r1,r3) = noRootK .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(recv-sym(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> SymBody .
+  op r5 : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq symSid(r4) = r3 .
+  eq (ck(s,r2,r1,r3) = noChainK) = false .
+  eq (symDec(mk-sym(ck(s,r2,r1,r3)),r4) = noRawMsg) = false .
+  eq (rk(s,r2,r1,r3) = noRootK) = false .
+  eq validSymBody(r1,r2,r4) = true .
+  eq (msg(r1,r1,r2,r4,r5) \in nw(s)) = true .
+  eq symN(r4) = nr(s,r2,r1,r3) .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(recv-sym(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> SymBody .
+  op r5 : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq symSid(r4) = r3 .
+  eq (ck(s,r2,r1,r3) = noChainK) = false .
+  eq (symDec(mk-sym(ck(s,r2,r1,r3)),r4) = noRawMsg) = false .
+  eq (rk(s,r2,r1,r3) = noRootK) = false .
+  eq validSymBody(r1,r2,r4) = true .
+  eq (msg(r1,r1,r2,r4,r5) \in nw(s)) = true .
+  eq (symN(r4) = nr(s,r2,r1,r3)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(recv-sym(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> SymBody .
+  op r5 : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq symSid(r4) = r3 .
+  eq (ck(s,r2,r1,r3) = noChainK) = false .
+  eq (symDec(mk-sym(ck(s,r2,r1,r3)),r4) = noRawMsg) = false .
+  eq (rk(s,r2,r1,r3) = noRootK) = false .
+  eq validSymBody(r1,r2,r4) = true .
+  eq (msg(r1,r1,r2,r4,r5) \in nw(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(recv-sym(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> SymBody .
+  op r5 : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq symSid(r4) = r3 .
+  eq (ck(s,r2,r1,r3) = noChainK) = false .
+  eq (symDec(mk-sym(ck(s,r2,r1,r3)),r4) = noRawMsg) = false .
+  eq (rk(s,r2,r1,r3) = noRootK) = false .
+  eq validSymBody(r1,r2,r4) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(recv-sym(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> SymBody .
+  op r5 : -> Nat .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (symSid(r4) = r3) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(recv-sym(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq existUser(r1,idsServer(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(register(s,r1),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq existUser(r1,idsServer(s)) = false .
+  eq (ECDHK-PriK(r1) \in usedSecret(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(register(s,r1),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq existUser(r1,idsServer(s)) = false .
+  eq (ECDHK-PriK(r1) \in usedSecret(s)) = false .
+  eq (MLK-PriK(r1) \in usedSecret(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(register(s,r1),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq existUser(r1,idsServer(s)) = false .
+  eq (ECDHK-PriK(r1) \in usedSecret(s)) = false .
+  eq (MLK-PriK(r1) \in usedSecret(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(register(s,r1),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq r1 = r2 .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq ck(s,r1,r2,r3) = noChainK .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq rk(s,r1,r2,r3) = noRootK .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
+  eq a = r1 .
+  eq a2 = r1 .
+  eq b = r2 .
+  eq r1 = intru .
+  eq r2 = intru .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
+  eq a = r1 .
+  eq a2 = r1 .
+  eq b = r2 .
+  eq r1 = intru .
+  eq (r2 = intru) = false .
+  eq ck(s,intru,r2,r3) = noChainK .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
+  eq a = r1 .
+  eq a2 = r1 .
+  eq b = r2 .
+  eq r1 = intru .
+  eq (r2 = intru) = false .
+  eq (ck(s,intru,r2,r3) = noChainK) = false .
+  eq rk(s,intru,r2,r3) = noRootK .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
+  eq a = r1 .
+  eq a2 = r1 .
+  eq b = r2 .
+  eq r1 = intru .
+  eq (r2 = intru) = false .
+  eq (ck(s,intru,r2,r3) = noChainK) = false .
+  eq (rk(s,intru,r2,r3) = noRootK) = false .
+  eq existPeerPK(intru,r2,r3,peerPKS(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
+  eq a = r1 .
+  eq a2 = r1 .
+  eq b = r2 .
+  eq r1 = intru .
+  eq (r2 = intru) = false .
+  eq (ck(s,intru,r2,r3) = noChainK) = false .
+  eq (rk(s,intru,r2,r3) = noRootK) = false .
+  eq existPeerPK(intru,r2,r3,peerPKS(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
+  eq a = r1 .
+  eq a2 = r1 .
+  eq b = r2 .
+  eq (r1 = intru) = false .
+  eq r2 = intru .
+  eq ck(s,r1,intru,r3) = noChainK .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
+  eq a = r1 .
+  eq a2 = r1 .
+  eq b = r2 .
+  eq (r1 = intru) = false .
+  eq r2 = intru .
+  eq (ck(s,r1,intru,r3) = noChainK) = false .
+  eq rk(s,r1,intru,r3) = noRootK .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
+  eq a = r1 .
+  eq a2 = r1 .
+  eq b = r2 .
+  eq (r1 = intru) = false .
+  eq r2 = intru .
+  eq (ck(s,r1,intru,r3) = noChainK) = false .
+  eq (rk(s,r1,intru,r3) = noRootK) = false .
+  eq existPeerPK(r1,intru,r3,peerPKS(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
+  eq a = r1 .
+  eq a2 = r1 .
+  eq b = r2 .
+  eq (r1 = intru) = false .
+  eq r2 = intru .
+  eq (ck(s,r1,intru,r3) = noChainK) = false .
+  eq (rk(s,r1,intru,r3) = noRootK) = false .
+  eq existPeerPK(r1,intru,r3,peerPKS(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
+  eq a = r1 .
+  eq a2 = r1 .
+  eq b = r2 .
+  eq (r1 = intru) = false .
+  eq (r2 = intru) = false .
+  eq ab = asymBody(r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6),sign(sk(r1),asymSignedData(r1,r2,r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6)))) .
+  eq msk = r5 .
+  eq sid = r3 .
+  eq time(s) = n .
+  eq (r5 \in leakscr(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
+  eq a = r1 .
+  eq a2 = r1 .
+  eq b = r2 .
+  eq (r1 = intru) = false .
+  eq (r2 = intru) = false .
+  eq ab = asymBody(r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6),sign(sk(r1),asymSignedData(r1,r2,r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6)))) .
+  eq msk = r5 .
+  eq sid = r3 .
+  eq time(s) = n .
+  eq (r5 \in leakscr(s)) = false .
+  eq (mlk-getSecret(mpk) \in leakscr(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
+  eq a = r1 .
+  eq a2 = r1 .
+  eq b = r2 .
+  eq (r1 = intru) = false .
+  eq (r2 = intru) = false .
+  eq ab = asymBody(r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6),sign(sk(r1),asymSignedData(r1,r2,r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6)))) .
+  eq msk = r5 .
+  eq sid = r3 .
+  eq time(s) = n .
+  eq (r5 \in leakscr(s)) = false .
+  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
+  eq (sk(r1) \in leakscr(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
+  eq a = r1 .
+  eq a2 = r1 .
+  eq b = r2 .
+  eq (r1 = intru) = false .
+  eq (r2 = intru) = false .
+  eq ab = asymBody(r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6),sign(sk(r1),asymSignedData(r1,r2,r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6)))) .
+  eq msk = r5 .
+  eq sid = r3 .
+  eq time(s) = n .
+  eq (r5 \in leakscr(s)) = false .
+  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
+  eq (sk(r1) \in leakscr(s)) = false .
+  eq ((mlk-getSecret(mpk) & r5) \in knl(s)) = true .
+  eq ((mlk-getSecret(mpk) & r5) \in leakscr(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
+  eq a = r1 .
+  eq a2 = r1 .
+  eq b = r2 .
+  eq (r1 = intru) = false .
+  eq (r2 = intru) = false .
+  eq ab = asymBody(r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6),sign(sk(r1),asymSignedData(r1,r2,r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6)))) .
+  eq msk = r5 .
+  eq sid = r3 .
+  eq time(s) = n .
+  eq (r5 \in leakscr(s)) = false .
+  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
+  eq (sk(r1) \in leakscr(s)) = false .
+  eq ((mlk-getSecret(mpk) & r5) \in knl(s)) = true .
+  eq ((mlk-getSecret(mpk) & r5) \in leakscr(s)) = false .
+  eq mlk-getSecret(mpk) = mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) .
+  eq (mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) \in leakscr(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
+  eq a = r1 .
+  eq a2 = r1 .
+  eq b = r2 .
+  eq (r1 = intru) = false .
+  eq (r2 = intru) = false .
+  eq ab = asymBody(r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6),sign(sk(r1),asymSignedData(r1,r2,r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6)))) .
+  eq msk = r5 .
+  eq sid = r3 .
+  eq time(s) = n .
+  eq (r5 \in leakscr(s)) = false .
+  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
+  eq (sk(r1) \in leakscr(s)) = false .
+  eq ((mlk-getSecret(mpk) & r5) \in knl(s)) = true .
+  eq ((mlk-getSecret(mpk) & r5) \in leakscr(s)) = false .
+  eq mlk-getSecret(mpk) = mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) .
+  eq (mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) \in leakscr(s)) = false .
+  eq ((mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5) \in knl(s)) = true .
+  eq ((mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5) \in leakscr(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
+  eq a = r1 .
+  eq a2 = r1 .
+  eq b = r2 .
+  eq (r1 = intru) = false .
+  eq (r2 = intru) = false .
+  eq ab = asymBody(r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6),sign(sk(r1),asymSignedData(r1,r2,r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6)))) .
+  eq msk = r5 .
+  eq sid = r3 .
+  eq time(s) = n .
+  eq (r5 \in leakscr(s)) = false .
+  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
+  eq (sk(r1) \in leakscr(s)) = false .
+  eq ((mlk-getSecret(mpk) & r5) \in knl(s)) = true .
+  eq ((mlk-getSecret(mpk) & r5) \in leakscr(s)) = false .
+  eq mlk-getSecret(mpk) = mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) .
+  eq (mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) \in leakscr(s)) = false .
+  eq ((mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5) \in knl(s)) = true .
+  eq ((mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5) \in leakscr(s)) = false .
+  eq (msg(r1,r1,r2,asymBody(r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6),sign(sk(r1),asymSignedData(r1,r2,r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6)))),n) \in nw(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true, use inv3 as a lemma
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
+  eq a = r1 .
+  eq a2 = r1 .
+  eq b = r2 .
+  eq (r1 = intru) = false .
+  eq (r2 = intru) = false .
+  eq ab = asymBody(r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6),sign(sk(r1),asymSignedData(r1,r2,r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6)))) .
+  eq msk = r5 .
+  eq sid = r3 .
+  eq time(s) = n .
+  eq (r5 \in leakscr(s)) = false .
+  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
+  eq (sk(r1) \in leakscr(s)) = false .
+  eq ((mlk-getSecret(mpk) & r5) \in knl(s)) = true .
+  eq ((mlk-getSecret(mpk) & r5) \in leakscr(s)) = false .
+  eq mlk-getSecret(mpk) = mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) .
+  eq (mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) \in leakscr(s)) = false .
+  eq ((mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5) \in knl(s)) = true .
+  eq ((mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5) \in leakscr(s)) = false .
+  eq (msg(r1,r1,r2,asymBody(r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6),sign(sk(r1),asymSignedData(r1,r2,r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6)))),n) \in nw(s)) = false .
+  red inv3(s,mpk,r5) implies (keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n)) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
+  eq a = r1 .
+  eq a2 = r1 .
+  eq b = r2 .
+  eq (r1 = intru) = false .
+  eq (r2 = intru) = false .
+  eq ab = asymBody(r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6),sign(sk(r1),asymSignedData(r1,r2,r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6)))) .
+  eq msk = r5 .
+  eq sid = r3 .
+  eq time(s) = n .
+  eq (r5 \in leakscr(s)) = false .
+  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
+  eq (sk(r1) \in leakscr(s)) = false .
+  eq ((mlk-getSecret(mpk) & r5) \in knl(s)) = true .
+  eq ((mlk-getSecret(mpk) & r5) \in leakscr(s)) = false .
+  eq mlk-getSecret(mpk) = mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) .
+  eq (mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) \in leakscr(s)) = false .
+  eq ((mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5) \in knl(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
+  eq a = r1 .
+  eq a2 = r1 .
+  eq b = r2 .
+  eq (r1 = intru) = false .
+  eq (r2 = intru) = false .
+  eq ab = asymBody(r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6),sign(sk(r1),asymSignedData(r1,r2,r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6)))) .
+  eq msk = r5 .
+  eq sid = r3 .
+  eq time(s) = n .
+  eq (r5 \in leakscr(s)) = false .
+  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
+  eq (sk(r1) \in leakscr(s)) = false .
+  eq ((mlk-getSecret(mpk) & r5) \in knl(s)) = true .
+  eq ((mlk-getSecret(mpk) & r5) \in leakscr(s)) = false .
+  eq (mlk-getSecret(mpk) = mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s)))) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
+  eq a = r1 .
+  eq a2 = r1 .
+  eq b = r2 .
+  eq (r1 = intru) = false .
+  eq (r2 = intru) = false .
+  eq ab = asymBody(r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6),sign(sk(r1),asymSignedData(r1,r2,r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6)))) .
+  eq msk = r5 .
+  eq sid = r3 .
+  eq time(s) = n .
+  eq (r5 \in leakscr(s)) = false .
+  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
+  eq (sk(r1) \in leakscr(s)) = false .
+  eq ((mlk-getSecret(mpk) & r5) \in knl(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
+  eq a = r1 .
+  eq a2 = r1 .
+  eq b = r2 .
+  eq (r1 = intru) = false .
+  eq (r2 = intru) = false .
+  eq ab = asymBody(r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6),sign(sk(r1),asymSignedData(r1,r2,r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6)))) .
+  eq msk = r5 .
+  eq sid = r3 .
+  eq (time(s) = n) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
+  eq a = r1 .
+  eq a2 = r1 .
+  eq b = r2 .
+  eq (r1 = intru) = false .
+  eq (r2 = intru) = false .
+  eq ab = asymBody(r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6),sign(sk(r1),asymSignedData(r1,r2,r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6)))) .
+  eq msk = r5 .
+  eq (sid = r3) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
+  eq a = r1 .
+  eq a2 = r1 .
+  eq b = r2 .
+  eq (r1 = intru) = false .
+  eq (r2 = intru) = false .
+  eq ab = asymBody(r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6),sign(sk(r1),asymSignedData(r1,r2,r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6)))) .
+  eq (msk = r5) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
+  eq a = r1 .
+  eq a2 = r1 .
+  eq b = r2 .
+  eq (r1 = intru) = false .
+  eq (r2 = intru) = false .
+  eq (ab = asymBody(r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6),sign(sk(r1),asymSignedData(r1,r2,r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6))))) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
+  eq a = r1 .
+  eq a2 = r1 .
+  eq (b = r2) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
+  eq a = r1 .
+  eq (a2 = r1) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
+  eq (a = r1) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq existPeerPK(r1,r2,r3,peerPKS(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq r1 = r2 .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-init(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq existUser(r1,idsServer(s)) = true .
+  eq existUser(r2,idsServer(s)) = true .
+  eq (r4 \in usedSecret(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-init(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq existUser(r1,idsServer(s)) = true .
+  eq existUser(r2,idsServer(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-init(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq existUser(r1,idsServer(s)) = true .
+  eq existUser(r2,idsServer(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq (r3 \in usedSession(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-init(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq existUser(r1,idsServer(s)) = true .
+  eq existUser(r2,idsServer(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq (r3 \in usedSession(s)) = false .
+  eq validRegData(findRegData(r2,idsServer(s))) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-init(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq existUser(r1,idsServer(s)) = true .
+  eq existUser(r2,idsServer(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq (r3 \in usedSession(s)) = false .
+  eq validRegData(findRegData(r2,idsServer(s))) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-init(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq existUser(r1,idsServer(s)) = true .
+  eq existUser(r2,idsServer(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-init(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq existUser(r1,idsServer(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-init(s,r1,r2,r3,r4,r5),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq r1 = r2 .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq ck(s,r1,r2,r3) = noChainK .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq rk(s,r1,r2,r3) = noRootK .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op ab : -> AsymBody .
+  op b : -> Prin .
+  op mpk : -> MLK-PublicK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = false .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,mpk,msk,ab,n) .
+close
+
+--> Time taken is 4516ms

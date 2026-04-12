@@ -1,19 +1,24 @@
 mod INV {
     pr(PQ3)
 
-    vars S  : Sys .
+    var S  : Sys .
     vars A2 A B : Prin .
-    vars SID : SessId .
-    vars ESK : ECDHK-SecretK .
+    var SID : SessId .
+    var ESK : ECDHK-SecretK .
     vars MSK MSK2 : MLK-SecretK .
     var MPK : MLK-PublicK .
-    vars IB  : InitBody .
-    vars AB  : AsymBody .
-    vars N   : Nat .
+    var IB  : InitBody .
+    var AB  : AsymBody .
+    var N   : Nat .
+    var MLK-Ct : MLK-Cipher .
 
-    -- secrecy of the initial KEM shared-secret pair
-    op keyPairSe : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK InitBody Nat -> Bool .
-    eq keyPairSe(S, A2, A, B, SID, ESK, MSK, IB, N) =
+    -- The secrecy of the ML-KEM shared secret key property ensures that a ML-KEM key shared between two honest principals remains confidential 
+    -- and is not compromised by the intruder, even in the presence of a powerful quantum-capable adversary. 
+
+    -- At initialize key exchange state
+    -- lemma 1 + 2
+    op keyPairSeInit : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK InitBody Nat -> Bool .
+    eq keyPairSeInit(S, A2, A, B, SID, ESK, MSK, IB, N) =
         (   
             not (A = intru or B = intru) and
             not (A = B) and
@@ -34,12 +39,48 @@ mod INV {
             not (ss-mlk(B, MSK) \in knl(S))
         ) .
 
+    -- At asymmetric key exchange state
+    -- lemma 2 + (3 + 4)
+    op keyPairSeAsym : Sys Prin Prin Prin SessId MLK-PublicK MLK-SecretK AsymBody Nat -> Bool .
+    eq keyPairSeAsym(S, A2, A, B, SID, MPK, MSK, AB, N) =
+        (
+            not (A = intru or B = intru) and
+            not (A = B) and
+            msg(A2, A, B, AB, N) \in nw(S) and
+            validAsymBody(A, B, AB) and
+            asymSid(AB) = SID and
+            asymMlkPkEph(AB) = mlk-keygen(MSK) and
+            asymMlkCt(AB) = mlk-encapsC(MPK, MSK) and
+            not (sk(A) \in leakscr(S)) and
+            not (mlk-getSecret(MPK) \in leakscr(S)) and
+            not (MSK \in leakscr(S)) and
+            not (mlk-encapsK(MPK, MSK) \in leakscr(S))
+        )
+        implies
+        (
+            not (mlk-encapsK(MPK, MSK) \in knl(S)) 
+        ) .
 
     -- lemma 2
+    -- inv1: If neither of the two MLK secret values used to establish a shared key has been leaked, then the intruder cannot derive the corresponding shared secret produced from their combination.
     op inv1 : Sys MLK-SecretK MLK-SecretK -> Bool .
-    eq inv1(S, MSK, MSK2) = (not (MSK \in leakscr(S)) and not (MSK2 \in leakscr(S))) implies (not ((MSK & MSK2) \in knl(S))) .
+    eq inv1(S, MSK, MSK2) 
+    = (not (MSK \in leakscr(S)) and not (MSK2 \in leakscr(S))) implies (not ((MSK & MSK2) \in knl(S))) .
 
     -- no lemma
+    -- inv2: If a ephemeral MLK secret key has not been leaked, then the intruder cannot derive it.
     op inv2 : Sys MLK-SecretK -> Bool .
     eq inv2(S, MSK) = not(MSK \in leakscr(S)) implies not(MSK \in knl(S)) .
+
+    -- lemma 2 + 4
+    -- inv3: if the intruder learns a ML-KEM shared secret despite one contributing ML-KEM secret remaining uncompromised, the other contributing secret must have been compromised. 
+    op inv3 : Sys MLK-PublicK MLK-SecretK -> Bool .
+    eq inv3(S, MPK, MSK) 
+    = ((mlk-getSecret(MPK) & MSK) \in knl(S) and not(mlk-getSecret(MPK) \in leakscr(S))) implies (MSK \in leakscr(S)) .
+    -- no lemma
+    -- inv4: if a MLK secret key has been compromised, then it must have already registered as a usable secret.
+    op inv4 : Sys MLK-SecretK -> Bool .
+    eq inv4(S, MSK) = (MSK \in leakscr(S)) implies (MSK \in usedSecret(S)) .
+
 }
+

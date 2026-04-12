@@ -61,10 +61,13 @@ open PQ3 .
       ibInit,
       time(s0)
     ) .
-  -- -- -- sender/receiver key agreement checks
+  -- sender/receiver key agreement checks
   red rk(s1, p, q, sid0) = rk(s2, p, q, sid0) .   
   red ck(s1, p, q, sid0) . 
   red ck(s2, p, q, sid0) . 
   red ck(s1, p, q, sid0) = ck(s2, p, q, sid0) . 
+
+  red peerPKS(s2) .
+  red selfSKS(s2) .
 
 close
