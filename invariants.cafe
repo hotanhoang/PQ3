@@ -68,7 +68,7 @@ mod INV {
     = (not (MSK \in leakscr(S)) and not (MSK2 \in leakscr(S))) implies (not ((MSK & MSK2) \in knl(S))) .
 
     -- no lemma
-    -- inv2: If a ephemeral MLK secret key has not been leaked, then the intruder cannot derive it.
+    -- inv2: If a ephemeral MLK secret key has not been leaked, then the intruder cannot know it.
     op inv2 : Sys MLK-SecretK -> Bool .
     eq inv2(S, MSK) = not(MSK \in leakscr(S)) implies not(MSK \in knl(S)) .
 
