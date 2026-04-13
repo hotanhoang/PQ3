@@ -1,0 +1,9 @@
+ipsgopen INV .
+  inv inv5(S:Sys, B:Prin, ESK:ECDHK-SecretK, MSK:MLK-SecretK) .
+  generate rootKeySeInit(S:Sys, A2:Prin, A:Prin, B:Prin, SID:SessId, ESK:ECDHK-SecretK, MSK:MLK-SecretK, RK:RootK, IB:InitBody, N:Nat)
+  induction on S:Sys .
+close
+set-output examples/pq3/inv/rootKeySeInit.cafe .
+:save-proof .
+
+eof

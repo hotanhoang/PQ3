@@ -11,7 +11,7 @@ mod INV {
     var AB  : AsymBody .
     var N   : Nat .
     var MLK-Ct : MLK-Cipher .
-    var RK : RootK .
+    vars Previous-RK RK : RootK .
     var MSK-SS : MLK-ShareS .
     var ESK-SS : ECDHK-ShareS .
 
@@ -41,6 +41,30 @@ mod INV {
         (
             not (ss-mlk(B, MSK) \in knl(S))
         ) .
+    -- lemma 5
+    op rootKeySeInit : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK InitBody Nat -> Bool .
+    eq rootKeySeInit(S, A2, A, B, SID, ESK, MSK, RK, IB, N) =
+        (   
+            not (A = intru or B = intru) and
+            not (A = B) and
+            existUser(B, idsServer(S)) and
+            validRegData(findRegData(B, idsServer(S))) and
+            SID = initSid(IB) and
+            validInitBody(A, SID, IB) and
+            initMlkPkEph(IB) = mlk-keygen(MSK) and
+            initMlkCt(IB) = ct-mlk(B, MSK) and
+            msg(A2, A, B, IB, N) \in nw(S) and 
+            not (MLK-PriK(B) \in leakscr(S)) and
+            not (MSK \in leakscr(S)) and
+            not (sk(A) \in leakscr(S)) and
+            not (ss-mlk(B, MSK) \in leakscr(S)) and 
+            init-rk(ss-ecdh(B, ESK), ss-mlk(B, MSK)) = RK and
+            init-rk(ss-ecdh(B, ESK), ss-mlk(B, MSK)) \in leakscr(S)
+        )
+        implies
+        (
+            not (RK \in knl(S))
+        ) .
     
     
     -- At asymmetric key exchange state
@@ -63,6 +87,28 @@ mod INV {
         implies
         (
             not (mlk-encapsK(MPK, MSK) \in knl(S)) 
+        ) .
+    -- lemma 6
+    op rootKeySeAsym : Sys Prin Prin Prin SessId MLK-PublicK ECDHK-SecretK MLK-SecretK RootK RootK AsymBody Nat -> Bool .
+    eq rootKeySeAsym(S, A2, A, B, SID, MPK, ESK, MSK, Previous-RK, RK, AB, N) =
+        (
+            not (A = intru or B = intru) and
+            not (A = B) and
+            msg(A2, A, B, AB, N) \in nw(S) and
+            validAsymBody(A, B, AB) and
+            asymSid(AB) = SID and
+            asymMlkPkEph(AB) = mlk-keygen(MSK) and
+            asymMlkCt(AB) = mlk-encapsC(MPK, MSK) and
+            not (sk(A) \in leakscr(S)) and
+            not (mlk-getSecret(MPK) \in leakscr(S)) and
+            not (MSK \in leakscr(S)) and
+            not (ss-mlk(B, MSK) \in leakscr(S)) and 
+            kdf-rk(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK)) = RK and
+            not (kdf-rk(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK)) \in leakscr(S))
+        )
+        implies
+        (
+            not (RK \in knl(S))
         ) .
 
     -- If the intruder cannot derive the root key if the ML-Kem secret key has not been leaked.

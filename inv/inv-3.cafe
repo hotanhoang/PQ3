@@ -1557,4 +1557,4 @@ open INV .
   red inv3(s,mpk,msk) implies inv3(send-sym(s,r1,r2,r3,r4),mpk,msk) .
 close
 
---> Time taken is 2080ms
+--> Time taken is 2112ms
