@@ -11,6 +11,9 @@ mod INV {
     var AB  : AsymBody .
     var N   : Nat .
     var MLK-Ct : MLK-Cipher .
+    var RK : RootK .
+    var MSK-SS : MLK-ShareS .
+    var ESK-SS : ECDHK-ShareS .
 
     -- The secrecy of the ML-KEM shared secret key property ensures that a ML-KEM key shared between two honest principals remains confidential 
     -- and is not compromised by the intruder, even in the presence of a powerful quantum-capable adversary. 
@@ -38,7 +41,8 @@ mod INV {
         (
             not (ss-mlk(B, MSK) \in knl(S))
         ) .
-
+    
+    
     -- At asymmetric key exchange state
     -- lemma 2 + (3 + 4)
     op keyPairSeAsym : Sys Prin Prin Prin SessId MLK-PublicK MLK-SecretK AsymBody Nat -> Bool .
@@ -61,6 +65,26 @@ mod INV {
             not (mlk-encapsK(MPK, MSK) \in knl(S)) 
         ) .
 
+    -- If the intruder cannot derive the root key if the ML-Kem secret key has not been leaked.
+    -- no lemma
+    op inv5 : Sys Prin ECDHK-SecretK MLK-SecretK -> Bool .
+    eq inv5(S, B, ESK, MSK) =
+    (
+        not (ss-mlk(B, MSK) \in leakscr(S))
+    )
+    implies
+        not (init-rk(ss-ecdh(B, ESK), ss-mlk(B, MSK)) \in knl(S)) .
+
+    -- no lemma
+    op inv6 : Sys Prin RootK ECDHK-SecretK MLK-SecretK -> Bool .
+    eq inv6(S, B, RK, ESK, MSK) =
+    (
+        not (ss-mlk(B, MSK) \in leakscr(S))
+    )
+    implies
+        not (kdf-rk(RK, ss-ecdh(B, ESK), ss-mlk(B, MSK)) \in knl(S)) .
+
+    
     -- lemma 2
     -- inv1: If neither of the two MLK secret values used to establish a shared key has been leaked, then the intruder cannot derive the corresponding shared secret produced from their combination.
     op inv1 : Sys MLK-SecretK MLK-SecretK -> Bool .
@@ -77,10 +101,12 @@ mod INV {
     op inv3 : Sys MLK-PublicK MLK-SecretK -> Bool .
     eq inv3(S, MPK, MSK) 
     = ((mlk-getSecret(MPK) & MSK) \in knl(S) and not(mlk-getSecret(MPK) \in leakscr(S))) implies (MSK \in leakscr(S)) .
+    
     -- no lemma
     -- inv4: if a MLK secret key has been compromised, then it must have already registered as a usable secret.
     op inv4 : Sys MLK-SecretK -> Bool .
     eq inv4(S, MSK) = (MSK \in leakscr(S)) implies (MSK \in usedSecret(S)) .
+
 
 }
 

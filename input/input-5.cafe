@@ -1,0 +1,8 @@
+ipsgopen INV .
+  generate inv5(S:Sys, B:Prin, ESK:ECDHK-SecretK, MSK:MLK-SecretK)
+  induction on S:Sys .
+close
+set-output examples/pq3/inv/inv-5.cafe .
+:save-proof .
+
+eof

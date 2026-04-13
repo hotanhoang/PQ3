@@ -3059,7 +3059,7 @@ open INV .
   red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
 close
 
---> true, use inv3 as a lemma
+--> false
 open INV .
   op a : -> Prin .
   op a2 : -> Prin .
@@ -3102,7 +3102,7 @@ open INV .
   eq ((mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5) \in knl(s)) = true .
   eq ((mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5) \in leakscr(s)) = false .
   eq (msg(r1,r1,r2,asymBody(r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6),sign(sk(r1),asymSignedData(r1,r2,r3,ns(s,r1,r2,r3),ecdhk-encapsC(findPeerEcdhPK(r1,r2,r3,peerPKS(s)),r4),mlk-encapsC(findPeerMlkPK(r1,r2,r3,peerPKS(s)),r5),ecdhk-keygen(r4),mlk-keygen(r5),aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5))),r6)))),n) \in nw(s)) = false .
-  red inv3(s,mpk,r5) implies (keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n)) .
+  red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,mpk,msk,ab,n) .
 close
 
 --> true
@@ -3798,4 +3798,4 @@ open INV .
   red keyPairSeAsym(s,a2,a,b,sid,mpk,msk,ab,n) implies keyPairSeAsym(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,mpk,msk,ab,n) .
 close
 
---> Time taken is 4516ms
+--> Time taken is 4507ms
