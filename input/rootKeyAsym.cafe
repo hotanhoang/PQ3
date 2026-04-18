@@ -1,9 +1,0 @@
-ipsgopen INV .
-  inv inv6(S:Sys, B:Prin, RK:RootK, ESK:ECDHK-SecretK, MSK:MLK-SecretK) .
-  generate rootKeySeAsym(S:Sys, A2:Prin, A:Prin, B:Prin, SID:SessId, MPK:MLK-PublicK, ESK:ECDHK-SecretK, MSK:MLK-SecretK, Previous-RK:RootK, RK:RootK, AB:AsymBody, N:Nat)
-  induction on S:Sys .
-close
-set-output examples/pq3/inv/rootKeySeAsym.cafe . 
-:save-proof .
-
-eof

@@ -1,207 +1,213 @@
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op s : -> Sys .
-  red inv3(init,mpk,msk) .
+  red inv4(init,mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op s : -> Sys .
   eq (ecdhk-keygen(ECDHK-PriK(r1)) \in knl(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(intruBreakECDH(s,r1),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruBreakECDH(s,r1),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op s : -> Sys .
   eq (ecdhk-keygen(ECDHK-PriK(r1)) \in knl(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(intruBreakECDH(s,r1),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruBreakECDH(s,r1),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> ECDHK-SecretK .
   op r2 : -> ECDHK-PublicK .
   op s : -> Sys .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in knl(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(intruCalcECDHKEMInfo(s,r1,r2),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruCalcECDHKEMInfo(s,r1,r2),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> ECDHK-SecretK .
   op r2 : -> ECDHK-PublicK .
   op s : -> Sys .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in knl(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(intruCalcECDHKEMInfo(s,r1,r2),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruCalcECDHKEMInfo(s,r1,r2),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> ECDHK-SecretK .
   op r2 : -> ECDHK-PublicK .
   op s : -> Sys .
   eq (r1 \in knl(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(intruCalcECDHKEMInfo(s,r1,r2),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruCalcECDHKEMInfo(s,r1,r2),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> MLK-SecretK .
   op r2 : -> MLK-PublicK .
   op s : -> Sys .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in knl(s)) = true .
-  eq msk = r1 .
+  red inv4(s,mk,ck) implies inv4(intruCalcMLKKEMInfo(s,r1,r2),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-PublicK .
+  op s : -> Sys .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = false .
+  red inv4(s,mk,ck) implies inv4(intruCalcMLKKEMInfo(s,r1,r2),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> MLK-SecretK .
+  op r2 : -> MLK-PublicK .
+  op s : -> Sys .
+  eq (r1 \in knl(s)) = false .
+  red inv4(s,mk,ck) implies inv4(intruCalcMLKKEMInfo(s,r1,r2),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> RootK .
+  op r2 : -> ECDHK-ShareS .
+  op r3 : -> MLK-ShareS .
+  op s : -> Sys .
+  eq r1 = noRootK .
+  red inv4(s,mk,ck) implies inv4(intruComChainK(s,r1,r2,r3),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> RootK .
+  op r2 : -> ECDHK-ShareS .
+  op r3 : -> MLK-ShareS .
+  op s : -> Sys .
+  eq (r1 = noRootK) = false .
+  eq r1 = zero-rk .
+  red inv4(s,mk,ck) implies inv4(intruComChainK(s,r1,r2,r3),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> RootK .
+  op r2 : -> ECDHK-ShareS .
+  op r3 : -> MLK-ShareS .
+  op s : -> Sys .
+  eq (r1 = noRootK) = false .
+  eq (r1 = zero-rk) = false .
   eq (r1 \in leakscr(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(intruCalcMLKKEMInfo(s,r1,r2),mpk,msk) .
+  eq (r2 \in leakscr(s)) = true .
+  eq (r3 \in leakscr(s)) = true .
+  red inv4(s,mk,ck) implies inv4(intruComChainK(s,r1,r2,r3),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
-  op r1 : -> MLK-SecretK .
-  op r2 : -> MLK-PublicK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> RootK .
+  op r2 : -> ECDHK-ShareS .
+  op r3 : -> MLK-ShareS .
   op s : -> Sys .
-  eq (r1 \in knl(s)) = true .
-  eq (r2 \in knl(s)) = true .
-  eq msk = r1 .
+  eq (r1 = noRootK) = false .
+  eq (r1 = zero-rk) = false .
+  eq (r1 \in leakscr(s)) = true .
+  eq (r2 \in leakscr(s)) = true .
+  eq (r3 \in leakscr(s)) = false .
+  red inv4(s,mk,ck) implies inv4(intruComChainK(s,r1,r2,r3),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> RootK .
+  op r2 : -> ECDHK-ShareS .
+  op r3 : -> MLK-ShareS .
+  op s : -> Sys .
+  eq (r1 = noRootK) = false .
+  eq (r1 = zero-rk) = false .
+  eq (r1 \in leakscr(s)) = true .
+  eq (r2 \in leakscr(s)) = false .
+  red inv4(s,mk,ck) implies inv4(intruComChainK(s,r1,r2,r3),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> RootK .
+  op r2 : -> ECDHK-ShareS .
+  op r3 : -> MLK-ShareS .
+  op s : -> Sys .
+  eq (r1 = noRootK) = false .
+  eq (r1 = zero-rk) = false .
   eq (r1 \in leakscr(s)) = false .
-  eq (mlk-getSecret(mpk) \in leakscr(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(intruCalcMLKKEMInfo(s,r1,r2),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruComChainK(s,r1,r2,r3),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
-  op r1 : -> MLK-SecretK .
-  op r2 : -> MLK-PublicK .
-  op s : -> Sys .
-  eq (r1 \in knl(s)) = true .
-  eq (r2 \in knl(s)) = true .
-  eq msk = r1 .
-  eq (r1 \in leakscr(s)) = false .
-  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
-  eq mlk-getSecret(r2) = mlk-getSecret(mpk) .
-  eq ((mlk-getSecret(mpk) & r1) \in knl(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(intruCalcMLKKEMInfo(s,r1,r2),mpk,msk) .
-close
-
---> true, use inv2 as a lemma
-open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
-  op r1 : -> MLK-SecretK .
-  op r2 : -> MLK-PublicK .
-  op s : -> Sys .
-  eq (r1 \in knl(s)) = true .
-  eq (r2 \in knl(s)) = true .
-  eq msk = r1 .
-  eq (r1 \in leakscr(s)) = false .
-  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
-  eq mlk-getSecret(r2) = mlk-getSecret(mpk) .
-  eq ((mlk-getSecret(mpk) & r1) \in knl(s)) = false .
-  red inv2(s,r1) implies (inv3(s,mpk,msk) implies inv3(intruCalcMLKKEMInfo(s,r1,r2),mpk,msk)) .
-close
-
---> true
-open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
-  op r1 : -> MLK-SecretK .
-  op r2 : -> MLK-PublicK .
-  op s : -> Sys .
-  eq (r1 \in knl(s)) = true .
-  eq (r2 \in knl(s)) = true .
-  eq msk = r1 .
-  eq (r1 \in leakscr(s)) = false .
-  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
-  eq (mlk-getSecret(r2) = mlk-getSecret(mpk)) = false .
-  red inv3(s,mpk,msk) implies inv3(intruCalcMLKKEMInfo(s,r1,r2),mpk,msk) .
-close
-
---> true
-open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
-  op r1 : -> MLK-SecretK .
-  op r2 : -> MLK-PublicK .
-  op s : -> Sys .
-  eq (r1 \in knl(s)) = true .
-  eq (r2 \in knl(s)) = true .
-  eq (msk = r1) = false .
-  red inv3(s,mpk,msk) implies inv3(intruCalcMLKKEMInfo(s,r1,r2),mpk,msk) .
-close
-
---> true
-open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
-  op r1 : -> MLK-SecretK .
-  op r2 : -> MLK-PublicK .
-  op s : -> Sys .
-  eq (r1 \in knl(s)) = true .
-  eq (r2 \in knl(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(intruCalcMLKKEMInfo(s,r1,r2),mpk,msk) .
-close
-
---> true
-open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
-  op r1 : -> MLK-SecretK .
-  op r2 : -> MLK-PublicK .
-  op s : -> Sys .
-  eq (r1 \in knl(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(intruCalcMLKKEMInfo(s,r1,r2),mpk,msk) .
-close
-
---> true
-open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> ECDHK-SecretK .
   op r2 : -> ECDHK-Cipher .
   op s : -> Sys .
   eq (ecdhk-decaps(r2,r1) \in leakscr(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(intruComECDHKDecaps(s,r1,r2),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruComECDHKDecaps(s,r1,r2),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> ECDHK-SecretK .
   op r2 : -> ECDHK-Cipher .
   op s : -> Sys .
   eq (ecdhk-decaps(r2,r1) \in leakscr(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(intruComECDHKDecaps(s,r1,r2),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruComECDHKDecaps(s,r1,r2),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -210,13 +216,13 @@ open INV .
   op r6 : -> Nat .
   op s : -> Sys .
   eq (msg(r1,r1,r2,initBody(r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5)),sign(sk(r1),signedData(r1,r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5))))),r6) \in nw(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(intruComECDHKEMSS(s,r1,r2,r3,r4,r5,r6),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruComECDHKEMSS(s,r1,r2,r3,r4,r5,r6),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -225,13 +231,48 @@ open INV .
   op r6 : -> Nat .
   op s : -> Sys .
   eq (msg(r1,r1,r2,initBody(r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5)),sign(sk(r1),signedData(r1,r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5))))),r6) \in nw(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(intruComECDHKEMSS(s,r1,r2,r3,r4,r5,r6),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruComECDHKEMSS(s,r1,r2,r3,r4,r5,r6),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> ECDHK-ShareS .
+  op r2 : -> MLK-ShareS .
+  op s : -> Sys .
+  eq (r1 \in leakscr(s)) = true .
+  eq (r2 \in leakscr(s)) = true .
+  red inv4(s,mk,ck) implies inv4(intruComInitChainK(s,r1,r2),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> ECDHK-ShareS .
+  op r2 : -> MLK-ShareS .
+  op s : -> Sys .
+  eq (r1 \in leakscr(s)) = true .
+  eq (r2 \in leakscr(s)) = false .
+  red inv4(s,mk,ck) implies inv4(intruComInitChainK(s,r1,r2),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> ECDHK-ShareS .
+  op r2 : -> MLK-ShareS .
+  op s : -> Sys .
+  eq (r1 \in leakscr(s)) = false .
+  red inv4(s,mk,ck) implies inv4(intruComInitChainK(s,r1,r2),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -242,13 +283,13 @@ open INV .
   eq (r4 \in usedSecret(s)) = true .
   eq (r5 \in usedSecret(s)) = true .
   eq (msg(r1,r1,r2,initBody(r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5)),sign(sk(r1),signedData(r1,r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5))))),r6) \in nw(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(intruComInitKEM(s,r1,r2,r3,r4,r5,r6),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruComInitKEM(s,r1,r2,r3,r4,r5,r6),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -259,13 +300,13 @@ open INV .
   eq (r4 \in usedSecret(s)) = true .
   eq (r5 \in usedSecret(s)) = true .
   eq (msg(r1,r1,r2,initBody(r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5)),sign(sk(r1),signedData(r1,r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5))))),r6) \in nw(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(intruComInitKEM(s,r1,r2,r3,r4,r5,r6),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruComInitKEM(s,r1,r2,r3,r4,r5,r6),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -275,13 +316,13 @@ open INV .
   op s : -> Sys .
   eq (r4 \in usedSecret(s)) = true .
   eq (r5 \in usedSecret(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(intruComInitKEM(s,r1,r2,r3,r4,r5,r6),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruComInitKEM(s,r1,r2,r3,r4,r5,r6),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -290,100 +331,310 @@ open INV .
   op r6 : -> Nat .
   op s : -> Sys .
   eq (r4 \in usedSecret(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(intruComInitKEM(s,r1,r2,r3,r4,r5,r6),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruComInitKEM(s,r1,r2,r3,r4,r5,r6),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> ECDHK-ShareS .
+  op r2 : -> MLK-ShareS .
+  op s : -> Sys .
+  eq (r1 \in leakscr(s)) = true .
+  eq (r2 \in leakscr(s)) = true .
+  red inv4(s,mk,ck) implies inv4(intruComInitRootK(s,r1,r2),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> ECDHK-ShareS .
+  op r2 : -> MLK-ShareS .
+  op s : -> Sys .
+  eq (r1 \in leakscr(s)) = true .
+  eq (r2 \in leakscr(s)) = false .
+  red inv4(s,mk,ck) implies inv4(intruComInitRootK(s,r1,r2),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> ECDHK-ShareS .
+  op r2 : -> MLK-ShareS .
+  op s : -> Sys .
+  eq (r1 \in leakscr(s)) = false .
+  red inv4(s,mk,ck) implies inv4(intruComInitRootK(s,r1,r2),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op s : -> Sys .
   eq (ECDHK-PriK(r1) \in leakscr(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(intruComLongTermEcdhSK(s,r1),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruComLongTermEcdhSK(s,r1),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op s : -> Sys .
   eq (ECDHK-PriK(r1) \in leakscr(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(intruComLongTermEcdhSK(s,r1),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruComLongTermEcdhSK(s,r1),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op s : -> Sys .
   eq (MLK-PriK(r1) \in usedSecret(s)) = true .
   eq (MLK-PriK(r1) \in leakscr(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(intruComLongTermMlkSK(s,r1),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruComLongTermMlkSK(s,r1),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op s : -> Sys .
   eq (MLK-PriK(r1) \in usedSecret(s)) = true .
   eq (MLK-PriK(r1) \in leakscr(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(intruComLongTermMlkSK(s,r1),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruComLongTermMlkSK(s,r1),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op s : -> Sys .
   eq (MLK-PriK(r1) \in usedSecret(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(intruComLongTermMlkSK(s,r1),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruComLongTermMlkSK(s,r1),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> RawMsg .
+  op s : -> Sys .
+  eq (r1 \in leakscr(s)) = true .
+  red inv4(s,mk,ck) implies inv4(intruComMessage(s,r1),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> RawMsg .
+  op s : -> Sys .
+  eq (r1 \in leakscr(s)) = false .
+  red inv4(s,mk,ck) implies inv4(intruComMessage(s,r1),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> RootK .
+  op r2 : -> ECDHK-ShareS .
+  op r3 : -> MLK-ShareS .
+  op s : -> Sys .
+  eq r1 = noRootK .
+  red inv4(s,mk,ck) implies inv4(intruComRootK(s,r1,r2,r3),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> RootK .
+  op r2 : -> ECDHK-ShareS .
+  op r3 : -> MLK-ShareS .
+  op s : -> Sys .
+  eq (r1 = noRootK) = false .
+  eq r1 = zero-rk .
+  red inv4(s,mk,ck) implies inv4(intruComRootK(s,r1,r2,r3),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> RootK .
+  op r2 : -> ECDHK-ShareS .
+  op r3 : -> MLK-ShareS .
+  op s : -> Sys .
+  eq (r1 = noRootK) = false .
+  eq (r1 = zero-rk) = false .
+  eq (r1 \in leakscr(s)) = true .
+  eq (r2 \in leakscr(s)) = true .
+  eq (r3 \in leakscr(s)) = true .
+  red inv4(s,mk,ck) implies inv4(intruComRootK(s,r1,r2,r3),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> RootK .
+  op r2 : -> ECDHK-ShareS .
+  op r3 : -> MLK-ShareS .
+  op s : -> Sys .
+  eq (r1 = noRootK) = false .
+  eq (r1 = zero-rk) = false .
+  eq (r1 \in leakscr(s)) = true .
+  eq (r2 \in leakscr(s)) = true .
+  eq (r3 \in leakscr(s)) = false .
+  red inv4(s,mk,ck) implies inv4(intruComRootK(s,r1,r2,r3),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> RootK .
+  op r2 : -> ECDHK-ShareS .
+  op r3 : -> MLK-ShareS .
+  op s : -> Sys .
+  eq (r1 = noRootK) = false .
+  eq (r1 = zero-rk) = false .
+  eq (r1 \in leakscr(s)) = true .
+  eq (r2 \in leakscr(s)) = false .
+  red inv4(s,mk,ck) implies inv4(intruComRootK(s,r1,r2,r3),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> RootK .
+  op r2 : -> ECDHK-ShareS .
+  op r3 : -> MLK-ShareS .
+  op s : -> Sys .
+  eq (r1 = noRootK) = false .
+  eq (r1 = zero-rk) = false .
+  eq (r1 \in leakscr(s)) = false .
+  red inv4(s,mk,ck) implies inv4(intruComRootK(s,r1,r2,r3),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> Prin .
+  op r4 : -> SymBody .
+  op r5 : -> Nat .
+  op r6 : -> MsgK .
+  op r7 : -> RawMsg .
+  op s : -> Sys .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in usedRawMessages(s)) = true .
+  eq (senc(r6,r7) \in knl(s)) = true .
+  red inv4(s,mk,ck) implies inv4(intruDecMsg1(s,r1,r2,r3,r4,r5,r6,r7),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> Prin .
+  op r4 : -> SymBody .
+  op r5 : -> Nat .
+  op r6 : -> MsgK .
+  op r7 : -> RawMsg .
+  op s : -> Sys .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in usedRawMessages(s)) = true .
+  eq (senc(r6,r7) \in knl(s)) = false .
+  red inv4(s,mk,ck) implies inv4(intruDecMsg1(s,r1,r2,r3,r4,r5,r6,r7),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> Prin .
+  op r4 : -> SymBody .
+  op r5 : -> Nat .
+  op r6 : -> MsgK .
+  op r7 : -> RawMsg .
+  op s : -> Sys .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in usedRawMessages(s)) = false .
+  red inv4(s,mk,ck) implies inv4(intruDecMsg1(s,r1,r2,r3,r4,r5,r6,r7),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> Prin .
+  op r4 : -> SymBody .
+  op r5 : -> Nat .
+  op r6 : -> MsgK .
+  op r7 : -> RawMsg .
+  op s : -> Sys .
+  eq (r6 \in knl(s)) = false .
+  red inv4(s,mk,ck) implies inv4(intruDecMsg1(s,r1,r2,r3,r4,r5,r6,r7),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> ECDHK-SecretK .
   op r2 : -> ECDHK-Cipher .
   op s : -> Sys .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in knl(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(intruECDHKDecaps(s,r1,r2),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruECDHKDecaps(s,r1,r2),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> ECDHK-SecretK .
   op r2 : -> ECDHK-Cipher .
   op s : -> Sys .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in knl(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(intruECDHKDecaps(s,r1,r2),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruECDHKDecaps(s,r1,r2),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> ECDHK-SecretK .
   op r2 : -> ECDHK-Cipher .
   op s : -> Sys .
   eq (r1 \in knl(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(intruECDHKDecaps(s,r1,r2),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruECDHKDecaps(s,r1,r2),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -397,13 +648,13 @@ open INV .
   eq (r6 \in knl(s)) = true .
   eq (r7 \in knl(s)) = true .
   eq (hash(r6,r7) \in knl(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(intruForgeInitMsg(s,r1,r2,r3,r4,r5,r6,r7),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruForgeInitMsg(s,r1,r2,r3,r4,r5,r6,r7),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -417,13 +668,13 @@ open INV .
   eq (r6 \in knl(s)) = true .
   eq (r7 \in knl(s)) = true .
   eq (hash(r6,r7) \in knl(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(intruForgeInitMsg(s,r1,r2,r3,r4,r5,r6,r7),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruForgeInitMsg(s,r1,r2,r3,r4,r5,r6,r7),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -436,13 +687,13 @@ open INV .
   eq (r5 \in knl(s)) = true .
   eq (r6 \in knl(s)) = true .
   eq (r7 \in knl(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(intruForgeInitMsg(s,r1,r2,r3,r4,r5,r6,r7),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruForgeInitMsg(s,r1,r2,r3,r4,r5,r6,r7),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -454,13 +705,13 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r5 \in knl(s)) = true .
   eq (r6 \in knl(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(intruForgeInitMsg(s,r1,r2,r3,r4,r5,r6,r7),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruForgeInitMsg(s,r1,r2,r3,r4,r5,r6,r7),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -471,13 +722,13 @@ open INV .
   op s : -> Sys .
   eq (r4 \in knl(s)) = true .
   eq (r5 \in knl(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(intruForgeInitMsg(s,r1,r2,r3,r4,r5,r6,r7),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruForgeInitMsg(s,r1,r2,r3,r4,r5,r6,r7),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -487,257 +738,129 @@ open INV .
   op r7 : -> MLK-PublicK .
   op s : -> Sys .
   eq (r4 \in knl(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(intruForgeInitMsg(s,r1,r2,r3,r4,r5,r6,r7),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruForgeInitMsg(s,r1,r2,r3,r4,r5,r6,r7),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op s : -> Sys .
-  red inv3(s,mpk,msk) implies inv3(intruGetPubInfo(s,r1),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruGetPubInfo(s,r1),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> MLK-SecretK .
   op r2 : -> MLK-Cipher .
   op s : -> Sys .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in knl(s)) = true .
-  eq (msk \in leakscr(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(intruMLKDecaps(s,r1,r2),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruMLKDecaps(s,r1,r2),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
-  op r1 : -> MLK-SecretK .
-  op r2 : -> MLK-Cipher .
-  op s : -> Sys .
-  eq (r1 \in knl(s)) = true .
-  eq (r2 \in knl(s)) = true .
-  eq (msk \in leakscr(s)) = false .
-  eq (mlk-getSecret(mpk) \in leakscr(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(intruMLKDecaps(s,r1,r2),mpk,msk) .
-close
-
---> true
-open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
-  op r1 : -> MLK-SecretK .
-  op r2 : -> MLK-Cipher .
-  op s : -> Sys .
-  eq (r1 \in knl(s)) = true .
-  eq (r2 \in knl(s)) = true .
-  eq (msk \in leakscr(s)) = false .
-  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
-  eq ((mlk-getSecret(mpk) & msk) \in knl(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(intruMLKDecaps(s,r1,r2),mpk,msk) .
-close
-
---> true
-open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
-  op r1 : -> MLK-SecretK .
-  op r2 : -> MLK-Cipher .
-  op s : -> Sys .
-  eq (r1 \in knl(s)) = true .
-  eq (r2 \in knl(s)) = true .
-  eq (msk \in leakscr(s)) = false .
-  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
-  eq ((mlk-getSecret(mpk) & msk) \in knl(s)) = false .
-  eq mlk-getSecret(mpk) = r1 .
-  eq (r1 \in leakscr(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(intruMLKDecaps(s,r1,r2),mpk,msk) .
-close
-
---> true
-open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
-  op r1 : -> MLK-SecretK .
-  op r2 : -> MLK-Cipher .
-  op s : -> Sys .
-  eq (r1 \in knl(s)) = true .
-  eq (r2 \in knl(s)) = true .
-  eq (msk \in leakscr(s)) = false .
-  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
-  eq ((mlk-getSecret(mpk) & msk) \in knl(s)) = false .
-  eq mlk-getSecret(mpk) = r1 .
-  eq (r1 \in leakscr(s)) = false .
-  eq ((r1 & msk) \in knl(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(intruMLKDecaps(s,r1,r2),mpk,msk) .
-close
-
---> true, use inv2 as a lemma
-open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
-  op r1 : -> MLK-SecretK .
-  op r2 : -> MLK-Cipher .
-  op s : -> Sys .
-  eq (r1 \in knl(s)) = true .
-  eq (r2 \in knl(s)) = true .
-  eq (msk \in leakscr(s)) = false .
-  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
-  eq ((mlk-getSecret(mpk) & msk) \in knl(s)) = false .
-  eq mlk-getSecret(mpk) = r1 .
-  eq (r1 \in leakscr(s)) = false .
-  eq ((r1 & msk) \in knl(s)) = false .
-  eq mlk-getSecret(r2) = msk .
-  eq mlk-decaps(r2,r1) = (r1 & msk) .
-  red inv2(s,r1) implies (inv3(s,mpk,msk) implies inv3(intruMLKDecaps(s,r1,r2),mpk,msk)) .
-close
-
---> true
-open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
-  op r1 : -> MLK-SecretK .
-  op r2 : -> MLK-Cipher .
-  op s : -> Sys .
-  eq (r1 \in knl(s)) = true .
-  eq (r2 \in knl(s)) = true .
-  eq (msk \in leakscr(s)) = false .
-  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
-  eq ((mlk-getSecret(mpk) & msk) \in knl(s)) = false .
-  eq mlk-getSecret(mpk) = r1 .
-  eq (r1 \in leakscr(s)) = false .
-  eq ((r1 & msk) \in knl(s)) = false .
-  eq mlk-getSecret(r2) = msk .
-  eq (mlk-decaps(r2,r1) = (r1 & msk)) = false .
-  red inv3(s,mpk,msk) implies inv3(intruMLKDecaps(s,r1,r2),mpk,msk) .
-close
-
---> true
-open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
-  op r1 : -> MLK-SecretK .
-  op r2 : -> MLK-Cipher .
-  op s : -> Sys .
-  eq (r1 \in knl(s)) = true .
-  eq (r2 \in knl(s)) = true .
-  eq (msk \in leakscr(s)) = false .
-  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
-  eq ((mlk-getSecret(mpk) & msk) \in knl(s)) = false .
-  eq mlk-getSecret(mpk) = r1 .
-  eq (r1 \in leakscr(s)) = false .
-  eq ((r1 & msk) \in knl(s)) = false .
-  eq (mlk-getSecret(r2) = msk) = false .
-  red inv3(s,mpk,msk) implies inv3(intruMLKDecaps(s,r1,r2),mpk,msk) .
-close
-
---> true
-open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
-  op r1 : -> MLK-SecretK .
-  op r2 : -> MLK-Cipher .
-  op s : -> Sys .
-  eq (r1 \in knl(s)) = true .
-  eq (r2 \in knl(s)) = true .
-  eq (msk \in leakscr(s)) = false .
-  eq (mlk-getSecret(mpk) \in leakscr(s)) = false .
-  eq ((mlk-getSecret(mpk) & msk) \in knl(s)) = false .
-  eq (mlk-getSecret(mpk) = r1) = false .
-  red inv3(s,mpk,msk) implies inv3(intruMLKDecaps(s,r1,r2),mpk,msk) .
-close
-
---> true
-open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> MLK-SecretK .
   op r2 : -> MLK-Cipher .
   op s : -> Sys .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in knl(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(intruMLKDecaps(s,r1,r2),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruMLKDecaps(s,r1,r2),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> MLK-SecretK .
   op r2 : -> MLK-Cipher .
   op s : -> Sys .
   eq (r1 \in knl(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(intruMLKDecaps(s,r1,r2),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruMLKDecaps(s,r1,r2),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> ECDHK-SecretK .
   op s : -> Sys .
   eq (r1 \in usedSecret(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(intruRandECDHKEMSecret(s,r1),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruRandECDHKEMSecret(s,r1),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> ECDHK-SecretK .
   op s : -> Sys .
   eq (r1 \in usedSecret(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(intruRandECDHKEMSecret(s,r1),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruRandECDHKEMSecret(s,r1),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> MLK-SecretK .
   op s : -> Sys .
   eq (r1 \in usedSecret(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(intruRandMLKEMSecret(s,r1),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruRandMLKEMSecret(s,r1),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> MLK-SecretK .
   op s : -> Sys .
   eq (r1 \in usedSecret(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(intruRandMLKEMSecret(s,r1),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruRandMLKEMSecret(s,r1),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> RawMsg .
   op s : -> Sys .
   eq (r1 \in knl(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(intruRandMessage(s,r1),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(intruRandMessage(s,r1),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> RawMsg .
   op s : -> Sys .
   eq (r1 \in knl(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(intruRandMessage(s,r1),mpk,msk) .
+  eq (r1 \in usedRawMessages(s)) = true .
+  red inv4(s,mk,ck) implies inv4(intruRandMessage(s,r1),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> RawMsg .
+  op s : -> Sys .
+  eq (r1 \in knl(s)) = false .
+  eq (r1 \in usedRawMessages(s)) = false .
+  red inv4(s,mk,ck) implies inv4(intruRandMessage(s,r1),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -746,13 +869,13 @@ open INV .
   op s : -> Sys .
   eq asymSid(r4) = r3 .
   eq ck(s,r2,r1,r3) = noChainK .
-  red inv3(s,mpk,msk) implies inv3(recv-ar(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(recv-ar(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -762,13 +885,13 @@ open INV .
   eq asymSid(r4) = r3 .
   eq (ck(s,r2,r1,r3) = noChainK) = false .
   eq asymDec(mk-sym(kdf-ck(rk(s,r2,r1,r3),ecdhk-decaps(asymEcdhCt(r4),findSelfEcdhSK(r2,r1,r3,selfSKS(s))),mlk-decaps(asymMlkCt(r4),findSelfMlkSK(r2,r1,r3,selfSKS(s))))),r4) = noRawMsg .
-  red inv3(s,mpk,msk) implies inv3(recv-ar(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(recv-ar(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -779,13 +902,13 @@ open INV .
   eq (ck(s,r2,r1,r3) = noChainK) = false .
   eq (asymDec(mk-sym(kdf-ck(rk(s,r2,r1,r3),ecdhk-decaps(asymEcdhCt(r4),findSelfEcdhSK(r2,r1,r3,selfSKS(s))),mlk-decaps(asymMlkCt(r4),findSelfMlkSK(r2,r1,r3,selfSKS(s))))),r4) = noRawMsg) = false .
   eq rk(s,r2,r1,r3) = noRootK .
-  red inv3(s,mpk,msk) implies inv3(recv-ar(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(recv-ar(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -800,13 +923,13 @@ open INV .
   eq existSelfSK(r2,r1,r3,selfSKS(s)) = true .
   eq (msg(r1,r1,r2,r4,r5) \in nw(s)) = true .
   eq asymN(r4) = nr(s,r2,r1,r3) .
-  red inv3(s,mpk,msk) implies inv3(recv-ar(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(recv-ar(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -821,13 +944,13 @@ open INV .
   eq existSelfSK(r2,r1,r3,selfSKS(s)) = true .
   eq (msg(r1,r1,r2,r4,r5) \in nw(s)) = true .
   eq (asymN(r4) = nr(s,r2,r1,r3)) = false .
-  red inv3(s,mpk,msk) implies inv3(recv-ar(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(recv-ar(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -841,13 +964,13 @@ open INV .
   eq validAsymBody(r1,r2,r4) = true .
   eq existSelfSK(r2,r1,r3,selfSKS(s)) = true .
   eq (msg(r1,r1,r2,r4,r5) \in nw(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(recv-ar(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(recv-ar(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -860,13 +983,13 @@ open INV .
   eq (rk(s,r2,r1,r3) = noRootK) = false .
   eq validAsymBody(r1,r2,r4) = true .
   eq existSelfSK(r2,r1,r3,selfSKS(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(recv-ar(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(recv-ar(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -878,13 +1001,13 @@ open INV .
   eq (asymDec(mk-sym(kdf-ck(rk(s,r2,r1,r3),ecdhk-decaps(asymEcdhCt(r4),findSelfEcdhSK(r2,r1,r3,selfSKS(s))),mlk-decaps(asymMlkCt(r4),findSelfMlkSK(r2,r1,r3,selfSKS(s))))),r4) = noRawMsg) = false .
   eq (rk(s,r2,r1,r3) = noRootK) = false .
   eq validAsymBody(r1,r2,r4) = false .
-  red inv3(s,mpk,msk) implies inv3(recv-ar(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(recv-ar(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -892,13 +1015,13 @@ open INV .
   op r5 : -> Nat .
   op s : -> Sys .
   eq (asymSid(r4) = r3) = false .
-  red inv3(s,mpk,msk) implies inv3(recv-ar(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(recv-ar(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -906,13 +1029,13 @@ open INV .
   op r5 : -> Nat .
   op s : -> Sys .
   eq r1 = r2 .
-  red inv3(s,mpk,msk) implies inv3(recv-init(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(recv-init(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -925,13 +1048,13 @@ open INV .
   eq (r3 \in usedSession(s)) = true .
   eq existUser(r2,idsServer(s)) = true .
   eq (msg(r1,r1,r2,r4,r5) \in nw(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(recv-init(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(recv-init(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -944,13 +1067,13 @@ open INV .
   eq (r3 \in usedSession(s)) = true .
   eq existUser(r2,idsServer(s)) = true .
   eq (msg(r1,r1,r2,r4,r5) \in nw(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(recv-init(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(recv-init(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -962,13 +1085,13 @@ open INV .
   eq validInitBody(r1,r3,r4) = true .
   eq (r3 \in usedSession(s)) = true .
   eq existUser(r2,idsServer(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(recv-init(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(recv-init(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -979,13 +1102,13 @@ open INV .
   eq initSid(r4) = r3 .
   eq validInitBody(r1,r3,r4) = true .
   eq (r3 \in usedSession(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(recv-init(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(recv-init(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -995,13 +1118,13 @@ open INV .
   eq (r1 = r2) = false .
   eq initSid(r4) = r3 .
   eq validInitBody(r1,r3,r4) = false .
-  red inv3(s,mpk,msk) implies inv3(recv-init(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(recv-init(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -1010,13 +1133,13 @@ open INV .
   op s : -> Sys .
   eq (r1 = r2) = false .
   eq (initSid(r4) = r3) = false .
-  red inv3(s,mpk,msk) implies inv3(recv-init(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(recv-init(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -1025,13 +1148,13 @@ open INV .
   op s : -> Sys .
   eq symSid(r4) = r3 .
   eq ck(s,r2,r1,r3) = noChainK .
-  red inv3(s,mpk,msk) implies inv3(recv-sym(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(recv-sym(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -1041,13 +1164,13 @@ open INV .
   eq symSid(r4) = r3 .
   eq (ck(s,r2,r1,r3) = noChainK) = false .
   eq symDec(mk-sym(ck(s,r2,r1,r3)),r4) = noRawMsg .
-  red inv3(s,mpk,msk) implies inv3(recv-sym(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(recv-sym(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -1058,13 +1181,13 @@ open INV .
   eq (ck(s,r2,r1,r3) = noChainK) = false .
   eq (symDec(mk-sym(ck(s,r2,r1,r3)),r4) = noRawMsg) = false .
   eq rk(s,r2,r1,r3) = noRootK .
-  red inv3(s,mpk,msk) implies inv3(recv-sym(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(recv-sym(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -1078,13 +1201,13 @@ open INV .
   eq validSymBody(r1,r2,r4) = true .
   eq (msg(r1,r1,r2,r4,r5) \in nw(s)) = true .
   eq symN(r4) = nr(s,r2,r1,r3) .
-  red inv3(s,mpk,msk) implies inv3(recv-sym(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(recv-sym(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -1098,13 +1221,13 @@ open INV .
   eq validSymBody(r1,r2,r4) = true .
   eq (msg(r1,r1,r2,r4,r5) \in nw(s)) = true .
   eq (symN(r4) = nr(s,r2,r1,r3)) = false .
-  red inv3(s,mpk,msk) implies inv3(recv-sym(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(recv-sym(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -1117,13 +1240,13 @@ open INV .
   eq (rk(s,r2,r1,r3) = noRootK) = false .
   eq validSymBody(r1,r2,r4) = true .
   eq (msg(r1,r1,r2,r4,r5) \in nw(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(recv-sym(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(recv-sym(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -1135,13 +1258,13 @@ open INV .
   eq (symDec(mk-sym(ck(s,r2,r1,r3)),r4) = noRawMsg) = false .
   eq (rk(s,r2,r1,r3) = noRootK) = false .
   eq validSymBody(r1,r2,r4) = false .
-  red inv3(s,mpk,msk) implies inv3(recv-sym(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(recv-sym(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -1149,58 +1272,58 @@ open INV .
   op r5 : -> Nat .
   op s : -> Sys .
   eq (symSid(r4) = r3) = false .
-  red inv3(s,mpk,msk) implies inv3(recv-sym(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(recv-sym(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op s : -> Sys .
   eq existUser(r1,idsServer(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(register(s,r1),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(register(s,r1),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op s : -> Sys .
   eq existUser(r1,idsServer(s)) = false .
   eq (ECDHK-PriK(r1) \in usedSecret(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(register(s,r1),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(register(s,r1),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op s : -> Sys .
   eq existUser(r1,idsServer(s)) = false .
   eq (ECDHK-PriK(r1) \in usedSecret(s)) = false .
   eq (MLK-PriK(r1) \in usedSecret(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(register(s,r1),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(register(s,r1),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op s : -> Sys .
   eq existUser(r1,idsServer(s)) = false .
   eq (ECDHK-PriK(r1) \in usedSecret(s)) = false .
   eq (MLK-PriK(r1) \in usedSecret(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(register(s,r1),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(register(s,r1),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -1209,13 +1332,13 @@ open INV .
   op r6 : -> RawMsg .
   op s : -> Sys .
   eq r1 = r2 .
-  red inv3(s,mpk,msk) implies inv3(send-ar(s,r1,r2,r3,r4,r5,r6),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(send-ar(s,r1,r2,r3,r4,r5,r6),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -1225,13 +1348,13 @@ open INV .
   op s : -> Sys .
   eq (r1 = r2) = false .
   eq ck(s,r1,r2,r3) = noChainK .
-  red inv3(s,mpk,msk) implies inv3(send-ar(s,r1,r2,r3,r4,r5,r6),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(send-ar(s,r1,r2,r3,r4,r5,r6),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -1242,13 +1365,13 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq rk(s,r1,r2,r3) = noRootK .
-  red inv3(s,mpk,msk) implies inv3(send-ar(s,r1,r2,r3,r4,r5,r6),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(send-ar(s,r1,r2,r3,r4,r5,r6),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -1261,13 +1384,13 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSession(s)) = true .
   eq (r4 \in usedSecret(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(send-ar(s,r1,r2,r3,r4,r5,r6),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(send-ar(s,r1,r2,r3,r4,r5,r6),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -1281,13 +1404,13 @@ open INV .
   eq (r3 \in usedSession(s)) = true .
   eq (r4 \in usedSecret(s)) = false .
   eq (r5 \in usedSecret(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(send-ar(s,r1,r2,r3,r4,r5,r6),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(send-ar(s,r1,r2,r3,r4,r5,r6),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -1301,14 +1424,36 @@ open INV .
   eq (r3 \in usedSession(s)) = true .
   eq (r4 \in usedSecret(s)) = false .
   eq (r5 \in usedSecret(s)) = false .
+  eq (r6 \in usedRawMessages(s)) = true .
+  red inv4(s,mk,ck) implies inv4(send-ar(s,r1,r2,r3,r4,r5,r6),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedSecret(s)) = false .
+  eq (r5 \in usedSecret(s)) = false .
+  eq (r6 \in usedRawMessages(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(send-ar(s,r1,r2,r3,r4,r5,r6),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(send-ar(s,r1,r2,r3,r4,r5,r6),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -1322,14 +1467,15 @@ open INV .
   eq (r3 \in usedSession(s)) = true .
   eq (r4 \in usedSecret(s)) = false .
   eq (r5 \in usedSecret(s)) = false .
+  eq (r6 \in usedRawMessages(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(send-ar(s,r1,r2,r3,r4,r5,r6),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(send-ar(s,r1,r2,r3,r4,r5,r6),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -1341,13 +1487,13 @@ open INV .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSession(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(send-ar(s,r1,r2,r3,r4,r5,r6),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(send-ar(s,r1,r2,r3,r4,r5,r6),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -1355,13 +1501,13 @@ open INV .
   op r5 : -> MLK-SecretK .
   op s : -> Sys .
   eq r1 = r2 .
-  red inv3(s,mpk,msk) implies inv3(send-init(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(send-init(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -1372,13 +1518,13 @@ open INV .
   eq existUser(r1,idsServer(s)) = true .
   eq existUser(r2,idsServer(s)) = true .
   eq (r4 \in usedSecret(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(send-init(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(send-init(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -1390,13 +1536,13 @@ open INV .
   eq existUser(r2,idsServer(s)) = true .
   eq (r4 \in usedSecret(s)) = false .
   eq (r5 \in usedSecret(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(send-init(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(send-init(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -1409,13 +1555,13 @@ open INV .
   eq (r4 \in usedSecret(s)) = false .
   eq (r5 \in usedSecret(s)) = false .
   eq (r3 \in usedSession(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(send-init(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(send-init(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -1429,13 +1575,13 @@ open INV .
   eq (r5 \in usedSecret(s)) = false .
   eq (r3 \in usedSession(s)) = false .
   eq validRegData(findRegData(r2,idsServer(s))) = true .
-  red inv3(s,mpk,msk) implies inv3(send-init(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(send-init(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -1449,13 +1595,13 @@ open INV .
   eq (r5 \in usedSecret(s)) = false .
   eq (r3 \in usedSession(s)) = false .
   eq validRegData(findRegData(r2,idsServer(s))) = false .
-  red inv3(s,mpk,msk) implies inv3(send-init(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(send-init(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -1465,13 +1611,13 @@ open INV .
   eq (r1 = r2) = false .
   eq existUser(r1,idsServer(s)) = true .
   eq existUser(r2,idsServer(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(send-init(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(send-init(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -1480,26 +1626,26 @@ open INV .
   op s : -> Sys .
   eq (r1 = r2) = false .
   eq existUser(r1,idsServer(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(send-init(s,r1,r2,r3,r4,r5),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(send-init(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
   op r4 : -> RawMsg .
   op s : -> Sys .
   eq r1 = r2 .
-  red inv3(s,mpk,msk) implies inv3(send-sym(s,r1,r2,r3,r4),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(send-sym(s,r1,r2,r3,r4),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -1507,13 +1653,13 @@ open INV .
   op s : -> Sys .
   eq (r1 = r2) = false .
   eq ck(s,r1,r2,r3) = noChainK .
-  red inv3(s,mpk,msk) implies inv3(send-sym(s,r1,r2,r3,r4),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(send-sym(s,r1,r2,r3,r4),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -1522,13 +1668,13 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq rk(s,r1,r2,r3) = noRootK .
-  red inv3(s,mpk,msk) implies inv3(send-sym(s,r1,r2,r3,r4),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(send-sym(s,r1,r2,r3,r4),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -1538,13 +1684,31 @@ open INV .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSession(s)) = true .
-  red inv3(s,mpk,msk) implies inv3(send-sym(s,r1,r2,r3,r4),mpk,msk) .
+  eq (r4 \in usedRawMessages(s)) = true .
+  red inv4(s,mk,ck) implies inv4(send-sym(s,r1,r2,r3,r4),mk,ck) .
 close
 
 --> true
 open INV .
-  op mpk : -> MLK-PublicK .
-  op msk : -> MLK-SecretK .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> RawMsg .
+  op s : -> Sys .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSession(s)) = true .
+  eq (r4 \in usedRawMessages(s)) = false .
+  red inv4(s,mk,ck) implies inv4(send-sym(s,r1,r2,r3,r4),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> Prin .
   op r2 : -> Prin .
   op r3 : -> SessId .
@@ -1554,7 +1718,7 @@ open INV .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSession(s)) = false .
-  red inv3(s,mpk,msk) implies inv3(send-sym(s,r1,r2,r3,r4),mpk,msk) .
+  red inv4(s,mk,ck) implies inv4(send-sym(s,r1,r2,r3,r4),mk,ck) .
 close
 
---> Time taken is 2112ms
+--> Time taken is 2820ms

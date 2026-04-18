@@ -14,144 +14,117 @@ mod INV {
     vars Previous-RK RK : RootK .
     var MSK-SS : MLK-ShareS .
     var ESK-SS : ECDHK-ShareS .
+    var CK  : ChainK .
+    var MK  : MsgK .
+    vars RM RM1 RM2  : RawMsg .
+    var SB  : SymBody .
 
-    -- The secrecy of the ML-KEM shared secret key property ensures that a ML-KEM key shared between two honest principals remains confidential 
-    -- and is not compromised by the intruder, even in the presence of a powerful quantum-capable adversary. 
+    
+    -- Message secrecy property: if a message is sent by an honest principal and
+        -- 1. Message key used to encrypt the message is not leaked, and
+        -- 2. The chain key used to derive the message key is not leaked, and
+        -- 3. The recipent's long term identity key before the message was sent is not leaked, and
+        -- 4. ML-KEM shared secret key used to derive the chain key is not leaked 
+    -- then the intruder cannot know the message content.
 
-    -- At initialize key exchange state
-    -- lemma 1 + 2
-    op keyPairSeInit : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK InitBody Nat -> Bool .
-    eq keyPairSeInit(S, A2, A, B, SID, ESK, MSK, IB, N) =
-        (   
-            not (A = intru or B = intru) and
-            not (A = B) and
-            existUser(B, idsServer(S)) and
-            validRegData(findRegData(B, idsServer(S))) and
-            SID = initSid(IB) and
-            validInitBody(A, SID, IB) and
-            initMlkPkEph(IB) = mlk-keygen(MSK) and
-            initMlkCt(IB) = ct-mlk(B, MSK) and
-            msg(A2, A, B, IB, N) \in nw(S) and 
-            not (MLK-PriK(B) \in leakscr(S)) and
-            not (MSK \in leakscr(S)) and
-            not (sk(A) \in leakscr(S)) and
-            not (ss-mlk(B, MSK) \in leakscr(S))
-        )
-        implies
-        (
-            not (ss-mlk(B, MSK) \in knl(S))
-        ) .
-    -- lemma 5
-    op rootKeySeInit : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK InitBody Nat -> Bool .
-    eq rootKeySeInit(S, A2, A, B, SID, ESK, MSK, RK, IB, N) =
-        (   
-            not (A = intru or B = intru) and
-            not (A = B) and
-            existUser(B, idsServer(S)) and
-            validRegData(findRegData(B, idsServer(S))) and
-            SID = initSid(IB) and
-            validInitBody(A, SID, IB) and
-            initMlkPkEph(IB) = mlk-keygen(MSK) and
-            initMlkCt(IB) = ct-mlk(B, MSK) and
-            msg(A2, A, B, IB, N) \in nw(S) and 
-            not (MLK-PriK(B) \in leakscr(S)) and
-            not (MSK \in leakscr(S)) and
-            not (sk(A) \in leakscr(S)) and
-            not (ss-mlk(B, MSK) \in leakscr(S)) and 
-            init-rk(ss-ecdh(B, ESK), ss-mlk(B, MSK)) = RK and
-            init-rk(ss-ecdh(B, ESK), ss-mlk(B, MSK)) \in leakscr(S)
-        )
-        implies
-        (
-            not (RK \in knl(S))
-        ) .
-    
-    
-    -- At asymmetric key exchange state
-    -- lemma 2 + (3 + 4)
-    op keyPairSeAsym : Sys Prin Prin Prin SessId MLK-PublicK MLK-SecretK AsymBody Nat -> Bool .
-    eq keyPairSeAsym(S, A2, A, B, SID, MPK, MSK, AB, N) =
+    -- lemma 7 + 9 + 11
+    op messageSe1 : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK ChainK RawMsg SymBody Nat -> Bool .
+    eq messageSe1(S, A2, A, B, SID, ESK, MSK, CK, RM, SB, N) =
         (
             not (A = intru or B = intru) and
             not (A = B) and
-            msg(A2, A, B, AB, N) \in nw(S) and
-            validAsymBody(A, B, AB) and
-            asymSid(AB) = SID and
-            asymMlkPkEph(AB) = mlk-keygen(MSK) and
-            asymMlkCt(AB) = mlk-encapsC(MPK, MSK) and
-            not (sk(A) \in leakscr(S)) and
-            not (mlk-getSecret(MPK) \in leakscr(S)) and
-            not (MSK \in leakscr(S)) and
-            not (mlk-encapsK(MPK, MSK) \in leakscr(S))
+            msg(A2, A, B, SB, N) \in nw(S) and
+            validSymBody(A, B, SB) and
+            symSid(SB) = SID and
+            init-ck(ss-ecdh(B, ESK), ss-mlk(B, MSK)) = CK and
+            symDec(mkAt(CK, symN(SB)), SB) = RM and
+            not (RM = noRawMsg) and
+            (RM \in usedRawMessages(S)) and
+
+            not (sk(B) \in leakscr(S)) and
+            not (ss-mlk(B, MSK) \in leakscr(S)) and
+            not (ckAt(CK, symN(SB)) \in leakscr(S)) and
+            not (mkAt(CK, symN(SB)) \in leakscr(S)) and
+            not (RM \in leakscr(S))
         )
         implies
         (
-            not (mlk-encapsK(MPK, MSK) \in knl(S)) 
+            not (RM \in knl(S))
         ) .
-    -- lemma 6
-    op rootKeySeAsym : Sys Prin Prin Prin SessId MLK-PublicK ECDHK-SecretK MLK-SecretK RootK RootK AsymBody Nat -> Bool .
-    eq rootKeySeAsym(S, A2, A, B, SID, MPK, ESK, MSK, Previous-RK, RK, AB, N) =
+
+    -- lemma 7 + 12 + 11
+    op messageSe2 : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK RawMsg SymBody Nat -> Bool .
+    eq messageSe2(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, RM, SB, N) =
         (
             not (A = intru or B = intru) and
             not (A = B) and
-            msg(A2, A, B, AB, N) \in nw(S) and
-            validAsymBody(A, B, AB) and
-            asymSid(AB) = SID and
-            asymMlkPkEph(AB) = mlk-keygen(MSK) and
-            asymMlkCt(AB) = mlk-encapsC(MPK, MSK) and
-            not (sk(A) \in leakscr(S)) and
-            not (mlk-getSecret(MPK) \in leakscr(S)) and
-            not (MSK \in leakscr(S)) and
-            not (ss-mlk(B, MSK) \in leakscr(S)) and 
-            kdf-rk(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK)) = RK and
-            not (kdf-rk(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK)) \in leakscr(S))
+            msg(A2, A, B, SB, N) \in nw(S) and
+            validSymBody(A, B, SB) and
+            symSid(SB) = SID and
+            kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK)) = CK and
+            symDec(mkAt(CK, symN(SB)), SB) = RM and
+            not (RM = noRawMsg) and
+            RM \in usedRawMessages(S) and
+
+            not (sk(B) \in leakscr(S)) and
+            not (ss-mlk(B, MSK) \in leakscr(S)) and
+            not (ckAt(CK, symN(SB)) \in leakscr(S)) and
+            not (mkAt(CK, symN(SB)) \in leakscr(S)) and
+            not (RM \in leakscr(S))
         )
         implies
         (
-            not (RK \in knl(S))
+            not (RM \in knl(S))
         ) .
 
-    -- If the intruder cannot derive the root key if the ML-Kem secret key has not been leaked.
-    -- no lemma
-    op inv5 : Sys Prin ECDHK-SecretK MLK-SecretK -> Bool .
-    eq inv5(S, B, ESK, MSK) =
-    (
-        not (ss-mlk(B, MSK) \in leakscr(S))
-    )
-    implies
-        not (init-rk(ss-ecdh(B, ESK), ss-mlk(B, MSK)) \in knl(S)) .
 
     -- no lemma
-    op inv6 : Sys Prin RootK ECDHK-SecretK MLK-SecretK -> Bool .
-    eq inv6(S, B, RK, ESK, MSK) =
-    (
-        not (ss-mlk(B, MSK) \in leakscr(S))
-    )
-    implies
-        not (kdf-rk(RK, ss-ecdh(B, ESK), ss-mlk(B, MSK)) \in knl(S)) .
-
-    
-    -- lemma 2
-    -- inv1: If neither of the two MLK secret values used to establish a shared key has been leaked, then the intruder cannot derive the corresponding shared secret produced from their combination.
-    op inv1 : Sys MLK-SecretK MLK-SecretK -> Bool .
-    eq inv1(S, MSK, MSK2) 
-    = (not (MSK \in leakscr(S)) and not (MSK2 \in leakscr(S))) implies (not ((MSK & MSK2) \in knl(S))) .
+    -- formal description of the invariant: if a raw message is not leaked and not used in the protocol, then the intruder cannot know it.
+    op inv1 : Sys RawMsg -> Bool .
+    eq inv1(S, RM) = (not(RM \in leakscr(S)) and not(RM \in usedRawMessages(S))) implies not (RM \in knl(S)) .
 
     -- no lemma
-    -- inv2: If a ephemeral MLK secret key has not been leaked, then the intruder cannot know it.
-    op inv2 : Sys MLK-SecretK -> Bool .
-    eq inv2(S, MSK) = not(MSK \in leakscr(S)) implies not(MSK \in knl(S)) .
-
-    -- lemma 2 + 4
-    -- inv3: if the intruder learns a ML-KEM shared secret despite one contributing ML-KEM secret remaining uncompromised, the other contributing secret must have been compromised. 
-    op inv3 : Sys MLK-PublicK MLK-SecretK -> Bool .
-    eq inv3(S, MPK, MSK) 
-    = ((mlk-getSecret(MPK) & MSK) \in knl(S) and not(mlk-getSecret(MPK) \in leakscr(S))) implies (MSK \in leakscr(S)) .
-    
+    -- formal description of the invariant: if a message is sent by an honest principal and this is a real message, then the message content must be in used.
+    op inv2 : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK ChainK RawMsg SymBody Nat -> Bool .
+    eq inv2(S, A2, A, B, SID, ESK, MSK, CK, RM, SB, N) =
+        (
+            not (A = intru or B = intru) and
+            not (A = B) and
+            msg(A2, A, B, SB, N) \in nw(S) and
+            validSymBody(A, B, SB) and
+            symSid(SB) = SID and
+            init-ck(ss-ecdh(B, ESK), ss-mlk(B, MSK)) = CK and
+            symDec(mkAt(CK, symN(SB)), SB) = RM and
+            not (RM = noRawMsg)
+        )
+        implies
+        (
+            RM \in usedRawMessages(S)
+        ) .
     -- no lemma
-    -- inv4: if a MLK secret key has been compromised, then it must have already registered as a usable secret.
-    op inv4 : Sys MLK-SecretK -> Bool .
-    eq inv4(S, MSK) = (MSK \in leakscr(S)) implies (MSK \in usedSecret(S)) .
+    op inv3 : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK ChainK RawMsg RootK SymBody Nat -> Bool .
+    eq inv3(S, A2, A, B, SID, ESK, MSK, CK, RM, Previous-RK, SB, N) =
+        (
+            not (A = intru or B = intru) and
+            not (A = B) and
+            msg(A2, A, B, SB, N) \in nw(S) and
+            validSymBody(A, B, SB) and
+            symSid(SB) = SID and
+            kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK)) = CK and
+            symDec(mkAt(CK, symN(SB)), SB) = RM and
+            not (RM = noRawMsg) and
+            not (sk(A) \in leakscr(S))
+        )
+        implies
+        (
+            RM \in usedRawMessages(S)
+        ) .
+
+    -- no lemma
+    -- formal description of the invariant: if a chain key is not leaked, then the intruder cannot know any message key derived from it.
+    op inv4 : Sys MsgK ChainK -> Bool .
+    eq inv4(S, MK, CK) = not(CK \in leakscr(S)) implies not (MK \in knl(S)) .
+
 
 
 }

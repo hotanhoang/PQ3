@@ -1,8 +1,0 @@
-ipsgopen INV .
-  generate inv6(S:Sys, B:Prin, RK:RootK, ESK:ECDHK-SecretK, MSK:MLK-SecretK)
-  induction on S:Sys .
-close
-set-output examples/pq3/inv/inv-6.cafe .
-:save-proof .
-
-eof

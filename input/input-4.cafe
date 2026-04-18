@@ -1,8 +1,9 @@
 ipsgopen INV .
-  generate inv4(S:Sys, MSK:MLK-SecretK)
+  generate inv4(S:Sys, MK:MsgK, CK:ChainK)
   induction on S:Sys .
 close
-set-output examples/pq3/inv/inv-4.cafe .
+set-output examples/PQ3-Protocol/inv/inv4.cafe .
 :save-proof .
 
 eof
+

@@ -1,8 +1,8 @@
 ipsgopen INV .
-  generate inv2(S:Sys, MSK:MLK-SecretK)
+  generate inv2(S:Sys, A2:Prin, A:Prin, B:Prin, SID:SessId, ESK:ECDHK-SecretK, MSK:MLK-SecretK, CK:ChainK, RM:RawMsg, SB:SymBody, N:Nat)
   induction on S:Sys .
 close
-set-output examples/pq3/inv/inv-2.cafe .
+set-output examples/PQ3-Protocol/inv/inv2.cafe .
 :save-proof .
 
 eof
