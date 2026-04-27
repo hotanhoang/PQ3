@@ -354,13 +354,14 @@ open INV .
   op r3 : -> SessId .
   op r4 : -> ECDHK-SecretK .
   op r5 : -> MLK-SecretK .
-  op r6 : -> Nat .
+  op r6 : -> RawMsg .
+  op r7 : -> Nat .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (msg(r1,r1,r2,initBody(r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5)),sign(sk(r1),signedData(r1,r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5))))),r6) \in nw(s)) = true .
-  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruComECDHKEMSS(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+  eq (msg(r1,r1,r2,initBody(r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(ECDHK-PriK(r2)),mlk-keygen(MLK-PriK(r2))),ns(s,r1,r2,r3),ienc(mk-sym(ck(s,r1,r2,r3)),r6),sign(sk(r1),signedData(r1,r2,r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(ECDHK-PriK(r2)),mlk-keygen(MLK-PriK(r2))),ns(s,r1,r2,r3),ienc(mk-sym(ck(s,r1,r2,r3)),r6)))),r7) \in nw(s)) = true .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruComECDHKEMSS(s,r1,r2,r3,r4,r5,r6,r7),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
 --> true
@@ -377,13 +378,14 @@ open INV .
   op r3 : -> SessId .
   op r4 : -> ECDHK-SecretK .
   op r5 : -> MLK-SecretK .
-  op r6 : -> Nat .
+  op r6 : -> RawMsg .
+  op r7 : -> Nat .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (msg(r1,r1,r2,initBody(r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5)),sign(sk(r1),signedData(r1,r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5))))),r6) \in nw(s)) = false .
-  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruComECDHKEMSS(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+  eq (msg(r1,r1,r2,initBody(r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(ECDHK-PriK(r2)),mlk-keygen(MLK-PriK(r2))),ns(s,r1,r2,r3),ienc(mk-sym(ck(s,r1,r2,r3)),r6),sign(sk(r1),signedData(r1,r2,r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(ECDHK-PriK(r2)),mlk-keygen(MLK-PriK(r2))),ns(s,r1,r2,r3),ienc(mk-sym(ck(s,r1,r2,r3)),r6)))),r7) \in nw(s)) = false .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruComECDHKEMSS(s,r1,r2,r3,r4,r5,r6,r7),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
 --> true
@@ -459,15 +461,16 @@ open INV .
   op r3 : -> SessId .
   op r4 : -> ECDHK-SecretK .
   op r5 : -> MLK-SecretK .
-  op r6 : -> Nat .
+  op r6 : -> RawMsg .
+  op r7 : -> Nat .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (r4 \in usedSecret(s)) = true .
-  eq (r5 \in usedSecret(s)) = true .
-  eq (msg(r1,r1,r2,initBody(r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5)),sign(sk(r1),signedData(r1,r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5))))),r6) \in nw(s)) = true .
-  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruComInitKEM(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+  eq (r4 \in usedSK(s)) = true .
+  eq (r5 \in usedSK(s)) = true .
+  eq (msg(r1,r1,r2,initBody(r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(ECDHK-PriK(r2)),mlk-keygen(MLK-PriK(r2))),ns(s,r1,r2,r3),ienc(mk-sym(ck(s,r1,r2,r3)),r6),sign(sk(r1),signedData(r1,r2,r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(ECDHK-PriK(r2)),mlk-keygen(MLK-PriK(r2))),ns(s,r1,r2,r3),ienc(mk-sym(ck(s,r1,r2,r3)),r6)))),r7) \in nw(s)) = true .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruComInitKEM(s,r1,r2,r3,r4,r5,r6,r7),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
 --> true
@@ -484,15 +487,16 @@ open INV .
   op r3 : -> SessId .
   op r4 : -> ECDHK-SecretK .
   op r5 : -> MLK-SecretK .
-  op r6 : -> Nat .
+  op r6 : -> RawMsg .
+  op r7 : -> Nat .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (r4 \in usedSecret(s)) = true .
-  eq (r5 \in usedSecret(s)) = true .
-  eq (msg(r1,r1,r2,initBody(r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5)),sign(sk(r1),signedData(r1,r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(r4),mlk-keygen(r5))))),r6) \in nw(s)) = false .
-  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruComInitKEM(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+  eq (r4 \in usedSK(s)) = true .
+  eq (r5 \in usedSK(s)) = true .
+  eq (msg(r1,r1,r2,initBody(r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(ECDHK-PriK(r2)),mlk-keygen(MLK-PriK(r2))),ns(s,r1,r2,r3),ienc(mk-sym(ck(s,r1,r2,r3)),r6),sign(sk(r1),signedData(r1,r2,r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(ECDHK-PriK(r2)),mlk-keygen(MLK-PriK(r2))),ns(s,r1,r2,r3),ienc(mk-sym(ck(s,r1,r2,r3)),r6)))),r7) \in nw(s)) = false .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruComInitKEM(s,r1,r2,r3,r4,r5,r6,r7),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
 --> true
@@ -509,14 +513,15 @@ open INV .
   op r3 : -> SessId .
   op r4 : -> ECDHK-SecretK .
   op r5 : -> MLK-SecretK .
-  op r6 : -> Nat .
+  op r6 : -> RawMsg .
+  op r7 : -> Nat .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (r4 \in usedSecret(s)) = true .
-  eq (r5 \in usedSecret(s)) = false .
-  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruComInitKEM(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+  eq (r4 \in usedSK(s)) = true .
+  eq (r5 \in usedSK(s)) = false .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruComInitKEM(s,r1,r2,r3,r4,r5,r6,r7),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
 --> true
@@ -533,13 +538,14 @@ open INV .
   op r3 : -> SessId .
   op r4 : -> ECDHK-SecretK .
   op r5 : -> MLK-SecretK .
-  op r6 : -> Nat .
+  op r6 : -> RawMsg .
+  op r7 : -> Nat .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (r4 \in usedSecret(s)) = false .
-  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruComInitKEM(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+  eq (r4 \in usedSK(s)) = false .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruComInitKEM(s,r1,r2,r3,r4,r5,r6,r7),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
 --> true
@@ -651,7 +657,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (MLK-PriK(r1) \in usedSecret(s)) = true .
+  eq (MLK-PriK(r1) \in usedSK(s)) = true .
   eq (MLK-PriK(r1) \in leakscr(s)) = true .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruComLongTermMlkSK(s,r1),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
@@ -670,7 +676,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (MLK-PriK(r1) \in usedSecret(s)) = true .
+  eq (MLK-PriK(r1) \in usedSK(s)) = true .
   eq (MLK-PriK(r1) \in leakscr(s)) = false .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruComLongTermMlkSK(s,r1),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
@@ -689,7 +695,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (MLK-PriK(r1) \in usedSecret(s)) = false .
+  eq (MLK-PriK(r1) \in usedSK(s)) = false .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruComLongTermMlkSK(s,r1),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
@@ -707,6 +713,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
+  eq (r1 \in usedRM(s)) = true .
   eq (r1 \in leakscr(s)) = true .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruComMessage(s,r1),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
@@ -725,7 +732,26 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
+  eq (r1 \in usedRM(s)) = true .
   eq (r1 \in leakscr(s)) = false .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruComMessage(s,r1),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r1 \in usedRM(s)) = false .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruComMessage(s,r1),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
@@ -884,7 +910,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r6 \in knl(s)) = true .
-  eq (r7 \in usedRawMessages(s)) = true .
+  eq (r7 \in usedRM(s)) = true .
   eq (senc(r6,r7) \in knl(s)) = true .
   eq rm = r7 .
   eq a = b .
@@ -912,7 +938,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r6 \in knl(s)) = true .
-  eq (r7 \in usedRawMessages(s)) = true .
+  eq (r7 \in usedRM(s)) = true .
   eq (senc(r6,r7) \in knl(s)) = true .
   eq rm = r7 .
   eq (a = b) = false .
@@ -941,7 +967,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r6 \in knl(s)) = true .
-  eq (r7 \in usedRawMessages(s)) = true .
+  eq (r7 \in usedRM(s)) = true .
   eq (senc(r6,r7) \in knl(s)) = true .
   eq rm = r7 .
   eq (a = b) = false .
@@ -971,14 +997,14 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r6 \in knl(s)) = true .
-  eq (r7 \in usedRawMessages(s)) = true .
+  eq (r7 \in usedRM(s)) = true .
   eq (senc(r6,r7) \in knl(s)) = true .
   eq rm = r7 .
   eq (a = b) = false .
   eq (a = intru) = false .
   eq (b = intru) = false .
   eq r7 = noRawMsg .
-  eq (noRawMsg \in usedRawMessages(s)) = true .
+  eq (noRawMsg \in usedRM(s)) = true .
   eq (senc(r6,noRawMsg) \in knl(s)) = true .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruDecMsg1(s,r1,r2,r3,r4,r5,r6,r7),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
@@ -1004,14 +1030,14 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r6 \in knl(s)) = true .
-  eq (r7 \in usedRawMessages(s)) = true .
+  eq (r7 \in usedRM(s)) = true .
   eq (senc(r6,r7) \in knl(s)) = true .
   eq rm = r7 .
   eq (a = b) = false .
   eq (a = intru) = false .
   eq (b = intru) = false .
   eq r7 = noRawMsg .
-  eq (noRawMsg \in usedRawMessages(s)) = true .
+  eq (noRawMsg \in usedRM(s)) = true .
   eq (senc(r6,noRawMsg) \in knl(s)) = false .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruDecMsg1(s,r1,r2,r3,r4,r5,r6,r7),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
@@ -1037,14 +1063,14 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r6 \in knl(s)) = true .
-  eq (r7 \in usedRawMessages(s)) = true .
+  eq (r7 \in usedRM(s)) = true .
   eq (senc(r6,r7) \in knl(s)) = true .
   eq rm = r7 .
   eq (a = b) = false .
   eq (a = intru) = false .
   eq (b = intru) = false .
   eq r7 = noRawMsg .
-  eq (noRawMsg \in usedRawMessages(s)) = false .
+  eq (noRawMsg \in usedRM(s)) = false .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruDecMsg1(s,r1,r2,r3,r4,r5,r6,r7),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
@@ -1069,7 +1095,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r6 \in knl(s)) = true .
-  eq (r7 \in usedRawMessages(s)) = true .
+  eq (r7 \in usedRM(s)) = true .
   eq (senc(r6,r7) \in knl(s)) = true .
   eq rm = r7 .
   eq (a = b) = false .
@@ -1105,7 +1131,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r6 \in knl(s)) = true .
-  eq (r7 \in usedRawMessages(s)) = true .
+  eq (r7 \in usedRM(s)) = true .
   eq (senc(r6,r7) \in knl(s)) = true .
   eq rm = r7 .
   eq (a = b) = false .
@@ -1142,7 +1168,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r6 \in knl(s)) = true .
-  eq (r7 \in usedRawMessages(s)) = true .
+  eq (r7 \in usedRM(s)) = true .
   eq (senc(r6,r7) \in knl(s)) = true .
   eq rm = r7 .
   eq (a = b) = false .
@@ -1181,7 +1207,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r6 \in knl(s)) = true .
-  eq (r7 \in usedRawMessages(s)) = true .
+  eq (r7 \in usedRM(s)) = true .
   eq (senc(r6,r7) \in knl(s)) = true .
   eq rm = r7 .
   eq (a = b) = false .
@@ -1221,7 +1247,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r6 \in knl(s)) = true .
-  eq (r7 \in usedRawMessages(s)) = true .
+  eq (r7 \in usedRM(s)) = true .
   eq (senc(r6,r7) \in knl(s)) = true .
   eq rm = r7 .
   eq (a = b) = false .
@@ -1262,7 +1288,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r6 \in knl(s)) = true .
-  eq (r7 \in usedRawMessages(s)) = true .
+  eq (r7 \in usedRM(s)) = true .
   eq (senc(r6,r7) \in knl(s)) = true .
   eq rm = r7 .
   eq (a = b) = false .
@@ -1304,7 +1330,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r6 \in knl(s)) = true .
-  eq (r7 \in usedRawMessages(s)) = true .
+  eq (r7 \in usedRM(s)) = true .
   eq (senc(r6,r7) \in knl(s)) = true .
   eq rm = r7 .
   eq (a = b) = false .
@@ -1346,7 +1372,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r6 \in knl(s)) = true .
-  eq (r7 \in usedRawMessages(s)) = true .
+  eq (r7 \in usedRM(s)) = true .
   eq (senc(r6,r7) \in knl(s)) = true .
   eq rm = r7 .
   eq (a = b) = false .
@@ -1384,7 +1410,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r6 \in knl(s)) = true .
-  eq (r7 \in usedRawMessages(s)) = true .
+  eq (r7 \in usedRM(s)) = true .
   eq (senc(r6,r7) \in knl(s)) = true .
   eq rm = r7 .
   eq (a = b) = false .
@@ -1419,7 +1445,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r6 \in knl(s)) = true .
-  eq (r7 \in usedRawMessages(s)) = true .
+  eq (r7 \in usedRM(s)) = true .
   eq (senc(r6,r7) \in knl(s)) = true .
   eq rm = r7 .
   eq (a = b) = false .
@@ -1453,7 +1479,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r6 \in knl(s)) = true .
-  eq (r7 \in usedRawMessages(s)) = true .
+  eq (r7 \in usedRM(s)) = true .
   eq (senc(r6,r7) \in knl(s)) = true .
   eq rm = r7 .
   eq (a = b) = false .
@@ -1486,7 +1512,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r6 \in knl(s)) = true .
-  eq (r7 \in usedRawMessages(s)) = true .
+  eq (r7 \in usedRM(s)) = true .
   eq (senc(r6,r7) \in knl(s)) = true .
   eq rm = r7 .
   eq (a = b) = false .
@@ -1518,7 +1544,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r6 \in knl(s)) = true .
-  eq (r7 \in usedRawMessages(s)) = true .
+  eq (r7 \in usedRM(s)) = true .
   eq (senc(r6,r7) \in knl(s)) = true .
   eq (rm = r7) = false .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruDecMsg1(s,r1,r2,r3,r4,r5,r6,r7),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
@@ -1545,7 +1571,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r6 \in knl(s)) = true .
-  eq (r7 \in usedRawMessages(s)) = true .
+  eq (r7 \in usedRM(s)) = true .
   eq (senc(r6,r7) \in knl(s)) = false .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruDecMsg1(s,r1,r2,r3,r4,r5,r6,r7),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
@@ -1571,7 +1597,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r6 \in knl(s)) = true .
-  eq (r7 \in usedRawMessages(s)) = false .
+  eq (r7 \in usedRM(s)) = false .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruDecMsg1(s,r1,r2,r3,r4,r5,r6,r7),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
@@ -1674,6 +1700,8 @@ open INV .
   op r5 : -> MLK-Cipher .
   op r6 : -> ECDHK-PublicK .
   op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
@@ -1682,8 +1710,8 @@ open INV .
   eq (r5 \in knl(s)) = true .
   eq (r6 \in knl(s)) = true .
   eq (r7 \in knl(s)) = true .
-  eq (hash(r6,r7) \in knl(s)) = true .
-  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruForgeInitMsg(s,r1,r2,r3,r4,r5,r6,r7),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+  eq (r9 \in knl(s)) = true .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruFKInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
 --> true
@@ -1702,6 +1730,8 @@ open INV .
   op r5 : -> MLK-Cipher .
   op r6 : -> ECDHK-PublicK .
   op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
@@ -1710,8 +1740,8 @@ open INV .
   eq (r5 \in knl(s)) = true .
   eq (r6 \in knl(s)) = true .
   eq (r7 \in knl(s)) = true .
-  eq (hash(r6,r7) \in knl(s)) = false .
-  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruForgeInitMsg(s,r1,r2,r3,r4,r5,r6,r7),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+  eq (r9 \in knl(s)) = false .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruFKInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
 --> true
@@ -1730,6 +1760,8 @@ open INV .
   op r5 : -> MLK-Cipher .
   op r6 : -> ECDHK-PublicK .
   op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
@@ -1738,7 +1770,7 @@ open INV .
   eq (r5 \in knl(s)) = true .
   eq (r6 \in knl(s)) = true .
   eq (r7 \in knl(s)) = false .
-  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruForgeInitMsg(s,r1,r2,r3,r4,r5,r6,r7),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruFKInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
 --> true
@@ -1757,6 +1789,8 @@ open INV .
   op r5 : -> MLK-Cipher .
   op r6 : -> ECDHK-PublicK .
   op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
@@ -1764,7 +1798,7 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r5 \in knl(s)) = true .
   eq (r6 \in knl(s)) = false .
-  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruForgeInitMsg(s,r1,r2,r3,r4,r5,r6,r7),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruFKInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
 --> true
@@ -1783,13 +1817,15 @@ open INV .
   op r5 : -> MLK-Cipher .
   op r6 : -> ECDHK-PublicK .
   op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r4 \in knl(s)) = true .
   eq (r5 \in knl(s)) = false .
-  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruForgeInitMsg(s,r1,r2,r3,r4,r5,r6,r7),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruFKInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
 --> true
@@ -1808,12 +1844,14 @@ open INV .
   op r5 : -> MLK-Cipher .
   op r6 : -> ECDHK-PublicK .
   op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r4 \in knl(s)) = false .
-  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruForgeInitMsg(s,r1,r2,r3,r4,r5,r6,r7),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruFKInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
 --> true
@@ -1906,7 +1944,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (r1 \in usedSecret(s)) = true .
+  eq (r1 \in usedSK(s)) = true .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruRandECDHKEMSecret(s,r1),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
@@ -1924,7 +1962,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (r1 \in usedSecret(s)) = false .
+  eq (r1 \in usedSK(s)) = false .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruRandECDHKEMSecret(s,r1),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
@@ -1942,7 +1980,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (r1 \in usedSecret(s)) = true .
+  eq (r1 \in usedSK(s)) = true .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruRandMLKEMSecret(s,r1),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
@@ -1960,7 +1998,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (r1 \in usedSecret(s)) = false .
+  eq (r1 \in usedSK(s)) = false .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruRandMLKEMSecret(s,r1),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
@@ -1997,7 +2035,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = false .
-  eq (r1 \in usedRawMessages(s)) = true .
+  eq (r1 \in usedRM(s)) = true .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruRandMessage(s,r1),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
@@ -2016,7 +2054,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = false .
-  eq (r1 \in usedRawMessages(s)) = false .
+  eq (r1 \in usedRM(s)) = false .
   eq rm = r1 .
   eq a = b .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruRandMessage(s,r1),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
@@ -2037,7 +2075,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = false .
-  eq (r1 \in usedRawMessages(s)) = false .
+  eq (r1 \in usedRM(s)) = false .
   eq rm = r1 .
   eq (a = b) = false .
   eq a = intru .
@@ -2059,7 +2097,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = false .
-  eq (r1 \in usedRawMessages(s)) = false .
+  eq (r1 \in usedRM(s)) = false .
   eq rm = r1 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -2082,7 +2120,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = false .
-  eq (r1 \in usedRawMessages(s)) = false .
+  eq (r1 \in usedRM(s)) = false .
   eq rm = r1 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -2107,14 +2145,14 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = false .
-  eq (r1 \in usedRawMessages(s)) = false .
+  eq (r1 \in usedRM(s)) = false .
   eq rm = r1 .
   eq (a = b) = false .
   eq (a = intru) = false .
   eq (b = intru) = false .
   eq r1 = noRawMsg .
   eq (noRawMsg \in knl(s)) = false .
-  eq (noRawMsg \in usedRawMessages(s)) = true .
+  eq (noRawMsg \in usedRM(s)) = true .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruRandMessage(s,r1),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
@@ -2133,14 +2171,14 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = false .
-  eq (r1 \in usedRawMessages(s)) = false .
+  eq (r1 \in usedRM(s)) = false .
   eq rm = r1 .
   eq (a = b) = false .
   eq (a = intru) = false .
   eq (b = intru) = false .
   eq r1 = noRawMsg .
   eq (noRawMsg \in knl(s)) = false .
-  eq (noRawMsg \in usedRawMessages(s)) = false .
+  eq (noRawMsg \in usedRM(s)) = false .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruRandMessage(s,r1),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
@@ -2159,7 +2197,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = false .
-  eq (r1 \in usedRawMessages(s)) = false .
+  eq (r1 \in usedRM(s)) = false .
   eq rm = r1 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -2188,7 +2226,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = false .
-  eq (r1 \in usedRawMessages(s)) = false .
+  eq (r1 \in usedRM(s)) = false .
   eq rm = r1 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -2219,7 +2257,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = false .
-  eq (r1 \in usedRawMessages(s)) = false .
+  eq (r1 \in usedRM(s)) = false .
   eq rm = r1 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -2251,7 +2289,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = false .
-  eq (r1 \in usedRawMessages(s)) = false .
+  eq (r1 \in usedRM(s)) = false .
   eq rm = r1 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -2284,7 +2322,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = false .
-  eq (r1 \in usedRawMessages(s)) = false .
+  eq (r1 \in usedRM(s)) = false .
   eq rm = r1 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -2318,7 +2356,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = false .
-  eq (r1 \in usedRawMessages(s)) = false .
+  eq (r1 \in usedRM(s)) = false .
   eq rm = r1 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -2352,7 +2390,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = false .
-  eq (r1 \in usedRawMessages(s)) = false .
+  eq (r1 \in usedRM(s)) = false .
   eq rm = r1 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -2382,7 +2420,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = false .
-  eq (r1 \in usedRawMessages(s)) = false .
+  eq (r1 \in usedRM(s)) = false .
   eq rm = r1 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -2410,7 +2448,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = false .
-  eq (r1 \in usedRawMessages(s)) = false .
+  eq (r1 \in usedRM(s)) = false .
   eq rm = r1 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -2437,7 +2475,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = false .
-  eq (r1 \in usedRawMessages(s)) = false .
+  eq (r1 \in usedRM(s)) = false .
   eq rm = r1 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -2463,7 +2501,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = false .
-  eq (r1 \in usedRawMessages(s)) = false .
+  eq (r1 \in usedRM(s)) = false .
   eq rm = r1 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -2488,7 +2526,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = false .
-  eq (r1 \in usedRawMessages(s)) = false .
+  eq (r1 \in usedRM(s)) = false .
   eq (rm = r1) = false .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruRandMessage(s,r1),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
@@ -2768,9 +2806,9 @@ open INV .
   op sid : -> SessId .
   eq (r1 = r2) = false .
   eq initSid(r4) = r3 .
-  eq validInitBody(r1,r3,r4) = true .
-  eq (r3 \in usedSession(s)) = true .
-  eq existUser(r2,idsServer(s)) = true .
+  eq validInitBody(r1,r2,r4) = true .
+  eq (r3 \in usedSID(s)) = true .
+  eq existUser(r2,idsS(s)) = true .
   eq (msg(r1,r1,r2,r4,r5) \in nw(s)) = true .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(recv-init(s,r1,r2,r3,r4,r5),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
@@ -2795,9 +2833,9 @@ open INV .
   op sid : -> SessId .
   eq (r1 = r2) = false .
   eq initSid(r4) = r3 .
-  eq validInitBody(r1,r3,r4) = true .
-  eq (r3 \in usedSession(s)) = true .
-  eq existUser(r2,idsServer(s)) = true .
+  eq validInitBody(r1,r2,r4) = true .
+  eq (r3 \in usedSID(s)) = true .
+  eq existUser(r2,idsS(s)) = true .
   eq (msg(r1,r1,r2,r4,r5) \in nw(s)) = false .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(recv-init(s,r1,r2,r3,r4,r5),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
@@ -2822,9 +2860,9 @@ open INV .
   op sid : -> SessId .
   eq (r1 = r2) = false .
   eq initSid(r4) = r3 .
-  eq validInitBody(r1,r3,r4) = true .
-  eq (r3 \in usedSession(s)) = true .
-  eq existUser(r2,idsServer(s)) = false .
+  eq validInitBody(r1,r2,r4) = true .
+  eq (r3 \in usedSID(s)) = true .
+  eq existUser(r2,idsS(s)) = false .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(recv-init(s,r1,r2,r3,r4,r5),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
@@ -2848,8 +2886,8 @@ open INV .
   op sid : -> SessId .
   eq (r1 = r2) = false .
   eq initSid(r4) = r3 .
-  eq validInitBody(r1,r3,r4) = true .
-  eq (r3 \in usedSession(s)) = false .
+  eq validInitBody(r1,r2,r4) = true .
+  eq (r3 \in usedSID(s)) = false .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(recv-init(s,r1,r2,r3,r4,r5),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
@@ -2873,7 +2911,7 @@ open INV .
   op sid : -> SessId .
   eq (r1 = r2) = false .
   eq initSid(r4) = r3 .
-  eq validInitBody(r1,r3,r4) = false .
+  eq validInitBody(r1,r2,r4) = false .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(recv-init(s,r1,r2,r3,r4,r5),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
@@ -3117,7 +3155,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq existUser(r1,idsServer(s)) = true .
+  eq existUser(r1,idsS(s)) = true .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(register(s,r1),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
@@ -3135,8 +3173,8 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq existUser(r1,idsServer(s)) = false .
-  eq (ECDHK-PriK(r1) \in usedSecret(s)) = true .
+  eq existUser(r1,idsS(s)) = false .
+  eq (ECDHK-PriK(r1) \in usedSK(s)) = true .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(register(s,r1),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
@@ -3154,9 +3192,9 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq existUser(r1,idsServer(s)) = false .
-  eq (ECDHK-PriK(r1) \in usedSecret(s)) = false .
-  eq (MLK-PriK(r1) \in usedSecret(s)) = true .
+  eq existUser(r1,idsS(s)) = false .
+  eq (ECDHK-PriK(r1) \in usedSK(s)) = false .
+  eq (MLK-PriK(r1) \in usedSK(s)) = true .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(register(s,r1),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
@@ -3174,9 +3212,9 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq existUser(r1,idsServer(s)) = false .
-  eq (ECDHK-PriK(r1) \in usedSecret(s)) = false .
-  eq (MLK-PriK(r1) \in usedSecret(s)) = false .
+  eq existUser(r1,idsS(s)) = false .
+  eq (ECDHK-PriK(r1) \in usedSK(s)) = false .
+  eq (MLK-PriK(r1) \in usedSK(s)) = false .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(register(s,r1),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
@@ -3274,8 +3312,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedSecret(s)) = true .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedSK(s)) = true .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
@@ -3301,9 +3339,9 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedSecret(s)) = false .
-  eq (r5 \in usedSecret(s)) = true .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = true .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
@@ -3329,10 +3367,10 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedSecret(s)) = false .
-  eq (r5 \in usedSecret(s)) = false .
-  eq (r6 \in usedRawMessages(s)) = true .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = true .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
@@ -3358,10 +3396,10 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedSecret(s)) = false .
-  eq (r5 \in usedSecret(s)) = false .
-  eq (r6 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
   eq rm = r6 .
   eq a = b .
@@ -3390,10 +3428,10 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedSecret(s)) = false .
-  eq (r5 \in usedSecret(s)) = false .
-  eq (r6 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
   eq rm = r6 .
   eq (a = b) = false .
@@ -3423,10 +3461,10 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedSecret(s)) = false .
-  eq (r5 \in usedSecret(s)) = false .
-  eq (r6 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
   eq rm = r6 .
   eq (a = b) = false .
@@ -3457,17 +3495,17 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedSecret(s)) = false .
-  eq (r5 \in usedSecret(s)) = false .
-  eq (r6 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
   eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
   eq (b = intru) = false .
   eq r6 = noRawMsg .
-  eq (noRawMsg \in usedRawMessages(s)) = true .
+  eq (noRawMsg \in usedRM(s)) = true .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
@@ -3493,17 +3531,17 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedSecret(s)) = false .
-  eq (r5 \in usedSecret(s)) = false .
-  eq (r6 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
   eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
   eq (b = intru) = false .
   eq r6 = noRawMsg .
-  eq (noRawMsg \in usedRawMessages(s)) = false .
+  eq (noRawMsg \in usedRM(s)) = false .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
@@ -3529,10 +3567,10 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedSecret(s)) = false .
-  eq (r5 \in usedSecret(s)) = false .
-  eq (r6 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
   eq rm = r6 .
   eq (a = b) = false .
@@ -3570,10 +3608,10 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedSecret(s)) = false .
-  eq (r5 \in usedSecret(s)) = false .
-  eq (r6 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
   eq rm = r6 .
   eq (a = b) = false .
@@ -3613,10 +3651,10 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedSecret(s)) = false .
-  eq (r5 \in usedSecret(s)) = false .
-  eq (r6 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
   eq rm = r6 .
   eq (a = b) = false .
@@ -3657,10 +3695,10 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedSecret(s)) = false .
-  eq (r5 \in usedSecret(s)) = false .
-  eq (r6 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
   eq rm = r6 .
   eq (a = b) = false .
@@ -3702,10 +3740,10 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedSecret(s)) = false .
-  eq (r5 \in usedSecret(s)) = false .
-  eq (r6 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
   eq rm = r6 .
   eq (a = b) = false .
@@ -3748,10 +3786,10 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedSecret(s)) = false .
-  eq (r5 \in usedSecret(s)) = false .
-  eq (r6 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
   eq rm = r6 .
   eq (a = b) = false .
@@ -3794,10 +3832,10 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedSecret(s)) = false .
-  eq (r5 \in usedSecret(s)) = false .
-  eq (r6 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
   eq rm = r6 .
   eq (a = b) = false .
@@ -3836,10 +3874,10 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedSecret(s)) = false .
-  eq (r5 \in usedSecret(s)) = false .
-  eq (r6 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
   eq rm = r6 .
   eq (a = b) = false .
@@ -3876,10 +3914,10 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedSecret(s)) = false .
-  eq (r5 \in usedSecret(s)) = false .
-  eq (r6 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
   eq rm = r6 .
   eq (a = b) = false .
@@ -3915,10 +3953,10 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedSecret(s)) = false .
-  eq (r5 \in usedSecret(s)) = false .
-  eq (r6 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
   eq rm = r6 .
   eq (a = b) = false .
@@ -3953,10 +3991,10 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedSecret(s)) = false .
-  eq (r5 \in usedSecret(s)) = false .
-  eq (r6 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
   eq rm = r6 .
   eq (a = b) = false .
@@ -3990,10 +4028,10 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedSecret(s)) = false .
-  eq (r5 \in usedSecret(s)) = false .
-  eq (r6 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
   eq rm = r6 .
   eq (a = b) = false .
@@ -4026,10 +4064,10 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedSecret(s)) = false .
-  eq (r5 \in usedSecret(s)) = false .
-  eq (r6 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
   eq (rm = r6) = false .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
@@ -4057,10 +4095,10 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedSecret(s)) = false .
-  eq (r5 \in usedSecret(s)) = false .
-  eq (r6 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = false .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
@@ -4087,7 +4125,7 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = false .
+  eq (r3 \in usedSID(s)) = false .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
@@ -4105,12 +4143,13 @@ open INV .
   op r3 : -> SessId .
   op r4 : -> ECDHK-SecretK .
   op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq r1 = r2 .
-  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-init(s,r1,r2,r3,r4,r5),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
 --> true
@@ -4127,15 +4166,16 @@ open INV .
   op r3 : -> SessId .
   op r4 : -> ECDHK-SecretK .
   op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 = r2) = false .
-  eq existUser(r1,idsServer(s)) = true .
-  eq existUser(r2,idsServer(s)) = true .
-  eq (r4 \in usedSecret(s)) = true .
-  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-init(s,r1,r2,r3,r4,r5),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+  eq existUser(r1,idsS(s)) = true .
+  eq existUser(r2,idsS(s)) = true .
+  eq (r4 \in usedSK(s)) = true .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
 --> true
@@ -4152,16 +4192,17 @@ open INV .
   op r3 : -> SessId .
   op r4 : -> ECDHK-SecretK .
   op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 = r2) = false .
-  eq existUser(r1,idsServer(s)) = true .
-  eq existUser(r2,idsServer(s)) = true .
-  eq (r4 \in usedSecret(s)) = false .
-  eq (r5 \in usedSecret(s)) = true .
-  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-init(s,r1,r2,r3,r4,r5),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+  eq existUser(r1,idsS(s)) = true .
+  eq existUser(r2,idsS(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = true .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
 --> true
@@ -4178,17 +4219,18 @@ open INV .
   op r3 : -> SessId .
   op r4 : -> ECDHK-SecretK .
   op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 = r2) = false .
-  eq existUser(r1,idsServer(s)) = true .
-  eq existUser(r2,idsServer(s)) = true .
-  eq (r4 \in usedSecret(s)) = false .
-  eq (r5 \in usedSecret(s)) = false .
-  eq (r3 \in usedSession(s)) = true .
-  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-init(s,r1,r2,r3,r4,r5),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+  eq existUser(r1,idsS(s)) = true .
+  eq existUser(r2,idsS(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
 --> true
@@ -4205,18 +4247,19 @@ open INV .
   op r3 : -> SessId .
   op r4 : -> ECDHK-SecretK .
   op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 = r2) = false .
-  eq existUser(r1,idsServer(s)) = true .
-  eq existUser(r2,idsServer(s)) = true .
-  eq (r4 \in usedSecret(s)) = false .
-  eq (r5 \in usedSecret(s)) = false .
-  eq (r3 \in usedSession(s)) = false .
-  eq validRegData(findRegData(r2,idsServer(s))) = true .
-  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-init(s,r1,r2,r3,r4,r5),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+  eq existUser(r1,idsS(s)) = true .
+  eq existUser(r2,idsS(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r3 \in usedSID(s)) = false .
+  eq validRegData(findRegData(r2,idsS(s))) = true .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
 --> true
@@ -4233,18 +4276,19 @@ open INV .
   op r3 : -> SessId .
   op r4 : -> ECDHK-SecretK .
   op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 = r2) = false .
-  eq existUser(r1,idsServer(s)) = true .
-  eq existUser(r2,idsServer(s)) = true .
-  eq (r4 \in usedSecret(s)) = false .
-  eq (r5 \in usedSecret(s)) = false .
-  eq (r3 \in usedSession(s)) = false .
-  eq validRegData(findRegData(r2,idsServer(s))) = false .
-  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-init(s,r1,r2,r3,r4,r5),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+  eq existUser(r1,idsS(s)) = true .
+  eq existUser(r2,idsS(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r3 \in usedSID(s)) = false .
+  eq validRegData(findRegData(r2,idsS(s))) = false .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
 --> true
@@ -4261,14 +4305,15 @@ open INV .
   op r3 : -> SessId .
   op r4 : -> ECDHK-SecretK .
   op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 = r2) = false .
-  eq existUser(r1,idsServer(s)) = true .
-  eq existUser(r2,idsServer(s)) = false .
-  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-init(s,r1,r2,r3,r4,r5),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+  eq existUser(r1,idsS(s)) = true .
+  eq existUser(r2,idsS(s)) = false .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
 --> true
@@ -4285,13 +4330,14 @@ open INV .
   op r3 : -> SessId .
   op r4 : -> ECDHK-SecretK .
   op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 = r2) = false .
-  eq existUser(r1,idsServer(s)) = false .
-  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-init(s,r1,r2,r3,r4,r5),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+  eq existUser(r1,idsS(s)) = false .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
 --> true
@@ -4380,8 +4426,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = true .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = true .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
@@ -4405,8 +4451,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq a = b .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
@@ -4432,8 +4478,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq a = intru .
@@ -4460,8 +4506,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -4489,14 +4535,14 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
   eq (b = intru) = false .
   eq r4 = noRawMsg .
-  eq (noRawMsg \in usedRawMessages(s)) = true .
+  eq (noRawMsg \in usedRM(s)) = true .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
@@ -4520,14 +4566,14 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
   eq (b = intru) = false .
   eq r4 = noRawMsg .
-  eq (noRawMsg \in usedRawMessages(s)) = false .
+  eq (noRawMsg \in usedRM(s)) = false .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
@@ -4551,8 +4597,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -4583,8 +4629,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -4617,8 +4663,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -4652,8 +4698,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -4688,8 +4734,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -4724,8 +4770,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -4761,8 +4807,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -4799,8 +4845,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -4837,8 +4883,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -4879,8 +4925,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -4922,8 +4968,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -4942,7 +4988,7 @@ open INV .
   eq r3 = sid .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
-  eq (sid \in usedSession(s)) = true .
+  eq (sid \in usedSID(s)) = true .
   eq ckAt(kdf-ck(zero-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk)),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq time(s) = n .
   eq (r4 \in knl(s)) = true .
@@ -4970,8 +5016,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -4990,7 +5036,7 @@ open INV .
   eq r3 = sid .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
-  eq (sid \in usedSession(s)) = true .
+  eq (sid \in usedSID(s)) = true .
   eq ckAt(kdf-ck(zero-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk)),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq time(s) = n .
   eq (r4 \in knl(s)) = true .
@@ -5019,8 +5065,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -5039,7 +5085,7 @@ open INV .
   eq r3 = sid .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
-  eq (sid \in usedSession(s)) = true .
+  eq (sid \in usedSID(s)) = true .
   eq ckAt(kdf-ck(zero-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk)),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq time(s) = n .
   eq (r4 \in knl(s)) = true .
@@ -5069,8 +5115,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -5089,7 +5135,7 @@ open INV .
   eq r3 = sid .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
-  eq (sid \in usedSession(s)) = true .
+  eq (sid \in usedSID(s)) = true .
   eq ckAt(kdf-ck(zero-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk)),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq time(s) = n .
   eq (r4 \in knl(s)) = true .
@@ -5120,8 +5166,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -5140,7 +5186,7 @@ open INV .
   eq r3 = sid .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
-  eq (sid \in usedSession(s)) = true .
+  eq (sid \in usedSID(s)) = true .
   eq ckAt(kdf-ck(zero-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk)),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq time(s) = n .
   eq (r4 \in knl(s)) = true .
@@ -5172,8 +5218,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -5192,7 +5238,7 @@ open INV .
   eq r3 = sid .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
-  eq (sid \in usedSession(s)) = true .
+  eq (sid \in usedSID(s)) = true .
   eq ckAt(kdf-ck(zero-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk)),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq time(s) = n .
   eq (r4 \in knl(s)) = true .
@@ -5224,8 +5270,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -5244,7 +5290,7 @@ open INV .
   eq r3 = sid .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
-  eq (sid \in usedSession(s)) = true .
+  eq (sid \in usedSID(s)) = true .
   eq ckAt(kdf-ck(zero-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk)),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq time(s) = n .
   eq (r4 \in knl(s)) = false .
@@ -5271,8 +5317,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -5291,7 +5337,7 @@ open INV .
   eq r3 = sid .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
-  eq (sid \in usedSession(s)) = true .
+  eq (sid \in usedSID(s)) = true .
   eq ckAt(kdf-ck(zero-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk)),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq (time(s) = n) = false .
   eq (r4 \in knl(s)) = true .
@@ -5319,8 +5365,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -5339,7 +5385,7 @@ open INV .
   eq r3 = sid .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
-  eq (sid \in usedSession(s)) = true .
+  eq (sid \in usedSID(s)) = true .
   eq ckAt(kdf-ck(zero-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk)),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq (time(s) = n) = false .
   eq (r4 \in knl(s)) = true .
@@ -5368,8 +5414,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -5388,7 +5434,7 @@ open INV .
   eq r3 = sid .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
-  eq (sid \in usedSession(s)) = true .
+  eq (sid \in usedSID(s)) = true .
   eq ckAt(kdf-ck(zero-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk)),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq (time(s) = n) = false .
   eq (r4 \in knl(s)) = true .
@@ -5418,8 +5464,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -5438,7 +5484,7 @@ open INV .
   eq r3 = sid .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
-  eq (sid \in usedSession(s)) = true .
+  eq (sid \in usedSID(s)) = true .
   eq ckAt(kdf-ck(zero-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk)),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq (time(s) = n) = false .
   eq (r4 \in knl(s)) = true .
@@ -5469,8 +5515,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -5489,7 +5535,7 @@ open INV .
   eq r3 = sid .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
-  eq (sid \in usedSession(s)) = true .
+  eq (sid \in usedSID(s)) = true .
   eq ckAt(kdf-ck(zero-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk)),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq (time(s) = n) = false .
   eq (r4 \in knl(s)) = true .
@@ -5521,8 +5567,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -5541,7 +5587,7 @@ open INV .
   eq r3 = sid .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
-  eq (sid \in usedSession(s)) = true .
+  eq (sid \in usedSID(s)) = true .
   eq ckAt(kdf-ck(zero-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk)),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq (time(s) = n) = false .
   eq (r4 \in knl(s)) = true .
@@ -5574,8 +5620,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -5594,7 +5640,7 @@ open INV .
   eq r3 = sid .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
-  eq (sid \in usedSession(s)) = true .
+  eq (sid \in usedSID(s)) = true .
   eq ckAt(kdf-ck(zero-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk)),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq (time(s) = n) = false .
   eq (r4 \in knl(s)) = true .
@@ -5627,8 +5673,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -5647,7 +5693,7 @@ open INV .
   eq r3 = sid .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
-  eq (sid \in usedSession(s)) = true .
+  eq (sid \in usedSID(s)) = true .
   eq ckAt(kdf-ck(zero-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk)),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq (time(s) = n) = false .
   eq (r4 \in knl(s)) = false .
@@ -5674,8 +5720,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -5694,7 +5740,7 @@ open INV .
   eq r3 = sid .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
-  eq (sid \in usedSession(s)) = true .
+  eq (sid \in usedSID(s)) = true .
   eq (ckAt(kdf-ck(zero-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk)),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid)) = false .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
@@ -5719,8 +5765,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -5739,7 +5785,7 @@ open INV .
   eq r3 = sid .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
-  eq (sid \in usedSession(s)) = false .
+  eq (sid \in usedSID(s)) = false .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
@@ -5763,8 +5809,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -5804,8 +5850,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -5847,8 +5893,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -5892,8 +5938,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -5938,8 +5984,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -5985,8 +6031,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6033,8 +6079,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6081,8 +6127,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6125,8 +6171,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6167,8 +6213,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6208,8 +6254,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6247,8 +6293,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6285,8 +6331,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6322,8 +6368,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6363,8 +6409,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6406,8 +6452,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6450,8 +6496,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6495,8 +6541,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6541,8 +6587,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6587,8 +6633,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6629,8 +6675,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6669,8 +6715,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6708,8 +6754,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6746,8 +6792,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6783,8 +6829,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6819,8 +6865,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6859,8 +6905,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6901,8 +6947,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6944,8 +6990,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6988,8 +7034,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7033,8 +7079,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7078,8 +7124,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7119,8 +7165,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7158,8 +7204,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7196,8 +7242,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7233,8 +7279,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7269,8 +7315,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7304,8 +7350,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7341,8 +7387,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7380,8 +7426,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7420,8 +7466,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7461,8 +7507,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7503,8 +7549,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7545,8 +7591,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7583,8 +7629,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7619,8 +7665,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7654,8 +7700,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7688,8 +7734,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7721,8 +7767,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7753,8 +7799,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -7784,8 +7830,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -7816,8 +7862,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -7849,8 +7895,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -7882,8 +7928,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -7914,8 +7960,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -7947,8 +7993,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -7980,8 +8026,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -8012,8 +8058,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -8049,8 +8095,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -8086,8 +8132,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -8122,8 +8168,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -8157,8 +8203,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -8191,8 +8237,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -8224,8 +8270,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -8253,8 +8299,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq (a2 = r1) = false .
@@ -8281,8 +8327,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = true .
-  eq (r4 \in usedRawMessages(s)) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedRM(s)) = false .
   eq (rm = r4) = false .
   eq (a = r1) = false .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
@@ -8308,8 +8354,8 @@ open INV .
   eq (r1 = r2) = false .
   eq (ck(s,r1,r2,r3) = noChainK) = false .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSession(s)) = false .
+  eq (r3 \in usedSID(s)) = false .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
---> Time taken is 32387ms
+--> Time taken is 32028ms
