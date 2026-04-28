@@ -25,11 +25,11 @@ The purpose of this repository is to formally model the main phases of PQ3 and v
 
 ## Installation
 
-To use PQ Open PGP and the IPSG tool, you'll need to install **CafeOBJ** and **IPSG Tool**. Follow the steps below for installation.
+To run this repo with IPSG tool support, you'll need to install **CafeOBJ** and **IPSG Tool**. Follow the steps below for installation.
 
 ### Install CafeOBJ
 
-CafeOBJ is a high-level, executable specification language that is used to define and simulate models for cryptographic systems in the PQ Open PGP framework.
+CafeOBJ is a high-level, executable specification language that is used to define and simulate models for cryptographic systems in PQ3 framework.
 
 1. Visit the official CafeOBJ website: [CafeOBJ Download](https://cafeobj.org/download/)
 2. Follow the installation instructions based on your operating system:
