@@ -1,0 +1,14 @@
+in pq3a.cafe
+in invariants.cafe
+
+--> false
+open INV .
+  op r1 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  eq (r1 \in leakscr(s)) = false .
+  eq rm = r1 .
+  eq (r1 \in knl(s)) = false .
+  eq (r1 \in usedRawMessages(s)) = false .
+  red inv1(s,rm) implies inv1(intruComMessage(s,r1),rm) .
+close

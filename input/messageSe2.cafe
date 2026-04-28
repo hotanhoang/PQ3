@@ -1,0 +1,12 @@
+ipsgopen INV .
+  inv inv1(S:Sys, RM:RawMsg) .
+  inv inv3(S:Sys, A2:Prin, A:Prin, B:Prin, SID:SessId, ESK:ECDHK-SecretK, MSK:MLK-SecretK, CK:ChainK, RM:RawMsg, Previous-RK:RootK, SB:SymBody, N:Nat) .
+  inv inv4(S:Sys, MK:MsgK, CK:ChainK) .
+  generate messageSe2(S:Sys, A2:Prin, A:Prin, B:Prin, SID:SessId, ESK:ECDHK-SecretK, MSK:MLK-SecretK, Previous-RK:RootK, CK:ChainK, RM:RawMsg, SB:SymBody, N:Nat)
+  induction on S:Sys .
+close
+set-output examples/PQ3-Protocol/inv/messageSe2.cafe .
+:save-proof .
+
+eof
+

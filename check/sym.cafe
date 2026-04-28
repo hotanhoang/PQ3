@@ -1,0 +1,80 @@
+in pq3.cafe
+
+open PQ3 .
+  ops p q : -> Prin .
+  ops ec ec1 ec2 : -> ECDHK-SecretK .
+  ops ml ml1 ml2 : -> MLK-SecretK .
+
+  op rm0 : -> RawMsg .
+
+  ops s0 s1 s2 s3 s4 : -> Sys .
+  op sid0 : -> SessId .
+  op ibInit : -> InitBody .
+  op ct0 : -> CipherT .
+  op sb0 : -> SymBody .
+
+  eq (p = q) = false .
+  eq (rm0 = noRawMsg) = false .
+  eq (ec = ec1) = false .
+  eq (ec = ec2) = false .
+  eq (ec1 = ec2) = false .
+  eq (ec1 = ECDHK-PriK(p)) = false .
+  eq (ec2 = ECDHK-PriK(p)) = false .
+  eq (ec = ECDHK-PriK(p)) = false .
+  eq (ec1 = ECDHK-PriK(q)) = false .
+  eq (ec2 = ECDHK-PriK(q)) = false .
+  eq (ec = ECDHK-PriK(q)) = false .
+
+  eq (ml = ml1) = false .
+  eq (ml = ml2) = false .
+  eq (ml1 = ml2) = false .
+  eq (ml1 = MLK-PriK(p)) = false .
+  eq (ml2 = MLK-PriK(p)) = false .
+  eq (ml = MLK-PriK(p)) = false .
+  eq (ml1 = MLK-PriK(q)) = false .
+  eq (ml2 = MLK-PriK(q)) = false .
+  eq (ml = MLK-PriK(q)) = false .
+
+  -- register bundle keys of p and q on IDS server
+  eq s0 = register(register(init, p), q) .
+
+  eq ibInit =
+    mkInitBody(
+      p,
+      sid0,
+      ct-ecdh(q, ec2),
+      ct-mlk(q, ml2),
+      ecdhk-keygen(ec2),
+      mlk-keygen(ml2),
+      hash(ecdhk-keygen(ec2), mlk-keygen(ml2))
+    ) .
+
+  -- sender side init
+  eq s1 = send-init(s0, p, q, sid0, ec2, ml2) .
+
+  -- receiver side init
+  eq s2 = recv-init(
+      s1,
+      p, q,
+      sid0,
+      ibInit,
+      time(s0)) .
+  -- check init
+  red rk(s1, p, q, sid0) = rk(s2, q, p, sid0) .   
+
+  -- sender side sym
+  eq ct0 = senc(mk-sym(ck(s2, p, q, sid0)), rm0) .
+  eq sb0 = mkSymBody(p, q, sid0, ns(s2, p, q, sid0), ct0) .  
+  eq s3 = send-sym(s2, p, q, sid0, rm0) .
+
+  -- -- receiver side sym
+  eq s4 = recv-sym(s3, p, q, sid0, sb0, time(s2)) .
+
+  -- -- check
+  red c-send-sym(s2, p, q, sid0, rm0) .
+  red c-recv-sym(s3, p, q, sid0, sb0, time(s2)) .
+
+  red rk(s4, q, p, sid0) = rk(s3, q, p, sid0) .
+  -- red rk(s4, q, p, sid0) .
+  -- red rk(s3, q, p, sid0) .
+close
