@@ -2,7 +2,7 @@ ipsgopen INV .
   generate inv1(S:Sys, RM:RawMsg)
   induction on S:Sys .
 close
-set-output examples/PQ3-Protocol/inv/inv1.cafe .
+set-output examples/PQ3/inv/inv1.cafe .
 :save-proof .
 
 eof

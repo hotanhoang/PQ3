@@ -5,7 +5,7 @@ ipsgopen INV .
   generate messageSe1(S:Sys, A2:Prin, A:Prin, B:Prin, SID:SessId, ESK:ECDHK-SecretK, MSK:MLK-SecretK, CK:ChainK, RM:RawMsg, SB:SymBody, N:Nat)
   induction on S:Sys .
 close
-set-output examples/PQ3-Protocol/inv/messageSe1.cafe .
+set-output examples/PQ3/inv/messageSe1.cafe .
 :save-proof .
 
 eof

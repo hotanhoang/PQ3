@@ -24,6 +24,310 @@ open INV .
   op msk : -> MLK-SecretK .
   op n : -> Nat .
   op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-SecretK .
+  op r7 : -> MLK-SecretK .
+  op r8 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in knl(s)) = true .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(fkAsymMsg(s,r1,r2,r3,r4,r5,r6,r7,r8),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-SecretK .
+  op r7 : -> MLK-SecretK .
+  op r8 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in knl(s)) = false .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(fkAsymMsg(s,r1,r2,r3,r4,r5,r6,r7,r8),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-SecretK .
+  op r7 : -> MLK-SecretK .
+  op r8 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = false .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(fkAsymMsg(s,r1,r2,r3,r4,r5,r6,r7,r8),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-SecretK .
+  op r7 : -> MLK-SecretK .
+  op r8 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = false .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(fkAsymMsg(s,r1,r2,r3,r4,r5,r6,r7,r8),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-SecretK .
+  op r7 : -> MLK-SecretK .
+  op r8 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = false .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(fkAsymMsg(s,r1,r2,r3,r4,r5,r6,r7,r8),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in knl(s)) = true .
+  eq (r9 \in knl(s)) = true .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in knl(s)) = true .
+  eq (r9 \in knl(s)) = false .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in knl(s)) = false .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = false .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = false .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = false .
+  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
@@ -1682,176 +1986,6 @@ open INV .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = false .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruECDHKDecaps(s,r1,r2),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op r1 : -> Prin .
-  op r2 : -> Prin .
-  op r3 : -> SessId .
-  op r4 : -> ECDHK-Cipher .
-  op r5 : -> MLK-Cipher .
-  op r6 : -> ECDHK-PublicK .
-  op r7 : -> MLK-PublicK .
-  op r8 : -> RawMsg .
-  op r9 : -> KeyHash .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r4 \in knl(s)) = true .
-  eq (r5 \in knl(s)) = true .
-  eq (r6 \in knl(s)) = true .
-  eq (r7 \in knl(s)) = true .
-  eq (r9 \in knl(s)) = true .
-  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruFKInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op r1 : -> Prin .
-  op r2 : -> Prin .
-  op r3 : -> SessId .
-  op r4 : -> ECDHK-Cipher .
-  op r5 : -> MLK-Cipher .
-  op r6 : -> ECDHK-PublicK .
-  op r7 : -> MLK-PublicK .
-  op r8 : -> RawMsg .
-  op r9 : -> KeyHash .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r4 \in knl(s)) = true .
-  eq (r5 \in knl(s)) = true .
-  eq (r6 \in knl(s)) = true .
-  eq (r7 \in knl(s)) = true .
-  eq (r9 \in knl(s)) = false .
-  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruFKInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op r1 : -> Prin .
-  op r2 : -> Prin .
-  op r3 : -> SessId .
-  op r4 : -> ECDHK-Cipher .
-  op r5 : -> MLK-Cipher .
-  op r6 : -> ECDHK-PublicK .
-  op r7 : -> MLK-PublicK .
-  op r8 : -> RawMsg .
-  op r9 : -> KeyHash .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r4 \in knl(s)) = true .
-  eq (r5 \in knl(s)) = true .
-  eq (r6 \in knl(s)) = true .
-  eq (r7 \in knl(s)) = false .
-  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruFKInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op r1 : -> Prin .
-  op r2 : -> Prin .
-  op r3 : -> SessId .
-  op r4 : -> ECDHK-Cipher .
-  op r5 : -> MLK-Cipher .
-  op r6 : -> ECDHK-PublicK .
-  op r7 : -> MLK-PublicK .
-  op r8 : -> RawMsg .
-  op r9 : -> KeyHash .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r4 \in knl(s)) = true .
-  eq (r5 \in knl(s)) = true .
-  eq (r6 \in knl(s)) = false .
-  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruFKInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op r1 : -> Prin .
-  op r2 : -> Prin .
-  op r3 : -> SessId .
-  op r4 : -> ECDHK-Cipher .
-  op r5 : -> MLK-Cipher .
-  op r6 : -> ECDHK-PublicK .
-  op r7 : -> MLK-PublicK .
-  op r8 : -> RawMsg .
-  op r9 : -> KeyHash .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r4 \in knl(s)) = true .
-  eq (r5 \in knl(s)) = false .
-  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruFKInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op r1 : -> Prin .
-  op r2 : -> Prin .
-  op r3 : -> SessId .
-  op r4 : -> ECDHK-Cipher .
-  op r5 : -> MLK-Cipher .
-  op r6 : -> ECDHK-PublicK .
-  op r7 : -> MLK-PublicK .
-  op r8 : -> RawMsg .
-  op r9 : -> KeyHash .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r4 \in knl(s)) = false .
-  red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(intruFKInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
 --> true
@@ -8358,4 +8492,4 @@ open INV .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
---> Time taken is 32028ms
+--> Time taken is 30973ms

@@ -2,7 +2,7 @@ ipsgopen INV .
   generate inv4(S:Sys, MK:MsgK, CK:ChainK)
   induction on S:Sys .
 close
-set-output examples/PQ3-Protocol/inv/inv4.cafe .
+set-output examples/PQ3/inv/inv4.cafe .
 :save-proof .
 
 eof

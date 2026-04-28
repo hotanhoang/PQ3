@@ -929,7 +929,7 @@ mod* PQ3 {
     vars MPK MPK0 Mlk-PK Mlk-PK2 : MLK-PublicK
     vars C1 Ecdhk-Ci : ECDHK-Cipher .
     vars C2 Mlk-Ci : MLK-Cipher .
-    vars RM ARM RM2 : RawMsg
+    vars RM RM2 : RawMsg
     var RD : RegData
     var IDS : IDSServer
     var PPS : PeerPKS
@@ -1276,18 +1276,18 @@ mod* PQ3 {
     -- Send asymmetric message
     -- *****************************************************************************************************
 
-    eq c-send-ar(S, P, Q, SID, ESK, MSK, ARM) =
+    eq c-send-ar(S, P, Q, SID, ESK, MSK, RM) =
         (SID \in usedSID(S)
         and not (P = Q)
         and not (ESK \in usedSK(S))
         and not (MSK \in usedSK(S))
-        and not (ARM \in usedRM(S))
+        and not (RM \in usedRM(S))
         and existPeerPK(P, Q, SID, peerPKS(S))
         and not (rk(S, P, Q, SID) = noRootK)
         and not (ck(S, P, Q, SID) = noChainK)) .
-    ceq usedSK(send-ar(S, P, Q, SID, ESK, MSK, ARM)) = ESK MSK usedSK(S) if c-send-ar(S, P, Q, SID, ESK, MSK, ARM) .
-    ceq usedSID(send-ar(S, P, Q, SID, ESK, MSK, ARM)) = usedSID(S) if c-send-ar(S, P, Q, SID, ESK, MSK, ARM) .
-    ceq nw(send-ar(S, P, Q, SID, ESK, MSK, ARM)) =
+    ceq usedSK(send-ar(S, P, Q, SID, ESK, MSK, RM)) = ESK MSK usedSK(S) if c-send-ar(S, P, Q, SID, ESK, MSK, RM) .
+    ceq usedSID(send-ar(S, P, Q, SID, ESK, MSK, RM)) = usedSID(S) if c-send-ar(S, P, Q, SID, ESK, MSK, RM) .
+    ceq nw(send-ar(S, P, Q, SID, ESK, MSK, RM)) =
         msg(P, P, Q,
             mkAsymBody(
                 P, Q, SID,
@@ -1302,22 +1302,22 @@ mod* PQ3 {
                         ar-ss-ecdh-send(S, P, Q, SID, ESK),
                         ar-ss-mlk-send(S, P, Q, SID, MSK)
                     )
-                ), ARM)
+                ), RM)
             ),
             time(S)),
         nw(S)
-        if c-send-ar(S, P, Q, SID, ESK, MSK, ARM) .
-    ceq idsS(send-ar(S, P, Q, SID, ESK, MSK, ARM)) = idsS(S) if c-send-ar(S, P, Q, SID, ESK, MSK, ARM) .
-    ceq usedRM(send-ar(S, P, Q, SID, ESK, MSK, ARM)) = ARM usedRM(S) if c-send-ar(S, P, Q, SID, ESK, MSK, ARM) .
-    ceq time(send-ar(S, P, Q, SID, ESK, MSK, ARM)) = s(time(S)) if c-send-ar(S, P, Q, SID, ESK, MSK, ARM) .
-    ceq rk(send-ar(S, P, Q, SID, ESK, MSK, ARM), A, B, SID2) = (if A = P and B = Q and SID2 = SID
+        if c-send-ar(S, P, Q, SID, ESK, MSK, RM) .
+    ceq idsS(send-ar(S, P, Q, SID, ESK, MSK, RM)) = idsS(S) if c-send-ar(S, P, Q, SID, ESK, MSK, RM) .
+    ceq usedRM(send-ar(S, P, Q, SID, ESK, MSK, RM)) = RM usedRM(S) if c-send-ar(S, P, Q, SID, ESK, MSK, RM) .
+    ceq time(send-ar(S, P, Q, SID, ESK, MSK, RM)) = s(time(S)) if c-send-ar(S, P, Q, SID, ESK, MSK, RM) .
+    ceq rk(send-ar(S, P, Q, SID, ESK, MSK, RM), A, B, SID2) = (if A = P and B = Q and SID2 = SID
         then ar-rk(
                     rk(S, P, Q, SID),
                     ar-ss-ecdh-send(S, P, Q, SID, ESK),
                     ar-ss-mlk-send(S, P, Q, SID, MSK)
                 )
-        else rk(S, A, B, SID2) fi) if c-send-ar(S, P, Q, SID, ESK, MSK, ARM) .
-    ceq ck(send-ar(S, P, Q, SID, ESK, MSK, ARM), A, B, SID2)
+        else rk(S, A, B, SID2) fi) if c-send-ar(S, P, Q, SID, ESK, MSK, RM) .
+    ceq ck(send-ar(S, P, Q, SID, ESK, MSK, RM), A, B, SID2)
         = (if A = P and B = Q and SID2 = SID
             then ar-ck(
                     rk(S, P, Q, SID),
@@ -1326,17 +1326,17 @@ mod* PQ3 {
                 )
             else ck(S, A, B, SID2)
             fi)
-        if c-send-ar(S, P, Q, SID, ESK, MSK, ARM) .
-    ceq ns(send-ar(S, P, Q, SID, ESK, MSK, ARM), A, B, SID2) = (if A = P and B = Q and SID2 = SID then 0 else ns(S, A, B, SID2) fi) if c-send-ar(S, P, Q, SID, ESK, MSK, ARM) .
-    ceq nr(send-ar(S, P, Q, SID, ESK, MSK, ARM), A, B, SID2) = nr(S, A, B, SID2) if c-send-ar(S, P, Q, SID, ESK, MSK, ARM) .
-    ceq peerPKS(send-ar(S, P, Q, SID, ESK, MSK, ARM)) = peerPKS(S) if c-send-ar(S, P, Q, SID, ESK, MSK, ARM) .
-    ceq selfSKS(send-ar(S, P, Q, SID, ESK, MSK, ARM))
+        if c-send-ar(S, P, Q, SID, ESK, MSK, RM) .
+    ceq ns(send-ar(S, P, Q, SID, ESK, MSK, RM), A, B, SID2) = (if A = P and B = Q and SID2 = SID then 0 else ns(S, A, B, SID2) fi) if c-send-ar(S, P, Q, SID, ESK, MSK, RM) .
+    ceq nr(send-ar(S, P, Q, SID, ESK, MSK, RM), A, B, SID2) = nr(S, A, B, SID2) if c-send-ar(S, P, Q, SID, ESK, MSK, RM) .
+    ceq peerPKS(send-ar(S, P, Q, SID, ESK, MSK, RM)) = peerPKS(S) if c-send-ar(S, P, Q, SID, ESK, MSK, RM) .
+    ceq selfSKS(send-ar(S, P, Q, SID, ESK, MSK, RM))
         = selfSKRec(P, Q, SID, ESK, MSK)
             removeSelfSK(P, Q, SID, selfSKS(S))
-        if c-send-ar(S, P, Q, SID, ESK, MSK, ARM) .
-    ceq leakscr(send-ar(S, P, Q, SID, ESK, MSK, ARM)) = leakscr(S) if c-send-ar(S, P, Q, SID, ESK, MSK, ARM) .
-    ceq knl(send-ar(S, P, Q, SID, ESK, MSK, ARM)) = ar-ct-ecdh-send(S, P, Q, SID, ESK) || ar-ct-mlk-send(S, P, Q, SID, MSK) || ecdhk-keygen(ESK) || mlk-keygen(MSK) || knl(S) if c-send-ar(S, P, Q, SID, ESK, MSK, ARM) . 
-    ceq send-ar(S, P, Q, SID, ESK, MSK, ARM) = S if not c-send-ar(S, P, Q, SID, ESK, MSK, ARM) .
+        if c-send-ar(S, P, Q, SID, ESK, MSK, RM) .
+    ceq leakscr(send-ar(S, P, Q, SID, ESK, MSK, RM)) = leakscr(S) if c-send-ar(S, P, Q, SID, ESK, MSK, RM) .
+    ceq knl(send-ar(S, P, Q, SID, ESK, MSK, RM)) = ar-ct-ecdh-send(S, P, Q, SID, ESK) || ar-ct-mlk-send(S, P, Q, SID, MSK) || ecdhk-keygen(ESK) || mlk-keygen(MSK) || knl(S) if c-send-ar(S, P, Q, SID, ESK, MSK, RM) . 
+    ceq send-ar(S, P, Q, SID, ESK, MSK, RM) = S if not c-send-ar(S, P, Q, SID, ESK, MSK, RM) .
 
     -- *****************************************************************************************************
     -- Receive asymmetric message
@@ -1396,7 +1396,7 @@ mod* PQ3 {
     ceq recv-ar(S, P, Q, SID, AB, N) = S if not c-recv-ar(S, P, Q, SID, AB, N) .
 
     -- intruder capabilities
-    -- 1. randomly selecting a ML-KEM secret key and a ECDH-KEM secret key
+    -- 1. randomly selecting a ML-KEM secret key
     op intruRandMLKEMSecret : Sys MLK-SecretK -> Sys {constr}
     op c-intruRandMLKEMSecret : Sys MLK-SecretK -> Bool
     eq c-intruRandMLKEMSecret(S, MSK) = not(MSK \in usedSK(S)) .
@@ -1416,7 +1416,7 @@ mod* PQ3 {
     ceq knl(intruRandMLKEMSecret(S, MSK)) = (MSK || mlk-keygen(MSK) || knl(S)) if c-intruRandMLKEMSecret(S, MSK) .
     ceq intruRandMLKEMSecret(S, MSK) = S if not c-intruRandMLKEMSecret(S, MSK) .
 
-    -- 2
+    -- 2. randomly selecting a ECDH-KEM secret key
     op intruRandECDHKEMSecret : Sys ECDHK-SecretK -> Sys {constr}
     op c-intruRandECDHKEMSecret : Sys ECDHK-SecretK -> Bool
     eq c-intruRandECDHKEMSecret(S, ESK) = not(ESK \in usedSK(S)) .
@@ -1477,7 +1477,7 @@ mod* PQ3 {
     ceq knl(intruComMessage(S, RM)) = (RM || knl(S)) if c-intruComMessage(S, RM) .
     ceq intruComMessage(S, RM) = S if not c-intruComMessage(S, RM) .   
 
-    -- 5. computing a KEM shared secret, KEM ciphertext (Encaps)
+    -- 5. computing a ECDH-KEM shared secret, ECDH-KEM ciphertext (Encaps)
     op intruCalcECDHKEMInfo : Sys ECDHK-SecretK ECDHK-PublicK -> Sys {constr}
     op c-intruCalcECDHKEMInfo : Sys ECDHK-SecretK ECDHK-PublicK -> Bool
     eq c-intruCalcECDHKEMInfo(S, ESK, EPK) = (ESK \in knl(S) and EPK \in knl(S)) .
@@ -1500,7 +1500,7 @@ mod* PQ3 {
         knl(S)) if c-intruCalcECDHKEMInfo(S, ESK, EPK) .
     ceq intruCalcECDHKEMInfo(S, ESK, EPK) = S if not c-intruCalcECDHKEMInfo(S, ESK, EPK) .
 
-    -- 6
+    -- 6. computing a ML-KEM shared secret, ML-KEM ciphertext (Encaps)
     op intruCalcMLKKEMInfo : Sys MLK-SecretK MLK-PublicK -> Sys {constr}
     op c-intruCalcMLKKEMInfo : Sys MLK-SecretK MLK-PublicK -> Bool
     eq c-intruCalcMLKKEMInfo(S, MSK, MPK) = (MSK \in knl(S) and MPK \in knl(S)) .
@@ -1728,7 +1728,7 @@ mod* PQ3 {
     eq leakscr(intruGetPubInfo(S, P)) = leakscr(S) .
     eq knl(intruGetPubInfo(S, P)) = (P || knl(S)) .
 
-    -- 16. fake message
+    -- 16. fake init message
     op fkInitMsg : Sys Prin Prin SessId ECDHK-Cipher MLK-Cipher ECDHK-PublicK MLK-PublicK RawMsg KeyHash -> Sys {constr}
     op c-fkInitMsg : Sys Prin Prin SessId ECDHK-Cipher MLK-Cipher ECDHK-PublicK MLK-PublicK RawMsg KeyHash -> Bool
     eq c-fkInitMsg(S, A, B, SID, C1, C2, EPK, MPK, RM, H) = (C1 \in knl(S) and C2 \in knl(S) and EPK \in knl(S) and MPK  \in knl(S) and H \in knl(S)) .
@@ -1752,6 +1752,45 @@ mod* PQ3 {
     eq leakscr(fkInitMsg(S, A, B, SID, C1, C2, EPK, MPK, RM, H)) = leakscr(S) .
     eq knl(fkInitMsg(S, A, B, SID, C1, C2, EPK, MPK, RM, H)) = knl(S) .
     ceq fkInitMsg(S, A, B, SID, C1, C2, EPK, MPK, RM, H) = S if not c-fkInitMsg(S, A, B, SID, C1, C2, EPK, MPK, RM, H) .
+
+    -- 16. fake asym message
+    op fkAsymMsg : Sys Prin Prin SessId ECDHK-Cipher MLK-Cipher ECDHK-SecretK MLK-SecretK RawMsg -> Sys {constr}
+    op c-fkAsymMsg : Sys Prin Prin SessId ECDHK-Cipher MLK-Cipher ECDHK-SecretK MLK-SecretK RawMsg -> Bool
+    eq c-fkAsymMsg(S, A, B, SID, C1, C2, ESK, MSK, RM) = (C1 \in knl(S) and C2 \in knl(S) and ESK \in knl(S) and MSK  \in knl(S)) .
+    eq usedSK(fkAsymMsg(S, A, B, SID, C1, C2, ESK, MSK, RM)) = usedSK(S) .
+    eq usedSID(fkAsymMsg(S, A, B, SID, C1, C2, ESK, MSK, RM)) = usedSID(S) .
+    eq usedRM(fkAsymMsg(S, A, B, SID, C1, C2, ESK, MSK, RM)) = usedRM(S) .
+    ceq nw(fkAsymMsg(S, A, B, SID, C1, C2, ESK, MSK, RM)) =
+        (msg(intru, A, B,
+            mkAsymBody(
+                A, B, SID,
+                ns(S, A, B, SID),
+                ar-ct-ecdh-send(S, A, B, SID, ESK),
+                ar-ct-mlk-send(S, A, B, SID, MSK),
+                ecdhk-keygen(ESK),
+                mlk-keygen(MSK),
+                aenc(mk-sym(
+                    ar-ck(
+                        rk(S, A, B, SID),
+                        ar-ss-ecdh-send(S, A, B, SID, ESK),
+                        ar-ss-mlk-send(S, A, B, SID, MSK)
+                    )
+                ), RM)
+            ),
+            time(S)),
+        nw(S))
+    if c-fkAsymMsg(S, A, B, SID, C1, C2, ESK, MSK, RM) .
+    eq idsS(fkAsymMsg(S, A, B, SID, C1, C2, ESK, MSK, RM)) = idsS(S) .
+    eq time(fkAsymMsg(S, A, B, SID, C1, C2, ESK, MSK, RM)) = s(time(S)) .
+    eq rk(fkAsymMsg(S, A, B, SID, C1, C2, ESK, MSK, RM), P, Q, SID2) = rk(S, P, Q, SID2) .
+    eq ck(fkAsymMsg(S, A, B, SID, C1, C2, ESK, MSK, RM), P, Q, SID2) = ck(S, P, Q, SID2) .
+    eq ns(fkAsymMsg(S, A, B, SID, C1, C2, ESK, MSK, RM), P, Q, SID2) = ns(S, P, Q, SID2) .
+    eq nr(fkAsymMsg(S, A, B, SID, C1, C2, ESK, MSK, RM), P, Q, SID2) = nr(S, P, Q, SID2) .
+    eq peerPKS(fkAsymMsg(S, A, B, SID, C1, C2, ESK, MSK, RM)) = peerPKS(S) .
+    eq selfSKS(fkAsymMsg(S, A, B, SID, C1, C2, ESK, MSK, RM)) = selfSKS(S) .
+    eq leakscr(fkAsymMsg(S, A, B, SID, C1, C2, ESK, MSK, RM)) = leakscr(S) .
+    eq knl(fkAsymMsg(S, A, B, SID, C1, C2, ESK, MSK, RM)) = knl(S) .
+    ceq fkAsymMsg(S, A, B, SID, C1, C2, ESK, MSK, RM) = S if not c-fkAsymMsg(S, A, B, SID, C1, C2, ESK, MSK, RM) .
 
     -- 17. compromise ratchet root key
     op intruComInitRootK : Sys ECDHK-ShareS MLK-ShareS -> Sys {constr}
