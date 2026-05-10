@@ -255,17 +255,6 @@ mod INV {
     eq inv4(S, MK, CK) = not(CK \in leakscr(S)) implies not (MK \in knl(S)) .
 
 
-    op inv6 : Sys ECDHK-ShareS MLK-ShareS -> Bool .
-    eq inv6(S, ESK-SS, MSK-SS) =
-        (
-            ESK-SS \in leakscr(S) and
-            MSK-SS \in leakscr(S)
-        )
-        implies
-        (
-            kdf-rk(zero-rk, ESK-SS, MSK-SS) \in leakscr(S)
-        ) .
-
 
    
 }
