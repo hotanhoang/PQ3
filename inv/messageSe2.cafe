@@ -966,6 +966,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
+  eq (ECDHK-PriK(r1) \in usedSK(s)) = true .
   eq (ECDHK-PriK(r1) \in leakscr(s)) = true .
   red messageSe2(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies messageSe2(intruComLongTermEcdhSK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -985,6 +986,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
+  eq (ECDHK-PriK(r1) \in usedSK(s)) = true .
   eq (ECDHK-PriK(r1) \in leakscr(s)) = false .
   red messageSe2(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies messageSe2(intruComLongTermEcdhSK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -1004,8 +1006,27 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
+  eq (ECDHK-PriK(r1) \in usedSK(s)) = false .
+  red messageSe2(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies messageSe2(intruComLongTermEcdhSK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
   eq (MLK-PriK(r1) \in usedSK(s)) = true .
-  eq (MLK-PriK(r1) \in leakscr(s)) = true .
+  eq (MLK-PriK(r1) \in'' leakscr(s)) = true .
   red messageSe2(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies messageSe2(intruComLongTermMlkSK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -1025,7 +1046,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (MLK-PriK(r1) \in usedSK(s)) = true .
-  eq (MLK-PriK(r1) \in leakscr(s)) = false .
+  eq (MLK-PriK(r1) \in'' leakscr(s)) = false .
   red messageSe2(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies messageSe2(intruComLongTermMlkSK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -8764,4 +8785,4 @@ open INV .
   red messageSe2(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies messageSe2(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
---> Time taken is 32006ms
+--> Time taken is 34214ms

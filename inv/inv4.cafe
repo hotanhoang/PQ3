@@ -597,6 +597,7 @@ open INV .
   op mk : -> MsgK .
   op r1 : -> Prin .
   op s : -> Sys .
+  eq (ECDHK-PriK(r1) \in usedSK(s)) = true .
   eq (ECDHK-PriK(r1) \in leakscr(s)) = true .
   red inv4(s,mk,ck) implies inv4(intruComLongTermEcdhSK(s,r1),mk,ck) .
 close
@@ -607,6 +608,7 @@ open INV .
   op mk : -> MsgK .
   op r1 : -> Prin .
   op s : -> Sys .
+  eq (ECDHK-PriK(r1) \in usedSK(s)) = true .
   eq (ECDHK-PriK(r1) \in leakscr(s)) = false .
   red inv4(s,mk,ck) implies inv4(intruComLongTermEcdhSK(s,r1),mk,ck) .
 close
@@ -617,8 +619,18 @@ open INV .
   op mk : -> MsgK .
   op r1 : -> Prin .
   op s : -> Sys .
+  eq (ECDHK-PriK(r1) \in usedSK(s)) = false .
+  red inv4(s,mk,ck) implies inv4(intruComLongTermEcdhSK(s,r1),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> Prin .
+  op s : -> Sys .
   eq (MLK-PriK(r1) \in usedSK(s)) = true .
-  eq (MLK-PriK(r1) \in leakscr(s)) = true .
+  eq (MLK-PriK(r1) \in'' leakscr(s)) = true .
   red inv4(s,mk,ck) implies inv4(intruComLongTermMlkSK(s,r1),mk,ck) .
 close
 
@@ -629,7 +641,7 @@ open INV .
   op r1 : -> Prin .
   op s : -> Sys .
   eq (MLK-PriK(r1) \in usedSK(s)) = true .
-  eq (MLK-PriK(r1) \in leakscr(s)) = false .
+  eq (MLK-PriK(r1) \in'' leakscr(s)) = false .
   red inv4(s,mk,ck) implies inv4(intruComLongTermMlkSK(s,r1),mk,ck) .
 close
 
@@ -1853,4 +1865,4 @@ open INV .
   red inv4(s,mk,ck) implies inv4(send-sym(s,r1,r2,r3,r4),mk,ck) .
 close
 
---> Time taken is 3048ms
+--> Time taken is 3234ms
