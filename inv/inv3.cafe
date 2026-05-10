@@ -3339,4 +3339,4 @@ open INV .
   red inv3(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv3(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
 close
 
---> Time taken is 3660ms
+--> Time taken is 3586ms

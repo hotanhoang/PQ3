@@ -8512,4 +8512,4 @@ open INV .
   red messageSe1(s,a2,a,b,sid,esk,msk,ck,rm,sb,n) implies messageSe1(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,ck,rm,sb,n) .
 close
 
---> Time taken is 32902ms
+--> Time taken is 30786ms
