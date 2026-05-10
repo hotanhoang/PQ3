@@ -623,6 +623,12 @@ mod! DATA {
     vars M1 M2 : MLK-SecretK .
     vars I1 I2 : ID-SecretK .
 
+    eq (MK = IDKT) = false .
+    eq (IDKT = MK) = false .
+
+    eq (MK = MLKT) = false .
+    eq (MLKT = MK) = false .
+
     eq (RM = MLKT) = false .
     eq (MLKT = RM) = false .
 
