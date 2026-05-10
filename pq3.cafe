@@ -617,14 +617,23 @@ mod! DATA {
     var SG   : Signature .
     vars LSKT MLKT : MLK-PriKeyTime .
     var IDKT : ID-PriKeyTime .
-
+    vars T : Nat .
 
     vars E1 E2 : ECDHK-SecretK .
     vars M1 M2 : MLK-SecretK .
     vars I1 I2 : ID-SecretK .
 
+    eq (RK = idPkNPair(I1, T)) = false .
+    eq (idPkNPair(I1, T) = RK) = false .
+
+    eq (RK = IDKT) = false .
+    eq (IDKT = RK) = false .
+
     eq (MK = IDKT) = false .
     eq (IDKT = MK) = false .
+
+    eq (RK = MLKT) = false .
+    eq (MLKT = RK) = false .
 
     eq (MK = MLKT) = false .
     eq (MLKT = MK) = false .
@@ -1905,15 +1914,15 @@ mod* PQ3 {
     eq usedRM(intruComInitRootK(S, ES0, MS0)) = usedRM(S) .
     eq nw(intruComInitRootK(S, ES0, MS0)) = nw(S) .
     eq idsS(intruComInitRootK(S, ES0, MS0)) = idsS(S) .
-    ceq time(intruComInitRootK(S, ES0, MS0)) = s(time(S)) if c-intruComInitRootK(S, ES0, MS0) .
+    eq time(intruComInitRootK(S, ES0, MS0)) = time(S) .
     eq rk(intruComInitRootK(S, ES0, MS0), A, B, SID) = rk(S, A, B, SID) .
     eq ck(intruComInitRootK(S, ES0, MS0), A, B, SID) = ck(S, A, B, SID) .
     eq ns(intruComInitRootK(S, ES0, MS0), A, B, SID) = ns(S, A, B, SID) .
     eq nr(intruComInitRootK(S, ES0, MS0), A, B, SID) = nr(S, A, B, SID) .
     eq peerPKS(intruComInitRootK(S, ES0, MS0)) = peerPKS(S) .
     eq selfSKS(intruComInitRootK(S, ES0, MS0)) = selfSKS(S) .
-    ceq leakscr(intruComInitRootK(S, ES0, MS0)) = init-rk(ES0, MS0) leakscr(S) if c-intruComInitRootK(S, ES0, MS0) .
-    ceq knl(intruComInitRootK(S, ES0, MS0)) = init-rk(ES0, MS0) || knl(S) if c-intruComInitRootK(S, ES0, MS0) .
+    eq leakscr(intruComInitRootK(S, ES0, MS0)) = leakscr(S) .
+    ceq knl(intruComInitRootK(S, ES0, MS0)) =  kdf-rk(zero-rk, ES0, MS0) || knl(S) if c-intruComInitRootK(S, ES0, MS0) .
     ceq intruComInitRootK(S, ES0, MS0) = S if not c-intruComInitRootK(S, ES0, MS0) .
 
     -- 18
@@ -1930,15 +1939,15 @@ mod* PQ3 {
     eq usedRM(intruComRootK(S, RK0, ES0, MS0)) = usedRM(S) .
     eq nw(intruComRootK(S, RK0, ES0, MS0)) = nw(S) .
     eq idsS(intruComRootK(S, RK0, ES0, MS0)) = idsS(S) .
-    ceq time(intruComRootK(S, RK0, ES0, MS0)) = s(time(S)) if c-intruComRootK(S, RK0, ES0, MS0) .
+    eq time(intruComRootK(S, RK0, ES0, MS0)) = time(S) .
     eq rk(intruComRootK(S, RK0, ES0, MS0), A, B, SID) = rk(S, A, B, SID) .
     eq ck(intruComRootK(S, RK0, ES0, MS0), A, B, SID) = ck(S, A, B, SID) .
     eq ns(intruComRootK(S, RK0, ES0, MS0), A, B, SID) = ns(S, A, B, SID) .
     eq nr(intruComRootK(S, RK0, ES0, MS0), A, B, SID) = nr(S, A, B, SID) .
     eq peerPKS(intruComRootK(S, RK0, ES0, MS0)) = peerPKS(S) .
     eq selfSKS(intruComRootK(S, RK0, ES0, MS0)) = selfSKS(S) .
-    ceq leakscr(intruComRootK(S, RK0, ES0, MS0)) = kdf-rk(RK0, ES0, MS0) leakscr(S) if c-intruComRootK(S, RK0, ES0, MS0) .
-    ceq knl(intruComRootK(S, RK0, ES0, MS0)) = ar-rk(RK0, ES0, MS0) || knl(S) if c-intruComRootK(S, RK0, ES0, MS0) .
+    eq leakscr(intruComRootK(S, RK0, ES0, MS0)) = leakscr(S) .
+    ceq knl(intruComRootK(S, RK0, ES0, MS0)) = kdf-rk(RK0, ES0, MS0) || knl(S) if c-intruComRootK(S, RK0, ES0, MS0) .
     ceq intruComRootK(S, RK0, ES0, MS0) = S if not c-intruComRootK(S, RK0, ES0, MS0) .
 
     -- 19 compromise init chain key 
@@ -1950,15 +1959,15 @@ mod* PQ3 {
     eq usedRM(intruComInitChainK(S, ES0, MS0)) = usedRM(S) .
     eq nw(intruComInitChainK(S, ES0, MS0)) = nw(S) .
     eq idsS(intruComInitChainK(S, ES0, MS0)) = idsS(S) .
-    ceq time(intruComInitChainK(S, ES0, MS0)) = s(time(S)) if c-intruComInitChainK(S, ES0, MS0) .
+    eq time(intruComInitChainK(S, ES0, MS0)) = time(S) .
     eq rk(intruComInitChainK(S, ES0, MS0), A, B, SID) = rk(S, A, B, SID) .
     eq ck(intruComInitChainK(S, ES0, MS0), A, B, SID) = ck(S, A, B, SID) .
     eq ns(intruComInitChainK(S, ES0, MS0), A, B, SID) = ns(S, A, B, SID) .
     eq nr(intruComInitChainK(S, ES0, MS0), A, B, SID) = nr(S, A, B, SID) .
     eq peerPKS(intruComInitChainK(S, ES0, MS0)) = peerPKS(S) .
     eq selfSKS(intruComInitChainK(S, ES0, MS0)) = selfSKS(S) .
-    ceq leakscr(intruComInitChainK(S, ES0, MS0)) = init-ck(ES0, MS0) leakscr(S) if c-intruComInitChainK(S, ES0, MS0) .
-    ceq knl(intruComInitChainK(S, ES0, MS0)) = init-ck(ES0, MS0) || knl(S) if c-intruComInitChainK(S, ES0, MS0) .
+    eq leakscr(intruComInitChainK(S, ES0, MS0)) = leakscr(S) .
+    ceq knl(intruComInitChainK(S, ES0, MS0)) = kdf-ck(zero-rk, ES0, MS0) || knl(S) if c-intruComInitChainK(S, ES0, MS0) .
     ceq intruComInitChainK(S, ES0, MS0) = S if not c-intruComInitChainK(S, ES0, MS0) .
 
     -- 20 compromise ratchet chain key
@@ -1976,15 +1985,15 @@ mod* PQ3 {
     eq usedRM(intruComChainK(S, RK0, ES0, MS0)) = usedRM(S) .
     eq nw(intruComChainK(S, RK0, ES0, MS0)) = nw(S) .
     eq idsS(intruComChainK(S, RK0, ES0, MS0)) = idsS(S) .
-    ceq time(intruComChainK(S, RK0, ES0, MS0)) = s(time(S)) if c-intruComChainK(S, RK0, ES0, MS0) .
+    eq time(intruComChainK(S, RK0, ES0, MS0)) = time(S) .
     eq rk(intruComChainK(S, RK0, ES0, MS0), A, B, SID) = rk(S, A, B, SID) .
     eq ck(intruComChainK(S, RK0, ES0, MS0), A, B, SID) = ck(S, A, B, SID) .
     eq ns(intruComChainK(S, RK0, ES0, MS0), A, B, SID) = ns(S, A, B, SID) .
     eq nr(intruComChainK(S, RK0, ES0, MS0), A, B, SID) = nr(S, A, B, SID) .
     eq peerPKS(intruComChainK(S, RK0, ES0, MS0)) = peerPKS(S) .
     eq selfSKS(intruComChainK(S, RK0, ES0, MS0)) = selfSKS(S) .
-    ceq leakscr(intruComChainK(S, RK0, ES0, MS0)) = kdf-ck(RK0, ES0, MS0) leakscr(S) if c-intruComChainK(S, RK0, ES0, MS0) .
-    ceq knl(intruComChainK(S, RK0, ES0, MS0)) = ar-ck(RK0, ES0, MS0) || knl(S) if c-intruComChainK(S, RK0, ES0, MS0) .
+    eq leakscr(intruComChainK(S, RK0, ES0, MS0)) = leakscr(S) .
+    ceq knl(intruComChainK(S, RK0, ES0, MS0)) = kdf-ck(RK0, ES0, MS0) || knl(S) if c-intruComChainK(S, RK0, ES0, MS0) .
     ceq intruComChainK(S, RK0, ES0, MS0) = S if not c-intruComChainK(S, RK0, ES0, MS0) .
 
     -- 21. intruder decrypts a symmetric message if it knows the exact message key used to encrypt it

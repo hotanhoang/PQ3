@@ -10019,4 +10019,4 @@ open INV .
   red forwardSeMLK2(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeMLK2(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
---> Time taken is 28552ms
+--> Time taken is 25438ms
