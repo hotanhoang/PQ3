@@ -574,8 +574,48 @@ open INV .
   op r1 : -> Prin .
   op rm : -> RawMsg .
   op s : -> Sys .
-  eq (MLK-PriK(r1) \in usedSK(s)) = true .
-  eq (MLK-PriK(r1) \in leakscr(s)) = true .
+  eq (sk(r1) \in' leakscr(s)) = true .
+  red inv1(s,rm) implies inv1(intruComLongTermIDSK(s,r1),rm) .
+close
+
+--> true
+open INV .
+  op r1 : -> Prin .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  eq (sk(r1) \in' leakscr(s)) = false .
+  eq rm = idPkNPair(sk(r1),time(s)) .
+  eq (inv1(s,idPkNPair(sk(r1),time(s))) implies inv1(intruComLongTermIDSK(s,r1),idPkNPair(sk(r1),time(s)))) = true .
+  red inv1(s,rm) implies inv1(intruComLongTermIDSK(s,r1),rm) .
+close
+
+--> false
+open INV .
+  op r1 : -> Prin .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  eq (sk(r1) \in' leakscr(s)) = false .
+  eq rm = idPkNPair(sk(r1),time(s)) .
+  eq (inv1(s,idPkNPair(sk(r1),time(s))) implies inv1(intruComLongTermIDSK(s,r1),idPkNPair(sk(r1),time(s)))) = false .
+  red inv1(s,rm) implies inv1(intruComLongTermIDSK(s,r1),rm) .
+close
+
+--> true
+open INV .
+  op r1 : -> Prin .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  eq (sk(r1) \in' leakscr(s)) = false .
+  eq (rm = idPkNPair(sk(r1),time(s))) = false .
+  red inv1(s,rm) implies inv1(intruComLongTermIDSK(s,r1),rm) .
+close
+
+--> true
+open INV .
+  op r1 : -> Prin .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  eq (MLK-PriK(r1) \in'' leakscr(s)) = true .
   red inv1(s,rm) implies inv1(intruComLongTermMlkSK(s,r1),rm) .
 close
 
@@ -584,8 +624,20 @@ open INV .
   op r1 : -> Prin .
   op rm : -> RawMsg .
   op s : -> Sys .
-  eq (MLK-PriK(r1) \in usedSK(s)) = true .
-  eq (MLK-PriK(r1) \in leakscr(s)) = false .
+  eq (MLK-PriK(r1) \in'' leakscr(s)) = false .
+  eq rm = pkNPair(MLK-PriK(r1),time(s)) .
+  eq (inv1(s,pkNPair(MLK-PriK(r1),time(s))) implies inv1(intruComLongTermMlkSK(s,r1),pkNPair(MLK-PriK(r1),time(s)))) = true .
+  red inv1(s,rm) implies inv1(intruComLongTermMlkSK(s,r1),rm) .
+close
+
+--> false
+open INV .
+  op r1 : -> Prin .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  eq (MLK-PriK(r1) \in'' leakscr(s)) = false .
+  eq rm = pkNPair(MLK-PriK(r1),time(s)) .
+  eq (inv1(s,pkNPair(MLK-PriK(r1),time(s))) implies inv1(intruComLongTermMlkSK(s,r1),pkNPair(MLK-PriK(r1),time(s)))) = false .
   red inv1(s,rm) implies inv1(intruComLongTermMlkSK(s,r1),rm) .
 close
 
@@ -594,7 +646,8 @@ open INV .
   op r1 : -> Prin .
   op rm : -> RawMsg .
   op s : -> Sys .
-  eq (MLK-PriK(r1) \in usedSK(s)) = false .
+  eq (MLK-PriK(r1) \in'' leakscr(s)) = false .
+  eq (rm = pkNPair(MLK-PriK(r1),time(s))) = false .
   red inv1(s,rm) implies inv1(intruComLongTermMlkSK(s,r1),rm) .
 close
 
@@ -1761,4 +1814,4 @@ open INV .
   red inv1(s,rm) implies inv1(send-sym(s,r1,r2,r3,r4),rm) .
 close
 
---> Time taken is 3132ms
+--> Time taken is 3524ms
