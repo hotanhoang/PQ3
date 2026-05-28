@@ -1,14 +1,22 @@
 in pq3a.cafe
 in invariants.cafe
 
+
 --> false
 open INV .
-  op r1 : -> RawMsg .
-  op rm : -> RawMsg .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> RootK .
+  op r2 : -> ECDHK-ShareS .
+  op r3 : -> MLK-ShareS .
+  op r4 : -> SessId .
   op s : -> Sys .
-  eq (r1 \in leakscr(s)) = false .
-  eq rm = r1 .
-  eq (r1 \in knl(s)) = false .
-  eq (r1 \in usedRawMessages(s)) = false .
-  red inv1(s,rm) implies inv1(intruComMessage(s,r1),rm) .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq (r3 \in knl(s)) = true .
+  eq ck = kdf-ck(r1,r2,r3,r4) .
+  eq mk = mk-sym(kdf-ck(r1,r2,r3,r4)) .
+  eq (kdf-ck(r1,r2,r3,r4) \in knl(s)) = false .
+  eq (mk-sym(kdf-ck(r1,r2,r3,r4)) \in knl(s)) = false .
+  red inv8(s,r1,r2,r3,r4) implies inv6(s,ck,mk) implies inv6(intruDeriveCK(s,r1,r2,r3,r4),ck,mk) .
 close

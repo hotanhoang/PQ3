@@ -316,86 +316,74 @@ close
 open INV .
   op ck : -> ChainK .
   op mk : -> MsgK .
-  op r1 : -> RootK .
-  op r2 : -> ECDHK-ShareS .
-  op r3 : -> MLK-ShareS .
+  op r1 : -> ChainK .
   op s : -> Sys .
-  eq r1 = noRootK .
-  red inv4(s,mk,ck) implies inv4(intruComChainK(s,r1,r2,r3),mk,ck) .
+  eq (r1 \inCK' leakscr(s)) = true .
+  red inv4(s,mk,ck) implies inv4(intruComChainK(s,r1),mk,ck) .
 close
 
 --> true
 open INV .
   op ck : -> ChainK .
   op mk : -> MsgK .
-  op r1 : -> RootK .
-  op r2 : -> ECDHK-ShareS .
-  op r3 : -> MLK-ShareS .
+  op r1 : -> ChainK .
   op s : -> Sys .
-  eq (r1 = noRootK) = false .
-  eq r1 = zero-rk .
-  red inv4(s,mk,ck) implies inv4(intruComChainK(s,r1,r2,r3),mk,ck) .
+  eq (r1 \inCK' leakscr(s)) = false .
+  eq ck = r1 .
+  eq mk = mk-sym(r1) .
+  eq (r1 \in knl(s)) = true .
+  red inv4(s,mk,ck) implies inv4(intruComChainK(s,r1),mk,ck) .
 close
 
 --> true
 open INV .
   op ck : -> ChainK .
   op mk : -> MsgK .
-  op r1 : -> RootK .
-  op r2 : -> ECDHK-ShareS .
-  op r3 : -> MLK-ShareS .
+  op r1 : -> ChainK .
   op s : -> Sys .
-  eq (r1 = noRootK) = false .
-  eq (r1 = zero-rk) = false .
-  eq (r1 \in leakscr(s)) = true .
-  eq (r2 \in leakscr(s)) = true .
-  eq (r3 \in leakscr(s)) = true .
-  red inv4(s,mk,ck) implies inv4(intruComChainK(s,r1,r2,r3),mk,ck) .
+  eq (r1 \inCK' leakscr(s)) = false .
+  eq ck = r1 .
+  eq mk = mk-sym(r1) .
+  eq (r1 \in knl(s)) = false .
+  eq (mk-sym(r1) \in knl(s)) = true .
+  red inv4(s,mk,ck) implies inv4(intruComChainK(s,r1),mk,ck) .
+close
+
+--> false
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> ChainK .
+  op s : -> Sys .
+  eq (r1 \inCK' leakscr(s)) = false .
+  eq ck = r1 .
+  eq mk = mk-sym(r1) .
+  eq (r1 \in knl(s)) = false .
+  eq (mk-sym(r1) \in knl(s)) = false .
+  red inv4(s,mk,ck) implies inv4(intruComChainK(s,r1),mk,ck) .
 close
 
 --> true
 open INV .
   op ck : -> ChainK .
   op mk : -> MsgK .
-  op r1 : -> RootK .
-  op r2 : -> ECDHK-ShareS .
-  op r3 : -> MLK-ShareS .
+  op r1 : -> ChainK .
   op s : -> Sys .
-  eq (r1 = noRootK) = false .
-  eq (r1 = zero-rk) = false .
-  eq (r1 \in leakscr(s)) = true .
-  eq (r2 \in leakscr(s)) = true .
-  eq (r3 \in leakscr(s)) = false .
-  red inv4(s,mk,ck) implies inv4(intruComChainK(s,r1,r2,r3),mk,ck) .
+  eq (r1 \inCK' leakscr(s)) = false .
+  eq ck = r1 .
+  eq (mk = mk-sym(r1)) = false .
+  red inv4(s,mk,ck) implies inv4(intruComChainK(s,r1),mk,ck) .
 close
 
 --> true
 open INV .
   op ck : -> ChainK .
   op mk : -> MsgK .
-  op r1 : -> RootK .
-  op r2 : -> ECDHK-ShareS .
-  op r3 : -> MLK-ShareS .
+  op r1 : -> ChainK .
   op s : -> Sys .
-  eq (r1 = noRootK) = false .
-  eq (r1 = zero-rk) = false .
-  eq (r1 \in leakscr(s)) = true .
-  eq (r2 \in leakscr(s)) = false .
-  red inv4(s,mk,ck) implies inv4(intruComChainK(s,r1,r2,r3),mk,ck) .
-close
-
---> true
-open INV .
-  op ck : -> ChainK .
-  op mk : -> MsgK .
-  op r1 : -> RootK .
-  op r2 : -> ECDHK-ShareS .
-  op r3 : -> MLK-ShareS .
-  op s : -> Sys .
-  eq (r1 = noRootK) = false .
-  eq (r1 = zero-rk) = false .
-  eq (r1 \in leakscr(s)) = false .
-  red inv4(s,mk,ck) implies inv4(intruComChainK(s,r1,r2,r3),mk,ck) .
+  eq (r1 \inCK' leakscr(s)) = false .
+  eq (ck = r1) = false .
+  red inv4(s,mk,ck) implies inv4(intruComChainK(s,r1),mk,ck) .
 close
 
 --> true
@@ -450,41 +438,6 @@ open INV .
   op s : -> Sys .
   eq (msg(r1,r1,r2,initBody(r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(ECDHK-PriK(r2)),mlk-keygen(MLK-PriK(r2))),ns(s,r1,r2,r3),ienc(mk-sym(ck(s,r1,r2,r3)),r6),sign(sk(r1),signedData(r1,r2,r3,ecdhk-encapsC(ecdhk-keygen(ECDHK-PriK(r2)),r4),mlk-encapsC(mlk-keygen(MLK-PriK(r2)),r5),ecdhk-keygen(r4),mlk-keygen(r5),hash(ecdhk-keygen(ECDHK-PriK(r2)),mlk-keygen(MLK-PriK(r2))),ns(s,r1,r2,r3),ienc(mk-sym(ck(s,r1,r2,r3)),r6)))),r7) \in nw(s)) = false .
   red inv4(s,mk,ck) implies inv4(intruComECDHKEMSS(s,r1,r2,r3,r4,r5,r6,r7),mk,ck) .
-close
-
---> true
-open INV .
-  op ck : -> ChainK .
-  op mk : -> MsgK .
-  op r1 : -> ECDHK-ShareS .
-  op r2 : -> MLK-ShareS .
-  op s : -> Sys .
-  eq (r1 \in leakscr(s)) = true .
-  eq (r2 \in leakscr(s)) = true .
-  red inv4(s,mk,ck) implies inv4(intruComInitChainK(s,r1,r2),mk,ck) .
-close
-
---> true
-open INV .
-  op ck : -> ChainK .
-  op mk : -> MsgK .
-  op r1 : -> ECDHK-ShareS .
-  op r2 : -> MLK-ShareS .
-  op s : -> Sys .
-  eq (r1 \in leakscr(s)) = true .
-  eq (r2 \in leakscr(s)) = false .
-  red inv4(s,mk,ck) implies inv4(intruComInitChainK(s,r1,r2),mk,ck) .
-close
-
---> true
-open INV .
-  op ck : -> ChainK .
-  op mk : -> MsgK .
-  op r1 : -> ECDHK-ShareS .
-  op r2 : -> MLK-ShareS .
-  op s : -> Sys .
-  eq (r1 \in leakscr(s)) = false .
-  red inv4(s,mk,ck) implies inv4(intruComInitChainK(s,r1,r2),mk,ck) .
 close
 
 --> true
@@ -562,10 +515,11 @@ open INV .
   op mk : -> MsgK .
   op r1 : -> ECDHK-ShareS .
   op r2 : -> MLK-ShareS .
+  op r3 : -> SessId .
   op s : -> Sys .
-  eq (r1 \in leakscr(s)) = true .
-  eq (r2 \in leakscr(s)) = true .
-  red inv4(s,mk,ck) implies inv4(intruComInitRootK(s,r1,r2),mk,ck) .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  red inv4(s,mk,ck) implies inv4(intruComInitRootK(s,r1,r2,r3),mk,ck) .
 close
 
 --> true
@@ -574,10 +528,11 @@ open INV .
   op mk : -> MsgK .
   op r1 : -> ECDHK-ShareS .
   op r2 : -> MLK-ShareS .
+  op r3 : -> SessId .
   op s : -> Sys .
-  eq (r1 \in leakscr(s)) = true .
-  eq (r2 \in leakscr(s)) = false .
-  red inv4(s,mk,ck) implies inv4(intruComInitRootK(s,r1,r2),mk,ck) .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = false .
+  red inv4(s,mk,ck) implies inv4(intruComInitRootK(s,r1,r2,r3),mk,ck) .
 close
 
 --> true
@@ -586,9 +541,10 @@ open INV .
   op mk : -> MsgK .
   op r1 : -> ECDHK-ShareS .
   op r2 : -> MLK-ShareS .
+  op r3 : -> SessId .
   op s : -> Sys .
-  eq (r1 \in leakscr(s)) = false .
-  red inv4(s,mk,ck) implies inv4(intruComInitRootK(s,r1,r2),mk,ck) .
+  eq (r1 \in knl(s)) = false .
+  red inv4(s,mk,ck) implies inv4(intruComInitRootK(s,r1,r2,r3),mk,ck) .
 close
 
 --> true
@@ -699,12 +655,33 @@ close
 open INV .
   op ck : -> ChainK .
   op mk : -> MsgK .
+  op r1 : -> MsgK .
+  op s : -> Sys .
+  eq (r1 \in leakscr(s)) = true .
+  red inv4(s,mk,ck) implies inv4(intruComMsgK(s,r1),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> MsgK .
+  op s : -> Sys .
+  eq (r1 \in leakscr(s)) = false .
+  red inv4(s,mk,ck) implies inv4(intruComMsgK(s,r1),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
   op r1 : -> RootK .
   op r2 : -> ECDHK-ShareS .
   op r3 : -> MLK-ShareS .
+  op r4 : -> SessId .
   op s : -> Sys .
   eq r1 = noRootK .
-  red inv4(s,mk,ck) implies inv4(intruComRootK(s,r1,r2,r3),mk,ck) .
+  red inv4(s,mk,ck) implies inv4(intruComRootK(s,r1,r2,r3,r4),mk,ck) .
 close
 
 --> true
@@ -714,10 +691,16 @@ open INV .
   op r1 : -> RootK .
   op r2 : -> ECDHK-ShareS .
   op r3 : -> MLK-ShareS .
+  op r4 : -> SessId .
   op s : -> Sys .
   eq (r1 = noRootK) = false .
-  eq r1 = zero-rk .
-  red inv4(s,mk,ck) implies inv4(intruComRootK(s,r1,r2,r3),mk,ck) .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq (r3 \in knl(s)) = true .
+  eq ck = kdf-ck(r1,r2,r3,r4) .
+  eq mk = mk-sym(kdf-ck(r1,r2,r3,r4)) .
+  eq (kdf-ck(r1,r2,r3,r4) \in knl(s)) = true .
+  red inv4(s,mk,ck) implies inv4(intruComRootK(s,r1,r2,r3,r4),mk,ck) .
 close
 
 --> true
@@ -727,13 +710,37 @@ open INV .
   op r1 : -> RootK .
   op r2 : -> ECDHK-ShareS .
   op r3 : -> MLK-ShareS .
+  op r4 : -> SessId .
   op s : -> Sys .
   eq (r1 = noRootK) = false .
-  eq (r1 = zero-rk) = false .
-  eq (r1 \in leakscr(s)) = true .
-  eq (r2 \in leakscr(s)) = true .
-  eq (r3 \in leakscr(s)) = true .
-  red inv4(s,mk,ck) implies inv4(intruComRootK(s,r1,r2,r3),mk,ck) .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq (r3 \in knl(s)) = true .
+  eq ck = kdf-ck(r1,r2,r3,r4) .
+  eq mk = mk-sym(kdf-ck(r1,r2,r3,r4)) .
+  eq (kdf-ck(r1,r2,r3,r4) \in knl(s)) = false .
+  eq (mk-sym(kdf-ck(r1,r2,r3,r4)) \in knl(s)) = true .
+  red inv4(s,mk,ck) implies inv4(intruComRootK(s,r1,r2,r3,r4),mk,ck) .
+close
+
+--> false
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> RootK .
+  op r2 : -> ECDHK-ShareS .
+  op r3 : -> MLK-ShareS .
+  op r4 : -> SessId .
+  op s : -> Sys .
+  eq (r1 = noRootK) = false .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq (r3 \in knl(s)) = true .
+  eq ck = kdf-ck(r1,r2,r3,r4) .
+  eq mk = mk-sym(kdf-ck(r1,r2,r3,r4)) .
+  eq (kdf-ck(r1,r2,r3,r4) \in knl(s)) = false .
+  eq (mk-sym(kdf-ck(r1,r2,r3,r4)) \in knl(s)) = false .
+  red inv4(s,mk,ck) implies inv4(intruComRootK(s,r1,r2,r3,r4),mk,ck) .
 close
 
 --> true
@@ -743,13 +750,15 @@ open INV .
   op r1 : -> RootK .
   op r2 : -> ECDHK-ShareS .
   op r3 : -> MLK-ShareS .
+  op r4 : -> SessId .
   op s : -> Sys .
   eq (r1 = noRootK) = false .
-  eq (r1 = zero-rk) = false .
-  eq (r1 \in leakscr(s)) = true .
-  eq (r2 \in leakscr(s)) = true .
-  eq (r3 \in leakscr(s)) = false .
-  red inv4(s,mk,ck) implies inv4(intruComRootK(s,r1,r2,r3),mk,ck) .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq (r3 \in knl(s)) = true .
+  eq ck = kdf-ck(r1,r2,r3,r4) .
+  eq (mk = mk-sym(kdf-ck(r1,r2,r3,r4))) = false .
+  red inv4(s,mk,ck) implies inv4(intruComRootK(s,r1,r2,r3,r4),mk,ck) .
 close
 
 --> true
@@ -759,12 +768,14 @@ open INV .
   op r1 : -> RootK .
   op r2 : -> ECDHK-ShareS .
   op r3 : -> MLK-ShareS .
+  op r4 : -> SessId .
   op s : -> Sys .
   eq (r1 = noRootK) = false .
-  eq (r1 = zero-rk) = false .
-  eq (r1 \in leakscr(s)) = true .
-  eq (r2 \in leakscr(s)) = false .
-  red inv4(s,mk,ck) implies inv4(intruComRootK(s,r1,r2,r3),mk,ck) .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq (r3 \in knl(s)) = true .
+  eq (ck = kdf-ck(r1,r2,r3,r4)) = false .
+  red inv4(s,mk,ck) implies inv4(intruComRootK(s,r1,r2,r3,r4),mk,ck) .
 close
 
 --> true
@@ -774,80 +785,202 @@ open INV .
   op r1 : -> RootK .
   op r2 : -> ECDHK-ShareS .
   op r3 : -> MLK-ShareS .
+  op r4 : -> SessId .
   op s : -> Sys .
   eq (r1 = noRootK) = false .
-  eq (r1 = zero-rk) = false .
-  eq (r1 \in leakscr(s)) = false .
-  red inv4(s,mk,ck) implies inv4(intruComRootK(s,r1,r2,r3),mk,ck) .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq (r3 \in knl(s)) = false .
+  red inv4(s,mk,ck) implies inv4(intruComRootK(s,r1,r2,r3,r4),mk,ck) .
 close
 
 --> true
 open INV .
   op ck : -> ChainK .
   op mk : -> MsgK .
-  op r1 : -> Prin .
-  op r2 : -> Prin .
-  op r3 : -> Prin .
-  op r4 : -> SymBody .
-  op r5 : -> Nat .
-  op r6 : -> MsgK .
-  op r7 : -> RawMsg .
+  op r1 : -> RootK .
+  op r2 : -> ECDHK-ShareS .
+  op r3 : -> MLK-ShareS .
+  op r4 : -> SessId .
   op s : -> Sys .
-  eq (r6 \in knl(s)) = true .
-  eq (r7 \in usedRM(s)) = true .
-  eq (senc(r6,r7) \in knl(s)) = true .
-  red inv4(s,mk,ck) implies inv4(intruDecMsg1(s,r1,r2,r3,r4,r5,r6,r7),mk,ck) .
+  eq (r1 = noRootK) = false .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = false .
+  red inv4(s,mk,ck) implies inv4(intruComRootK(s,r1,r2,r3,r4),mk,ck) .
 close
 
 --> true
 open INV .
   op ck : -> ChainK .
   op mk : -> MsgK .
-  op r1 : -> Prin .
-  op r2 : -> Prin .
-  op r3 : -> Prin .
-  op r4 : -> SymBody .
-  op r5 : -> Nat .
-  op r6 : -> MsgK .
-  op r7 : -> RawMsg .
+  op r1 : -> RootK .
+  op r2 : -> ECDHK-ShareS .
+  op r3 : -> MLK-ShareS .
+  op r4 : -> SessId .
   op s : -> Sys .
-  eq (r6 \in knl(s)) = true .
-  eq (r7 \in usedRM(s)) = true .
-  eq (senc(r6,r7) \in knl(s)) = false .
-  red inv4(s,mk,ck) implies inv4(intruDecMsg1(s,r1,r2,r3,r4,r5,r6,r7),mk,ck) .
+  eq (r1 = noRootK) = false .
+  eq (r1 \in knl(s)) = false .
+  red inv4(s,mk,ck) implies inv4(intruComRootK(s,r1,r2,r3,r4),mk,ck) .
 close
 
 --> true
 open INV .
   op ck : -> ChainK .
   op mk : -> MsgK .
-  op r1 : -> Prin .
-  op r2 : -> Prin .
-  op r3 : -> Prin .
-  op r4 : -> SymBody .
-  op r5 : -> Nat .
-  op r6 : -> MsgK .
-  op r7 : -> RawMsg .
+  op r1 : -> MsgK .
+  op r2 : -> ChainK .
+  op r3 : -> RawMsg .
   op s : -> Sys .
-  eq (r6 \in knl(s)) = true .
-  eq (r7 \in usedRM(s)) = false .
-  red inv4(s,mk,ck) implies inv4(intruDecMsg1(s,r1,r2,r3,r4,r5,r6,r7),mk,ck) .
+  eq (r1 \in knl(s)) = true .
+  eq (r3 \in usedRM(s)) = true .
+  eq (senc(r1,r3) \in knl(s)) = true .
+  red inv4(s,mk,ck) implies inv4(intruDecMsg(s,r1,r2,r3),mk,ck) .
 close
 
 --> true
 open INV .
   op ck : -> ChainK .
   op mk : -> MsgK .
-  op r1 : -> Prin .
-  op r2 : -> Prin .
-  op r3 : -> Prin .
-  op r4 : -> SymBody .
-  op r5 : -> Nat .
-  op r6 : -> MsgK .
-  op r7 : -> RawMsg .
+  op r1 : -> MsgK .
+  op r2 : -> ChainK .
+  op r3 : -> RawMsg .
   op s : -> Sys .
-  eq (r6 \in knl(s)) = false .
-  red inv4(s,mk,ck) implies inv4(intruDecMsg1(s,r1,r2,r3,r4,r5,r6,r7),mk,ck) .
+  eq (r1 \in knl(s)) = true .
+  eq (r3 \in usedRM(s)) = true .
+  eq (senc(r1,r3) \in knl(s)) = false .
+  red inv4(s,mk,ck) implies inv4(intruDecMsg(s,r1,r2,r3),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> MsgK .
+  op r2 : -> ChainK .
+  op r3 : -> RawMsg .
+  op s : -> Sys .
+  eq (r1 \in knl(s)) = true .
+  eq (r3 \in usedRM(s)) = false .
+  red inv4(s,mk,ck) implies inv4(intruDecMsg(s,r1,r2,r3),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> MsgK .
+  op r2 : -> ChainK .
+  op r3 : -> RawMsg .
+  op s : -> Sys .
+  eq (r1 \in knl(s)) = false .
+  red inv4(s,mk,ck) implies inv4(intruDecMsg(s,r1,r2,r3),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> ChainK .
+  op s : -> Sys .
+  eq r1 = noChainK .
+  red inv4(s,mk,ck) implies inv4(intruDeriveCKAndMsgK(s,r1),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> ChainK .
+  op s : -> Sys .
+  eq (r1 = noChainK) = false .
+  eq (r1 \in knl(s)) = true .
+  eq ck = nextck(r1) .
+  eq mk = mk-sym(nextck(r1)) .
+  eq nextck(r1) = r1 .
+  red inv4(s,mk,ck) implies inv4(intruDeriveCKAndMsgK(s,r1),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> ChainK .
+  op s : -> Sys .
+  eq (r1 = noChainK) = false .
+  eq (r1 \in knl(s)) = true .
+  eq ck = nextck(r1) .
+  eq mk = mk-sym(nextck(r1)) .
+  eq (nextck(r1) = r1) = false .
+  eq (nextck(r1) \in knl(s)) = true .
+  red inv4(s,mk,ck) implies inv4(intruDeriveCKAndMsgK(s,r1),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> ChainK .
+  op s : -> Sys .
+  eq (r1 = noChainK) = false .
+  eq (r1 \in knl(s)) = true .
+  eq ck = nextck(r1) .
+  eq mk = mk-sym(nextck(r1)) .
+  eq (nextck(r1) = r1) = false .
+  eq (nextck(r1) \in knl(s)) = false .
+  eq (mk-sym(nextck(r1)) \in knl(s)) = true .
+  red inv4(s,mk,ck) implies inv4(intruDeriveCKAndMsgK(s,r1),mk,ck) .
+close
+
+--> false
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> ChainK .
+  op s : -> Sys .
+  eq (r1 = noChainK) = false .
+  eq (r1 \in knl(s)) = true .
+  eq ck = nextck(r1) .
+  eq mk = mk-sym(nextck(r1)) .
+  eq (nextck(r1) = r1) = false .
+  eq (nextck(r1) \in knl(s)) = false .
+  eq (mk-sym(nextck(r1)) \in knl(s)) = false .
+  red inv4(s,mk,ck) implies inv4(intruDeriveCKAndMsgK(s,r1),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> ChainK .
+  op s : -> Sys .
+  eq (r1 = noChainK) = false .
+  eq (r1 \in knl(s)) = true .
+  eq ck = nextck(r1) .
+  eq (mk = mk-sym(nextck(r1))) = false .
+  red inv4(s,mk,ck) implies inv4(intruDeriveCKAndMsgK(s,r1),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> ChainK .
+  op s : -> Sys .
+  eq (r1 = noChainK) = false .
+  eq (r1 \in knl(s)) = true .
+  eq (ck = nextck(r1)) = false .
+  red inv4(s,mk,ck) implies inv4(intruDeriveCKAndMsgK(s,r1),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> ChainK .
+  op s : -> Sys .
+  eq (r1 = noChainK) = false .
+  eq (r1 \in knl(s)) = false .
+  red inv4(s,mk,ck) implies inv4(intruDeriveCKAndMsgK(s,r1),mk,ck) .
 close
 
 --> true
@@ -1028,7 +1161,7 @@ open INV .
   op s : -> Sys .
   eq asymSid(r4) = r3 .
   eq (ck(s,r2,r1,r3) = noChainK) = false .
-  eq asymDec(mk-sym(kdf-ck(rk(s,r2,r1,r3),ecdhk-decaps(asymEcdhCt(r4),findSelfEcdhSK(r2,r1,r3,selfSKS(s))),mlk-decaps(asymMlkCt(r4),findSelfMlkSK(r2,r1,r3,selfSKS(s))))),r4) = noRawMsg .
+  eq asymDec(mk-sym(kdf-ck(rk(s,r2,r1,r3),ecdhk-decaps(asymEcdhCt(r4),findSelfEcdhSK(r2,r1,r3,selfSKS(s))),mlk-decaps(asymMlkCt(r4),findSelfMlkSK(r2,r1,r3,selfSKS(s))),r3)),r4) = noRawMsg .
   red inv4(s,mk,ck) implies inv4(recv-ar(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
@@ -1044,7 +1177,7 @@ open INV .
   op s : -> Sys .
   eq asymSid(r4) = r3 .
   eq (ck(s,r2,r1,r3) = noChainK) = false .
-  eq (asymDec(mk-sym(kdf-ck(rk(s,r2,r1,r3),ecdhk-decaps(asymEcdhCt(r4),findSelfEcdhSK(r2,r1,r3,selfSKS(s))),mlk-decaps(asymMlkCt(r4),findSelfMlkSK(r2,r1,r3,selfSKS(s))))),r4) = noRawMsg) = false .
+  eq (asymDec(mk-sym(kdf-ck(rk(s,r2,r1,r3),ecdhk-decaps(asymEcdhCt(r4),findSelfEcdhSK(r2,r1,r3,selfSKS(s))),mlk-decaps(asymMlkCt(r4),findSelfMlkSK(r2,r1,r3,selfSKS(s))),r3)),r4) = noRawMsg) = false .
   eq rk(s,r2,r1,r3) = noRootK .
   red inv4(s,mk,ck) implies inv4(recv-ar(s,r1,r2,r3,r4,r5),mk,ck) .
 close
@@ -1061,7 +1194,7 @@ open INV .
   op s : -> Sys .
   eq asymSid(r4) = r3 .
   eq (ck(s,r2,r1,r3) = noChainK) = false .
-  eq (asymDec(mk-sym(kdf-ck(rk(s,r2,r1,r3),ecdhk-decaps(asymEcdhCt(r4),findSelfEcdhSK(r2,r1,r3,selfSKS(s))),mlk-decaps(asymMlkCt(r4),findSelfMlkSK(r2,r1,r3,selfSKS(s))))),r4) = noRawMsg) = false .
+  eq (asymDec(mk-sym(kdf-ck(rk(s,r2,r1,r3),ecdhk-decaps(asymEcdhCt(r4),findSelfEcdhSK(r2,r1,r3,selfSKS(s))),mlk-decaps(asymMlkCt(r4),findSelfMlkSK(r2,r1,r3,selfSKS(s))),r3)),r4) = noRawMsg) = false .
   eq (rk(s,r2,r1,r3) = noRootK) = false .
   eq validAsymBody(r1,r2,r4) = true .
   eq existSelfSK(r2,r1,r3,selfSKS(s)) = true .
@@ -1082,7 +1215,7 @@ open INV .
   op s : -> Sys .
   eq asymSid(r4) = r3 .
   eq (ck(s,r2,r1,r3) = noChainK) = false .
-  eq (asymDec(mk-sym(kdf-ck(rk(s,r2,r1,r3),ecdhk-decaps(asymEcdhCt(r4),findSelfEcdhSK(r2,r1,r3,selfSKS(s))),mlk-decaps(asymMlkCt(r4),findSelfMlkSK(r2,r1,r3,selfSKS(s))))),r4) = noRawMsg) = false .
+  eq (asymDec(mk-sym(kdf-ck(rk(s,r2,r1,r3),ecdhk-decaps(asymEcdhCt(r4),findSelfEcdhSK(r2,r1,r3,selfSKS(s))),mlk-decaps(asymMlkCt(r4),findSelfMlkSK(r2,r1,r3,selfSKS(s))),r3)),r4) = noRawMsg) = false .
   eq (rk(s,r2,r1,r3) = noRootK) = false .
   eq validAsymBody(r1,r2,r4) = true .
   eq existSelfSK(r2,r1,r3,selfSKS(s)) = true .
@@ -1103,7 +1236,7 @@ open INV .
   op s : -> Sys .
   eq asymSid(r4) = r3 .
   eq (ck(s,r2,r1,r3) = noChainK) = false .
-  eq (asymDec(mk-sym(kdf-ck(rk(s,r2,r1,r3),ecdhk-decaps(asymEcdhCt(r4),findSelfEcdhSK(r2,r1,r3,selfSKS(s))),mlk-decaps(asymMlkCt(r4),findSelfMlkSK(r2,r1,r3,selfSKS(s))))),r4) = noRawMsg) = false .
+  eq (asymDec(mk-sym(kdf-ck(rk(s,r2,r1,r3),ecdhk-decaps(asymEcdhCt(r4),findSelfEcdhSK(r2,r1,r3,selfSKS(s))),mlk-decaps(asymMlkCt(r4),findSelfMlkSK(r2,r1,r3,selfSKS(s))),r3)),r4) = noRawMsg) = false .
   eq (rk(s,r2,r1,r3) = noRootK) = false .
   eq validAsymBody(r1,r2,r4) = true .
   eq existSelfSK(r2,r1,r3,selfSKS(s)) = true .
@@ -1123,7 +1256,7 @@ open INV .
   op s : -> Sys .
   eq asymSid(r4) = r3 .
   eq (ck(s,r2,r1,r3) = noChainK) = false .
-  eq (asymDec(mk-sym(kdf-ck(rk(s,r2,r1,r3),ecdhk-decaps(asymEcdhCt(r4),findSelfEcdhSK(r2,r1,r3,selfSKS(s))),mlk-decaps(asymMlkCt(r4),findSelfMlkSK(r2,r1,r3,selfSKS(s))))),r4) = noRawMsg) = false .
+  eq (asymDec(mk-sym(kdf-ck(rk(s,r2,r1,r3),ecdhk-decaps(asymEcdhCt(r4),findSelfEcdhSK(r2,r1,r3,selfSKS(s))),mlk-decaps(asymMlkCt(r4),findSelfMlkSK(r2,r1,r3,selfSKS(s))),r3)),r4) = noRawMsg) = false .
   eq (rk(s,r2,r1,r3) = noRootK) = false .
   eq validAsymBody(r1,r2,r4) = true .
   eq existSelfSK(r2,r1,r3,selfSKS(s)) = false .
@@ -1142,7 +1275,7 @@ open INV .
   op s : -> Sys .
   eq asymSid(r4) = r3 .
   eq (ck(s,r2,r1,r3) = noChainK) = false .
-  eq (asymDec(mk-sym(kdf-ck(rk(s,r2,r1,r3),ecdhk-decaps(asymEcdhCt(r4),findSelfEcdhSK(r2,r1,r3,selfSKS(s))),mlk-decaps(asymMlkCt(r4),findSelfMlkSK(r2,r1,r3,selfSKS(s))))),r4) = noRawMsg) = false .
+  eq (asymDec(mk-sym(kdf-ck(rk(s,r2,r1,r3),ecdhk-decaps(asymEcdhCt(r4),findSelfEcdhSK(r2,r1,r3,selfSKS(s))),mlk-decaps(asymMlkCt(r4),findSelfMlkSK(r2,r1,r3,selfSKS(s))),r3)),r4) = noRawMsg) = false .
   eq (rk(s,r2,r1,r3) = noRootK) = false .
   eq validAsymBody(r1,r2,r4) = false .
   red inv4(s,mk,ck) implies inv4(recv-ar(s,r1,r2,r3,r4,r5),mk,ck) .
@@ -1307,7 +1440,7 @@ open INV .
   op s : -> Sys .
   eq symSid(r4) = r3 .
   eq (ck(s,r2,r1,r3) = noChainK) = false .
-  eq symDec(mk-sym(ck(s,r2,r1,r3)),r4) = noRawMsg .
+  eq symDec(mk-sym(ck(s,r2,r1,r3)),symCt(r4)) = noRawMsg .
   red inv4(s,mk,ck) implies inv4(recv-sym(s,r1,r2,r3,r4,r5),mk,ck) .
 close
 
@@ -1323,7 +1456,7 @@ open INV .
   op s : -> Sys .
   eq symSid(r4) = r3 .
   eq (ck(s,r2,r1,r3) = noChainK) = false .
-  eq (symDec(mk-sym(ck(s,r2,r1,r3)),r4) = noRawMsg) = false .
+  eq (symDec(mk-sym(ck(s,r2,r1,r3)),symCt(r4)) = noRawMsg) = false .
   eq rk(s,r2,r1,r3) = noRootK .
   red inv4(s,mk,ck) implies inv4(recv-sym(s,r1,r2,r3,r4,r5),mk,ck) .
 close
@@ -1340,7 +1473,7 @@ open INV .
   op s : -> Sys .
   eq symSid(r4) = r3 .
   eq (ck(s,r2,r1,r3) = noChainK) = false .
-  eq (symDec(mk-sym(ck(s,r2,r1,r3)),r4) = noRawMsg) = false .
+  eq (symDec(mk-sym(ck(s,r2,r1,r3)),symCt(r4)) = noRawMsg) = false .
   eq (rk(s,r2,r1,r3) = noRootK) = false .
   eq validSymBody(r1,r2,r4) = true .
   eq (msg(r1,r1,r2,r4,r5) \in nw(s)) = true .
@@ -1360,7 +1493,7 @@ open INV .
   op s : -> Sys .
   eq symSid(r4) = r3 .
   eq (ck(s,r2,r1,r3) = noChainK) = false .
-  eq (symDec(mk-sym(ck(s,r2,r1,r3)),r4) = noRawMsg) = false .
+  eq (symDec(mk-sym(ck(s,r2,r1,r3)),symCt(r4)) = noRawMsg) = false .
   eq (rk(s,r2,r1,r3) = noRootK) = false .
   eq validSymBody(r1,r2,r4) = true .
   eq (msg(r1,r1,r2,r4,r5) \in nw(s)) = true .
@@ -1380,7 +1513,7 @@ open INV .
   op s : -> Sys .
   eq symSid(r4) = r3 .
   eq (ck(s,r2,r1,r3) = noChainK) = false .
-  eq (symDec(mk-sym(ck(s,r2,r1,r3)),r4) = noRawMsg) = false .
+  eq (symDec(mk-sym(ck(s,r2,r1,r3)),symCt(r4)) = noRawMsg) = false .
   eq (rk(s,r2,r1,r3) = noRootK) = false .
   eq validSymBody(r1,r2,r4) = true .
   eq (msg(r1,r1,r2,r4,r5) \in nw(s)) = false .
@@ -1399,7 +1532,7 @@ open INV .
   op s : -> Sys .
   eq symSid(r4) = r3 .
   eq (ck(s,r2,r1,r3) = noChainK) = false .
-  eq (symDec(mk-sym(ck(s,r2,r1,r3)),r4) = noRawMsg) = false .
+  eq (symDec(mk-sym(ck(s,r2,r1,r3)),symCt(r4)) = noRawMsg) = false .
   eq (rk(s,r2,r1,r3) = noRootK) = false .
   eq validSymBody(r1,r2,r4) = false .
   red inv4(s,mk,ck) implies inv4(recv-sym(s,r1,r2,r3,r4,r5),mk,ck) .
@@ -1591,6 +1724,55 @@ open INV .
   eq (r5 \in usedSK(s)) = false .
   eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
+  eq ck = aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5),r3)),r6) .
+  eq (inv4(s,mk,aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5),r3)),r6)) implies inv4(send-ar(s,r1,r2,r3,r4,r5,r6),mk,aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5),r3)),r6))) = true .
+  red inv4(s,mk,ck) implies inv4(send-ar(s,r1,r2,r3,r4,r5,r6),mk,ck) .
+close
+
+--> false
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
+  eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
+  eq ck = aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5),r3)),r6) .
+  eq (inv4(s,mk,aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5),r3)),r6)) implies inv4(send-ar(s,r1,r2,r3,r4,r5,r6),mk,aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5),r3)),r6))) = false .
+  red inv4(s,mk,ck) implies inv4(send-ar(s,r1,r2,r3,r4,r5,r6),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  eq (r1 = r2) = false .
+  eq (ck(s,r1,r2,r3) = noChainK) = false .
+  eq (rk(s,r1,r2,r3) = noRootK) = false .
+  eq (r3 \in usedSID(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
+  eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
+  eq (ck = aenc(mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5),r3)),r6)) = false .
   red inv4(s,mk,ck) implies inv4(send-ar(s,r1,r2,r3,r4,r5,r6),mk,ck) .
 close
 
@@ -1724,6 +1906,53 @@ open INV .
   eq (r5 \in usedSK(s)) = false .
   eq (r3 \in usedSID(s)) = false .
   eq validRegData(findRegData(r2,idsS(s))) = true .
+  eq ck = ienc(mk-sym(ck(s,r1,r2,r3)),r6) .
+  eq (inv4(s,mk,ienc(mk-sym(ck(s,r1,r2,r3)),r6)) implies inv4(send-init(s,r1,r2,r3,r4,r5,r6),mk,ienc(mk-sym(ck(s,r1,r2,r3)),r6))) = true .
+  red inv4(s,mk,ck) implies inv4(send-init(s,r1,r2,r3,r4,r5,r6),mk,ck) .
+close
+
+--> false
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  eq (r1 = r2) = false .
+  eq existUser(r1,idsS(s)) = true .
+  eq existUser(r2,idsS(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r3 \in usedSID(s)) = false .
+  eq validRegData(findRegData(r2,idsS(s))) = true .
+  eq ck = ienc(mk-sym(ck(s,r1,r2,r3)),r6) .
+  eq (inv4(s,mk,ienc(mk-sym(ck(s,r1,r2,r3)),r6)) implies inv4(send-init(s,r1,r2,r3,r4,r5,r6),mk,ienc(mk-sym(ck(s,r1,r2,r3)),r6))) = false .
+  red inv4(s,mk,ck) implies inv4(send-init(s,r1,r2,r3,r4,r5,r6),mk,ck) .
+close
+
+--> true
+open INV .
+  op ck : -> ChainK .
+  op mk : -> MsgK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op s : -> Sys .
+  eq (r1 = r2) = false .
+  eq existUser(r1,idsS(s)) = true .
+  eq existUser(r2,idsS(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r3 \in usedSID(s)) = false .
+  eq validRegData(findRegData(r2,idsS(s))) = true .
+  eq (ck = ienc(mk-sym(ck(s,r1,r2,r3)),r6)) = false .
   red inv4(s,mk,ck) implies inv4(send-init(s,r1,r2,r3,r4,r5,r6),mk,ck) .
 close
 
@@ -1873,4 +2102,4 @@ open INV .
   red inv4(s,mk,ck) implies inv4(send-sym(s,r1,r2,r3,r4),mk,ck) .
 close
 
---> Time taken is 3494ms
+--> Time taken is 4210ms
