@@ -1,0 +1,74 @@
+--> false
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op esk : -> ECDHK-SecretK .
+  op ib : -> InitBody .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> ECDHK-SecretK .
+  op r3 : -> MLK-SecretK .
+  op r4 : -> InitBody .
+  op r5 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq initDec(mk-sym(kdf-ck(zero-rk,(ECDHK-PriK(r1) & r2),(MLK-PriK(r1) & r3),initSid(r4))),initCt(r4)) = r5 .
+  eq ((ECDHK-PriK(r1) & r2) \in knl(s)) = true .
+  eq ((MLK-PriK(r1) & r3) \in knl(s)) = true .
+  eq rm = r5 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (r5 = noRawMsg) = false .
+  eq initDec(mk-sym(kdf-ck(zero-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid)),initCt(ib)) = r5 .
+  eq initSid(ib) = sid .
+  eq validInitBody(a,b,ib) = true .
+  eq (r5 \in usedRM(s)) = true .
+  eq (r5 \in knl(s)) = false .
+  eq (r5 \in leakscr(s)) = false .
+  eq (msg(a2,a,b,ib,n) \in nw(s)) = true .
+  eq (MLK-PriK(b) \in' leakscr(s)) = true .
+  eq (n < timeLeak(MLK-PriK(b),leakscr(s))) = true .
+  red forwardSeMLKInit(s,a2,a,b,sid,esk,msk,rm,ib,n) implies forwardSeMLKInit(intruCrackInitBody(s,r1,r2,r3,r4,r5),a2,a,b,sid,esk,msk,rm,ib,n) .
+close
+
+
+
+--> false
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op esk : -> ECDHK-SecretK .
+  op ib : -> InitBody .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op r1 : -> Prin .
+  op r2 : -> ECDHK-SecretK .
+  op r3 : -> MLK-SecretK .
+  op r4 : -> InitBody .
+  op r5 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sid : -> SessId .
+  eq initDec(mk-sym(kdf-ck(zero-rk,(ECDHK-PriK(r1) & r2),(MLK-PriK(r1) & r3),initSid(r4))),initCt(r4)) = r5 .
+  eq ((ECDHK-PriK(r1) & r2) \in knl(s)) = true .
+  eq ((MLK-PriK(r1) & r3) \in knl(s)) = true .
+  eq rm = r5 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (r5 = noRawMsg) = false .
+  eq initDec(mk-sym(kdf-ck(zero-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid)),initCt(ib)) = r5 .
+  eq initSid(ib) = sid .
+  eq validInitBody(a,b,ib) = true .
+  eq (r5 \in usedRM(s)) = true .
+  eq (r5 \in knl(s)) = false .
+  eq (r5 \in leakscr(s)) = false .
+  eq (msg(a2,a,b,ib,n) \in nw(s)) = true .
+  eq (MLK-PriK(b) \in' leakscr(s)) = false .
+  red forwardSeMLKInit(s,a2,a,b,sid,esk,msk,rm,ib,n) implies forwardSeMLKInit(intruCrackInitBody(s,r1,r2,r3,r4,r5),a2,a,b,sid,esk,msk,rm,ib,n) .
+close

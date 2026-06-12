@@ -1,0 +1,13 @@
+ipsgopen INV .
+  inv inv1(S:Sys, RM:RawMsg) .
+  inv inv2a(S:Sys, A2:Prin, A:Prin, B:Prin, SID:SessId, ESK:ECDHK-SecretK, MSK:MLK-SecretK, CK:ChainK, RM:RawMsg, IB:InitBody, N:Nat) .
+  inv inv3(S:Sys, RM:RawMsg, MK:MsgK) .
+  inv inv6(S:Sys, MK:MsgK, RM:RawMsg) .
+  generate forwardSeMLKInit(S:Sys, A2:Prin, A:Prin, B:Prin, SID:SessId, ESK:ECDHK-SecretK, MSK:MLK-SecretK, RM:RawMsg, IB:InitBody, N:Nat)
+  induction on S:Sys .
+close
+set-output examples/PQ3/inv/forwardSeMLKInit.cafe .
+:save-proof .
+
+eof
+

@@ -30,145 +30,6 @@ open INV .
   op r3 : -> SessId .
   op r4 : -> ECDHK-Cipher .
   op r5 : -> MLK-Cipher .
-  op r6 : -> ECDHK-SecretK .
-  op r7 : -> MLK-SecretK .
-  op r8 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r4 \in knl(s)) = true .
-  eq (r5 \in knl(s)) = true .
-  eq (r6 \in knl(s)) = true .
-  eq (r7 \in knl(s)) = true .
-  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(fkAsymMsg(s,r1,r2,r3,r4,r5,r6,r7,r8),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> Prin .
-  op r2 : -> Prin .
-  op r3 : -> SessId .
-  op r4 : -> ECDHK-Cipher .
-  op r5 : -> MLK-Cipher .
-  op r6 : -> ECDHK-SecretK .
-  op r7 : -> MLK-SecretK .
-  op r8 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r4 \in knl(s)) = true .
-  eq (r5 \in knl(s)) = true .
-  eq (r6 \in knl(s)) = true .
-  eq (r7 \in knl(s)) = false .
-  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(fkAsymMsg(s,r1,r2,r3,r4,r5,r6,r7,r8),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> Prin .
-  op r2 : -> Prin .
-  op r3 : -> SessId .
-  op r4 : -> ECDHK-Cipher .
-  op r5 : -> MLK-Cipher .
-  op r6 : -> ECDHK-SecretK .
-  op r7 : -> MLK-SecretK .
-  op r8 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r4 \in knl(s)) = true .
-  eq (r5 \in knl(s)) = true .
-  eq (r6 \in knl(s)) = false .
-  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(fkAsymMsg(s,r1,r2,r3,r4,r5,r6,r7,r8),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> Prin .
-  op r2 : -> Prin .
-  op r3 : -> SessId .
-  op r4 : -> ECDHK-Cipher .
-  op r5 : -> MLK-Cipher .
-  op r6 : -> ECDHK-SecretK .
-  op r7 : -> MLK-SecretK .
-  op r8 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r4 \in knl(s)) = true .
-  eq (r5 \in knl(s)) = false .
-  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(fkAsymMsg(s,r1,r2,r3,r4,r5,r6,r7,r8),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> Prin .
-  op r2 : -> Prin .
-  op r3 : -> SessId .
-  op r4 : -> ECDHK-Cipher .
-  op r5 : -> MLK-Cipher .
-  op r6 : -> ECDHK-SecretK .
-  op r7 : -> MLK-SecretK .
-  op r8 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r4 \in knl(s)) = false .
-  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(fkAsymMsg(s,r1,r2,r3,r4,r5,r6,r7,r8),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> Prin .
-  op r2 : -> Prin .
-  op r3 : -> SessId .
-  op r4 : -> ECDHK-Cipher .
-  op r5 : -> MLK-Cipher .
   op r6 : -> ECDHK-PublicK .
   op r7 : -> MLK-PublicK .
   op r8 : -> RawMsg .
@@ -341,6 +202,145 @@ open INV .
   op n : -> Nat .
   op previous-rk : -> RootK .
   op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-SecretK .
+  op r7 : -> MLK-SecretK .
+  op r8 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in knl(s)) = true .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(fkMsg(s,r1,r2,r3,r4,r5,r6,r7,r8),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-SecretK .
+  op r7 : -> MLK-SecretK .
+  op r8 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in knl(s)) = false .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(fkMsg(s,r1,r2,r3,r4,r5,r6,r7,r8),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-SecretK .
+  op r7 : -> MLK-SecretK .
+  op r8 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = false .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(fkMsg(s,r1,r2,r3,r4,r5,r6,r7,r8),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-SecretK .
+  op r7 : -> MLK-SecretK .
+  op r8 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = false .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(fkMsg(s,r1,r2,r3,r4,r5,r6,r7,r8),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-SecretK .
+  op r7 : -> MLK-SecretK .
+  op r8 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = false .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(fkMsg(s,r1,r2,r3,r4,r5,r6,r7,r8),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
@@ -385,28 +385,6 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = true .
-  eq (r2 \in knl(s)) = true .
-  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruCalcECDHKEMInfo(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> ECDHK-SecretK .
-  op r2 : -> ECDHK-PublicK .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r1 \in knl(s)) = true .
-  eq (r2 \in knl(s)) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruCalcECDHKEMInfo(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -447,28 +425,6 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = true .
-  eq (r2 \in knl(s)) = true .
-  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruCalcMLKKEMInfo(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> MLK-SecretK .
-  op r2 : -> MLK-PublicK .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r1 \in knl(s)) = true .
-  eq (r2 \in knl(s)) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruCalcMLKKEMInfo(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -546,7 +502,8 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (ecdhk-decaps(r2,r1) \in leakscr(s)) = true .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruComECDHKDecaps(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -566,7 +523,28 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (ecdhk-decaps(r2,r1) \in leakscr(s)) = false .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = false .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruComECDHKDecaps(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> ECDHK-SecretK .
+  op r2 : -> ECDHK-Cipher .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruComECDHKDecaps(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -838,6 +816,65 @@ open INV .
   op sid : -> SessId .
   eq (r1 \in usedRM(s)) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruComMessage(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> MLK-SecretK .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r1 \in usedSK(s)) = true .
+  eq (r1 \in'' leakscr(s)) = true .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruComMlkSK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> MLK-SecretK .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r1 \in usedSK(s)) = true .
+  eq (r1 \in'' leakscr(s)) = false .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruComMlkSK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> MLK-SecretK .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r1 \in usedSK(s)) = false .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruComMlkSK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
 --> true
@@ -1256,7 +1293,7 @@ open INV .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDecMsg(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
---> true, use inv5 as a lemma
+--> true, use inv3 as a lemma
 open INV .
   op a : -> Prin .
   op a2 : -> Prin .
@@ -1292,7 +1329,7 @@ open INV .
   eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
   eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
   eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = false .
-  red inv5(s,r2,r1) implies (postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDecMsg(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
+  red inv3(s,r2,r1) implies (postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDecMsg(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
 
 --> true
@@ -1657,6 +1694,99 @@ open INV .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDeriveCK(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> RootK .
+  op r2 : -> ECDHK-ShareS .
+  op r3 : -> MLK-ShareS .
+  op r4 : -> SessId .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq r1 = zero-rk .
+  eq (r2 \in knl(s)) = true .
+  eq (r3 \in knl(s)) = true .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDeriveInitCK(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> RootK .
+  op r2 : -> ECDHK-ShareS .
+  op r3 : -> MLK-ShareS .
+  op r4 : -> SessId .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq r1 = zero-rk .
+  eq (r2 \in knl(s)) = true .
+  eq (r3 \in knl(s)) = false .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDeriveInitCK(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> RootK .
+  op r2 : -> ECDHK-ShareS .
+  op r3 : -> MLK-ShareS .
+  op r4 : -> SessId .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq r1 = zero-rk .
+  eq (r2 \in knl(s)) = false .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDeriveInitCK(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> RootK .
+  op r2 : -> ECDHK-ShareS .
+  op r3 : -> MLK-ShareS .
+  op r4 : -> SessId .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r1 = zero-rk) = false .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDeriveInitCK(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
 --> true
@@ -2445,7 +2575,7 @@ open INV .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruRandMessage(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
---> true, use inv3 as a lemma
+--> true, use inv2 as a lemma
 open INV .
   op a : -> Prin .
   op a2 : -> Prin .
@@ -2478,7 +2608,7 @@ open INV .
   eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
   eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
   eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = false .
-  red inv3(s,a2,a,b,sid,esk,msk,ck,r1,previous-rk,sb,n) implies (postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruRandMessage(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
+  red inv2(s,a2,a,b,sid,esk,msk,ck,r1,previous-rk,sb,n) implies (postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruRandMessage(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
 
 --> true
@@ -4593,6 +4723,753 @@ open INV .
   eq (r3 \in usedSID(s)) = false .
   eq validRegData(findRegData(r2,idsS(s))) = true .
   eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
+  eq r6 = rm .
+  eq a = b .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq existUser(r1,idsS(s)) = true .
+  eq existUser(r2,idsS(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r3 \in usedSID(s)) = false .
+  eq validRegData(findRegData(r2,idsS(s))) = true .
+  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
+  eq r6 = rm .
+  eq (a = b) = false .
+  eq a = intru .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq existUser(r1,idsS(s)) = true .
+  eq existUser(r2,idsS(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r3 \in usedSID(s)) = false .
+  eq validRegData(findRegData(r2,idsS(s))) = true .
+  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
+  eq r6 = rm .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq b = intru .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq existUser(r1,idsS(s)) = true .
+  eq existUser(r2,idsS(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r3 \in usedSID(s)) = false .
+  eq validRegData(findRegData(r2,idsS(s))) = true .
+  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
+  eq r6 = rm .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq rm = noRawMsg .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq existUser(r1,idsS(s)) = true .
+  eq existUser(r2,idsS(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r3 \in usedSID(s)) = false .
+  eq validRegData(findRegData(r2,idsS(s))) = true .
+  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
+  eq r6 = rm .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (rm = noRawMsg) = false .
+  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = rm .
+  eq symSid(sb) = sid .
+  eq validSymBody(a,b,sb) = true .
+  eq (previous-rk \in leakscr(s)) = true .
+  eq (rm \in knl(s)) = true .
+  eq (rm \in leakscr(s)) = true .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq existUser(r1,idsS(s)) = true .
+  eq existUser(r2,idsS(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r3 \in usedSID(s)) = false .
+  eq validRegData(findRegData(r2,idsS(s))) = true .
+  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
+  eq r6 = rm .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (rm = noRawMsg) = false .
+  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = rm .
+  eq symSid(sb) = sid .
+  eq validSymBody(a,b,sb) = true .
+  eq (previous-rk \in leakscr(s)) = true .
+  eq (rm \in knl(s)) = true .
+  eq (rm \in leakscr(s)) = false .
+  eq (rm \in usedRM(s)) = true .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq existUser(r1,idsS(s)) = true .
+  eq existUser(r2,idsS(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r3 \in usedSID(s)) = false .
+  eq validRegData(findRegData(r2,idsS(s))) = true .
+  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
+  eq r6 = rm .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (rm = noRawMsg) = false .
+  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = rm .
+  eq symSid(sb) = sid .
+  eq validSymBody(a,b,sb) = true .
+  eq (previous-rk \in leakscr(s)) = true .
+  eq (rm \in knl(s)) = true .
+  eq (rm \in leakscr(s)) = false .
+  eq (rm \in usedRM(s)) = false .
+  eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq existUser(r1,idsS(s)) = true .
+  eq existUser(r2,idsS(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r3 \in usedSID(s)) = false .
+  eq validRegData(findRegData(r2,idsS(s))) = true .
+  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
+  eq r6 = rm .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (rm = noRawMsg) = false .
+  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = rm .
+  eq symSid(sb) = sid .
+  eq validSymBody(a,b,sb) = true .
+  eq (previous-rk \in leakscr(s)) = true .
+  eq (rm \in knl(s)) = true .
+  eq (rm \in leakscr(s)) = false .
+  eq (rm \in usedRM(s)) = false .
+  eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = true .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq existUser(r1,idsS(s)) = true .
+  eq existUser(r2,idsS(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r3 \in usedSID(s)) = false .
+  eq validRegData(findRegData(r2,idsS(s))) = true .
+  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
+  eq r6 = rm .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (rm = noRawMsg) = false .
+  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = rm .
+  eq symSid(sb) = sid .
+  eq validSymBody(a,b,sb) = true .
+  eq (previous-rk \in leakscr(s)) = true .
+  eq (rm \in knl(s)) = true .
+  eq (rm \in leakscr(s)) = false .
+  eq (rm \in usedRM(s)) = false .
+  eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = true .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq existUser(r1,idsS(s)) = true .
+  eq existUser(r2,idsS(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r3 \in usedSID(s)) = false .
+  eq validRegData(findRegData(r2,idsS(s))) = true .
+  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
+  eq r6 = rm .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (rm = noRawMsg) = false .
+  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = rm .
+  eq symSid(sb) = sid .
+  eq validSymBody(a,b,sb) = true .
+  eq (previous-rk \in leakscr(s)) = true .
+  eq (rm \in knl(s)) = true .
+  eq (rm \in leakscr(s)) = false .
+  eq (rm \in usedRM(s)) = false .
+  eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = true .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true, use inv1 as a lemma
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq existUser(r1,idsS(s)) = true .
+  eq existUser(r2,idsS(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r3 \in usedSID(s)) = false .
+  eq validRegData(findRegData(r2,idsS(s))) = true .
+  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
+  eq r6 = rm .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (rm = noRawMsg) = false .
+  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = rm .
+  eq symSid(sb) = sid .
+  eq validSymBody(a,b,sb) = true .
+  eq (previous-rk \in leakscr(s)) = true .
+  eq (rm \in knl(s)) = true .
+  eq (rm \in leakscr(s)) = false .
+  eq (rm \in usedRM(s)) = false .
+  eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = false .
+  red inv1(s,rm) implies (postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq existUser(r1,idsS(s)) = true .
+  eq existUser(r2,idsS(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r3 \in usedSID(s)) = false .
+  eq validRegData(findRegData(r2,idsS(s))) = true .
+  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
+  eq r6 = rm .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (rm = noRawMsg) = false .
+  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = rm .
+  eq symSid(sb) = sid .
+  eq validSymBody(a,b,sb) = true .
+  eq (previous-rk \in leakscr(s)) = true .
+  eq (rm \in knl(s)) = true .
+  eq (rm \in leakscr(s)) = false .
+  eq (rm \in usedRM(s)) = false .
+  eq (msg(a2,a,b,sb,n) \in nw(s)) = false .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq existUser(r1,idsS(s)) = true .
+  eq existUser(r2,idsS(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r3 \in usedSID(s)) = false .
+  eq validRegData(findRegData(r2,idsS(s))) = true .
+  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
+  eq r6 = rm .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (rm = noRawMsg) = false .
+  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = rm .
+  eq symSid(sb) = sid .
+  eq validSymBody(a,b,sb) = true .
+  eq (previous-rk \in leakscr(s)) = true .
+  eq (rm \in knl(s)) = false .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq existUser(r1,idsS(s)) = true .
+  eq existUser(r2,idsS(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r3 \in usedSID(s)) = false .
+  eq validRegData(findRegData(r2,idsS(s))) = true .
+  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
+  eq r6 = rm .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (rm = noRawMsg) = false .
+  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = rm .
+  eq symSid(sb) = sid .
+  eq validSymBody(a,b,sb) = true .
+  eq (previous-rk \in leakscr(s)) = false .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq existUser(r1,idsS(s)) = true .
+  eq existUser(r2,idsS(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r3 \in usedSID(s)) = false .
+  eq validRegData(findRegData(r2,idsS(s))) = true .
+  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
+  eq r6 = rm .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (rm = noRawMsg) = false .
+  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = rm .
+  eq symSid(sb) = sid .
+  eq validSymBody(a,b,sb) = false .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq existUser(r1,idsS(s)) = true .
+  eq existUser(r2,idsS(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r3 \in usedSID(s)) = false .
+  eq validRegData(findRegData(r2,idsS(s))) = true .
+  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
+  eq r6 = rm .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (rm = noRawMsg) = false .
+  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = rm .
+  eq (symSid(sb) = sid) = false .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq existUser(r1,idsS(s)) = true .
+  eq existUser(r2,idsS(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r3 \in usedSID(s)) = false .
+  eq validRegData(findRegData(r2,idsS(s))) = true .
+  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
+  eq r6 = rm .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (rm = noRawMsg) = false .
+  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
+  eq (symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = rm) = false .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq existUser(r1,idsS(s)) = true .
+  eq existUser(r2,idsS(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r3 \in usedSID(s)) = false .
+  eq validRegData(findRegData(r2,idsS(s))) = true .
+  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
+  eq r6 = rm .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (rm = noRawMsg) = false .
+  eq (ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid)) = false .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq existUser(r1,idsS(s)) = true .
+  eq existUser(r2,idsS(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r3 \in usedSID(s)) = false .
+  eq validRegData(findRegData(r2,idsS(s))) = true .
+  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
+  eq (r6 = rm) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -9624,4 +10501,4 @@ open INV .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
---> Time taken is 37771ms
+--> Time taken is 43664ms

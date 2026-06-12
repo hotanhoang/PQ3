@@ -1,0 +1,163 @@
+in pq3.cafe .
+
+
+open PQ3 .
+  ops p q : -> Prin .
+  ops ec ec1 ec2 : -> ECDHK-SecretK .
+  ops ml ml1 ml2 : -> MLK-SecretK .
+
+  op s0 : -> Sys .
+  op s1 : -> Sys .
+  op s2 : -> Sys .
+  ops rm0 rm1 rm2  : -> RawMsg .
+
+  op sid0 : -> SessId .
+  op ibInit : -> InitBody .
+
+  eq (p = q) = false .
+  eq (p = intru) = false .
+  eq (q = intru) = false .
+
+  eq (rm0 = noRawMsg) = false .
+  eq (rm1 = noRawMsg) = false .
+  eq (rm2 = noRawMsg) = false .
+  eq (rm0 = rm1) = false .
+  eq (rm0 = rm2) = false .
+  eq (rm1 = rm2) = false .
+
+
+  eq (ec = ec1) = false .
+  eq (ec = ec2) = false .
+  eq (ec1 = ec2) = false .
+  eq (ec1 = ECDHK-PriK(p)) = false .
+  eq (ec2 = ECDHK-PriK(p)) = false .
+  eq (ec = ECDHK-PriK(p)) = false .
+  eq (ec1 = ECDHK-PriK(q)) = false .
+  eq (ec2 = ECDHK-PriK(q)) = false .
+  eq (ec = ECDHK-PriK(q)) = false .
+
+  eq (ml = ml1) = false .
+  eq (ml = ml2) = false .
+  eq (ml1 = ml2) = false .
+  eq (ml1 = MLK-PriK(p)) = false .
+  eq (ml2 = MLK-PriK(p)) = false .
+  eq (ml = MLK-PriK(p)) = false .
+  eq (ml1 = MLK-PriK(q)) = false .
+  eq (ml2 = MLK-PriK(q)) = false .
+  eq (ml = MLK-PriK(q)) = false .
+
+
+  eq (ecdhk-keygen(ECDHK-PriK(q)) = mlk-keygen(MLK-PriK(intru))) = false .
+  eq (ecdhk-keygen(ECDHK-PriK(q)) = mlk-keygen(ml2)) = false .
+  eq (ecdhk-keygen(ECDHK-PriK(q)) = ienc(mk-sym(noChainK), rm0)) = false .
+
+  -- register bundle keys of p and q on IDS server
+  eq s0 = register(register(init, p), q) .
+
+  eq ibInit =
+    mkInitBody(
+      p,
+      q,
+      sid0,
+      ct-ecdh(q, ec2),
+      ct-mlk(q, ml2),
+      ecdhk-keygen(ec2),
+      mlk-keygen(ml2),
+      ns(s0, p, q, sid0),
+      ienc(mk-sym(ck(s0, p, q, sid0)), rm0),
+      hash(ECDHK-PubK(q), MLK-PubK(q))
+    ) .
+
+  eq s1 = send-init(s0, p, q, sid0, ec2, ml2, rm0) .
+
+  -- red c-recv-init(
+  --     s1,
+  --     p, q,
+  --     sid0,
+  --     ibInit,
+  --     time(s0)
+  --   ) .
+
+
+  eq s2 =
+    recv-init(
+      s1,
+      p, q,
+      sid0,
+      ibInit,
+      time(s0)
+    ) .
+
+  -- red knl(s0) .
+  -- red ienc(mk-sym(init-ck(ss-ecdh(q, ec2), ss-mlk(q, ml2), sid0)), rm0) \in knl(s2) . -- true
+  
+
+  -- -- sender/receiver key agreement checks
+  -- red rk(s1, p, q, sid0) = rk(s2, p, q, sid0) .   
+  -- red ck(s1, p, q, sid0) . 
+  -- red ck(s2, p, q, sid0) . 
+  -- red ck(s1, p, q, sid0) = ck(s2, p, q, sid0) . 
+
+  -- red peerPKS(s2) .
+  -- red selfSKS(s2) .
+
+
+  -- ====================================================================
+  -- KỊCH BẢN TẤN CÔNG: BẺ KHÓA CẢ MLK LẪN ECDH
+  -- ====================================================================
+
+  -- --------------------------------------------------------------------
+  -- GIAI ĐOẠN 1: COMPROMISE VÀ GIẢI MÃ ML-KEM
+  -- --------------------------------------------------------------------
+  -- 1.1: Intruder đánh cắp Long-term MLK Private Key của q
+  op s3 : -> Sys .
+  -- red c-intruComLongTermMlkSK(s2, q) . -- true
+  eq s3 = intruComLongTermMlkSK(s2, q) .
+
+  -- 1.2: Dùng khóa vừa compromise để giải mã bản mã MLK, lấy MSS (MLK Shared Secret)
+  op s4 : -> Sys .
+  -- red c-intruMLKDecaps(s3, MLK-PriK(q), ct-mlk(q, ml2)) . -- true
+  eq s4 = intruMLKDecaps(s3, MLK-PriK(q), ct-mlk(q, ml2)) .
+
+  -- --------------------------------------------------------------------
+  -- GIAI ĐOẠN 2: DÙNG MÁY TÍNH LƯỢNG TỬ BẺ KHÓA ECDH
+  -- --------------------------------------------------------------------
+  -- 2.1: Intruder dùng sức mạnh lượng tử để tính ngược ECDHK Private Key của q từ Public Key
+  op s5 : -> Sys .
+  -- red c-intruBreakECDH(s4, q) . -- true
+  eq s5 = intruBreakECDH(s4, q) .
+  -- 2.2: Dùng khóa cổ điển vừa bẻ được để giải mã bản mã ECDH, lấy ESS (ECDH Shared Secret)
+  op s6 : -> Sys .
+  -- red c-intruECDHKDecaps(s5, ECDHK-PriK(q), ct-ecdh(q, ec2)) . -- true
+  eq s6 = intruECDHKDecaps(s5, ECDHK-PriK(q), ct-ecdh(q, ec2)) .
+
+  -- --------------------------------------------------------------------
+  -- GIAI ĐOẠN 3: TỔNG HỢP KHÓA VÀ GIẢI MÃ THÔNG ĐIỆP
+  -- --------------------------------------------------------------------
+
+  -- red rk(s0, p, q, sid0) \in knl(s6) . -- Intruder có được Root Key -- true
+  -- red  ecdhk-decaps(ct-ecdh(q, ec2), ECDHK-PriK(q)) \in knl(s6) . -- Intruder có được ESS -- true
+  -- red mlk-decaps(ct-mlk(q, ml2), MLK-PriK(q)) \in knl(s6) . -- Intruder có được MSS -- true
+  -- 3.1: Intruder tự chạy thuật toán KDF. 
+  op s7 : -> Sys .
+  -- red c-intruDeriveCK(s6, rk(s6, p, q, sid0), ecdhk-decaps(ct-ecdh(q, ec2), ECDHK-PriK(q)), mlk-decaps(ct-mlk(q, ml2), MLK-PriK(q)), sid0) . 
+  eq s7 = intruDeriveCK(s6, rk(s6, p, q, sid0), ecdhk-decaps(ct-ecdh(q, ec2), ECDHK-PriK(q)), mlk-decaps(ct-mlk(q, ml2), MLK-PriK(q)), sid0) .
+
+  -- Kiểm tra: Intruder đã có được Message Key (MK) chưa?
+
+  red ienc(mk-sym(ck(s7, p, q, sid0)), rm0) \in knl(s7) .  -- true
+  -- red rm0 \in usedRM(s7) . -- true
+  -- red mk-sym(ck(s7, p, q, sid0)) \in knl(s7) . -- true
+
+  -- 3.2: Có Message Key rồi, Intruder mở khóa bản mã ienc(...) để lấy thông điệp gốc rm0
+  op s8 : -> Sys .
+  -- red c-intruDecInitMsg(s7, mk-sym(ck(s7, p, q, sid0)), rm0) . -- Expected: true
+  -- red knl(s7) .
+  -- eq s8 = intruDecInitMsg(s7, mk-sym(ck(s7, p, q, sid0)), rm0) .
+
+  -- -- -- ====================================================================
+  -- -- -- KẾT LUẬN: THÔNG ĐIỆP CÓ BỊ LỘ KHÔNG?
+  -- -- -- ====================================================================
+  -- red rm0 \in knl(s8) .
+
+close

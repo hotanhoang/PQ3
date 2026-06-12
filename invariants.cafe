@@ -31,7 +31,7 @@ mod INV {
         -- 4. ML-KEM shared secret key used to derive the chain key is not leaked 
     -- then the intruder cannot know the message content.
 
-    -- lemma 1 + 3 + 4
+    -- lemma 1 + 2 + 3
     op messageSe : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK RawMsg SymBody Nat -> Bool .
     eq messageSe(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, RM, SB, N) =
         (
@@ -44,12 +44,12 @@ mod INV {
             symDec(mkAt(CK, symN(SB)), symCt(SB)) = RM and
             not (RM = noRawMsg) and
             RM \in usedRM(S) and
-
+            
             not (sk(B) \in' leakscr(S)) and
             not (ss-mlk(B, MSK) \in leakscr(S)) and
             not (ckAt(CK, symN(SB)) \in leakscr(S)) and
             not (mkAt(CK, symN(SB)) \in leakscr(S)) and
-            not (RM \in leakscr(S))
+            not (RM \in leakscr(S)) 
         )
         implies
         (
@@ -76,14 +76,15 @@ mod INV {
             not (ckAt(CK, symN(SB)) \in leakscr(S)) and
             not (mkAt(CK, symN(SB)) \in leakscr(S)) and
             not (RM \in leakscr(S)) and
-            (sk(B) \in' leakscr(S) implies N < timeLeakID(sk(B), leakscr(S)))
+            (sk(B) \in' leakscr(S) implies N < timeLeak(sk(B), leakscr(S)))
         )
         implies
         (
             not (RM \in knl(S))
         ) .
 
-    -- for ML-KEM shared secret key
+
+    -- for ML-KEM secret key
     op forwardSeMLK : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK RawMsg SymBody Nat -> Bool .
     eq forwardSeMLK(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, RM, SB, N) =
         (
@@ -101,9 +102,30 @@ mod INV {
             not (ckAt(CK, symN(SB)) \in leakscr(S)) and
             not (mkAt(CK, symN(SB)) \in leakscr(S)) and
             not (RM \in leakscr(S)) and
-            not (Previous-RK = zero-rk) and
             not (Previous-RK \in leakscr(S)) and
-            (MLK-PriK(B) \in'' leakscr(S) implies N < timeLeak(MLK-PriK(B), leakscr(S)))
+            (Previous-RK = zero-rk) and
+            (MLK-PriK(B) \in' leakscr(S) implies N < timeLeak(MLK-PriK(B), leakscr(S)))
+        )
+        implies
+        (
+            not (RM \in knl(S))
+        ) .
+
+    op forwardSeMLKInit : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RawMsg InitBody Nat -> Bool .
+    eq forwardSeMLKInit(S, A2, A, B, SID, ESK, MSK, RM, IB, N) =
+        (
+            not (A = intru or B = intru) and
+            not (A = B) and
+            msg(A2, A, B, IB, N) \in nw(S) and
+            validInitBody(A, B, IB) and
+            initSid(IB) = SID and
+
+            initDec(mk-sym(init-ck(ss-ecdh(B, ESK), ss-mlk(B, MSK), SID)), initCt(IB)) = RM and
+            not (RM = noRawMsg) and
+            RM \in usedRM(S) and
+
+            not (RM \in leakscr(S)) and
+            (MLK-PriK(B) \in' leakscr(S) implies N < timeLeak(MLK-PriK(B), leakscr(S)))
         )
         implies
         (
@@ -121,16 +143,15 @@ mod INV {
         symSid(SB) = SID and
 
         kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
-        symDec(mkAt(CK, symN(SB)), symCt(SB)) = RM and
+        symDec(mk-sym(CK), symCt(SB)) = RM and
         not (RM = noRawMsg) and
         RM \in usedRM(S) and
-
-        (ckAt(CK, s(symN(SB))) \inCK' leakscr(S) implies N < timeLeakCK(ckAt(CK, s(symN(SB))), leakscr(S))) and
 
         not (ss-mlk(B, MSK) \in leakscr(S)) and
         not (ckAt(CK, symN(SB)) \in leakscr(S)) and
         not (mkAt(CK, symN(SB)) \in leakscr(S)) and
-        not (RM \in leakscr(S))
+        not (RM \in leakscr(S)) and
+        (ckAt(CK, s(symN(SB))) \in' leakscr(S) implies N < timeLeak(ckAt(CK, s(symN(SB))), leakscr(S))) 
     )
     implies
     (
@@ -153,12 +174,13 @@ mod INV {
         not (RM = noRawMsg) and
         RM \in usedRM(S) and
 
-        (mkAt(CK, s(symN(SB))) \inMK' leakscr(S) implies N < timeLeakMK(mkAt(CK, s(symN(SB))), leakscr(S))) and
 
         not (ss-mlk(B, MSK) \in leakscr(S)) and
         not (ckAt(CK, symN(SB)) \in leakscr(S)) and
         not (mkAt(CK, symN(SB)) \in leakscr(S)) and
-        not (RM \in leakscr(S))
+        not (RM \in leakscr(S)) and
+        (mkAt(CK, s(symN(SB))) \in' leakscr(S) implies N < timeLeak(mkAt(CK, s(symN(SB))), leakscr(S))) 
+
     )
     implies
     (
@@ -202,15 +224,11 @@ mod INV {
     (
         not (A = intru or B = intru) and
         not (A = B) and
-
         msg(A2, A, B, SB, N) \in nw(S) and
-
         validSymBody(A, B, SB) and
         symSid(SB) = SID and
-
         symDec(mkAt(CK, symN(SB)), symCt(SB)) = RM and
         not (RM = noRawMsg) and
-
         not (sk(A) \in' leakscr(S))
     )
     implies
@@ -226,24 +244,28 @@ mod INV {
 
     -- no lemma
     -- formal description of the invariant: if a message is sent by an honest principal and this is a real message, then the message content must be in used.
-    op inv2 : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK ChainK RawMsg SymBody Nat -> Bool .
-    eq inv2(S, A2, A, B, SID, ESK, MSK, CK, RM, SB, N) =
+    op inv2a : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK ChainK RawMsg InitBody Nat -> Bool .
+    eq inv2a(S, A2, A, B, SID, ESK, MSK, CK, RM, IB, N) =
         (
             not (A = B) and
-            msg(A2, A, B, SB, N) \in nw(S) and
-            validSymBody(A, B, SB) and
-            symSid(SB) = SID and
+            msg(A2, A, B, IB, N) \in nw(S) and
+            validInitBody(A, B, IB) and
+            initSid(IB) = SID and
             init-ck(ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
-            symDec(mkAt(CK, symN(SB)), symCt(SB)) = RM and
+            initDec(mk-sym(CK), initCt(IB)) = RM and
             not (RM = noRawMsg)
         )
         implies
         (
             RM \in usedRM(S)
         ) .
+
+
+
+
     -- no lemma
-    op inv3 : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK ChainK RawMsg RootK SymBody Nat -> Bool .
-    eq inv3(S, A2, A, B, SID, ESK, MSK, CK, RM, Previous-RK, SB, N) =
+    op inv2 : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK ChainK RawMsg RootK SymBody Nat -> Bool .
+    eq inv2(S, A2, A, B, SID, ESK, MSK, CK, RM, Previous-RK, SB, N) =
         (
             not (A = B) and
             msg(A2, A, B, SB, N) \in nw(S) and
@@ -258,23 +280,34 @@ mod INV {
             RM \in usedRM(S)
         ) .
 
-    -- lemma: 5
-    op inv4 : Sys RawMsg MsgK -> Bool .
-    eq inv4(S, RM, MK) = 
+    -- lemma: 4
+    op inv3 : Sys RawMsg MsgK -> Bool .
+    eq inv3(S, RM, MK) = 
         (
             senc(MK, RM) \in knl(S) and
             MK \in knl(S)
         )  implies RM \in knl(S) .
-    -- lemma: 6
-    op inv5 : Sys ChainK MsgK -> Bool .
-    eq inv5(S, CK, MK) = 
+    -- lemma: 5
+    op inv4 : Sys ChainK MsgK -> Bool .
+    eq inv4(S, CK, MK) = 
         (
             CK \in knl(S) and
             MK = mk-sym(CK)
         ) implies MK \in  knl(S) .
 
-    -- lemma: 6
-    op inv6 : Sys ChainK -> Bool .
-    eq inv6(S, CK) = CK \in knl(S) implies nextck(CK) \in knl(S) .
+    -- lemma: 5
+    op inv5 : Sys ChainK -> Bool .
+    eq inv5(S, CK) = CK \in knl(S) implies nextck(CK) \in knl(S) .
+
+    op inv6 : Sys MsgK RawMsg -> Bool .
+    eq inv6(S, MK, RM) =
+        (
+            ienc(MK, RM) \in knl(S) and
+            MK \in knl(S)
+        )  implies RM \in knl(S) .
+
+
+
+    
 }
 

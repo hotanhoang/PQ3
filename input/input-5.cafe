@@ -1,6 +1,6 @@
 ipsgopen INV .
-  inv inv6(S:Sys, CK:ChainK) .
-  generate inv5(S:Sys, CK:ChainK, MK:MsgK)
+  inv inv5(S:Sys, CK:ChainK) .
+  generate inv5(S:Sys, CK:ChainK)
   induction on S:Sys .
 close
 set-output examples/PQ3/inv/inv5.cafe .

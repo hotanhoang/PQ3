@@ -1,8 +1,11 @@
 ipsgopen INV .
-  generate inv3(S:Sys, A2:Prin, A:Prin, B:Prin, SID:SessId, ESK:ECDHK-SecretK, MSK:MLK-SecretK, CK:ChainK, RM:RawMsg, Previous-RK:RootK, SB:SymBody, N:Nat)
+  inv inv4(S:Sys, CK:ChainK, MK:MsgK) .
+  inv inv3(S:Sys, RM:RawMsg, MK:MsgK) .
+  generate inv3(S:Sys, RM:RawMsg, MK:MsgK)
   induction on S:Sys .
 close
 set-output examples/PQ3/inv/inv3.cafe .
 :save-proof .
 
 eof
+

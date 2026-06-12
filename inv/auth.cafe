@@ -4796,4 +4796,4 @@ open INV .
   red auth(s,a2,a,b,sid,rm,ck,sb,n,?t) implies auth(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,rm,ck,sb,n,?t) .
 close
 
---> Time taken is 6824ms
+--> Time taken is 6970ms

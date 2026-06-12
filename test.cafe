@@ -1,22 +1,36 @@
-in pq3a.cafe
-in invariants.cafe
+in pq3.cafe .
+in invariants.cafe .
 
-
---> false
+set trace whole on
+--> true
 open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
   op ck : -> ChainK .
-  op mk : -> MsgK .
-  op r1 : -> RootK .
-  op r2 : -> ECDHK-ShareS .
-  op r3 : -> MLK-ShareS .
-  op r4 : -> SessId .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
+  op rm : -> RawMsg .
   op s : -> Sys .
-  eq (r1 \in knl(s)) = true .
-  eq (r2 \in knl(s)) = true .
-  eq (r3 \in knl(s)) = true .
-  eq ck = kdf-ck(r1,r2,r3,r4) .
-  eq mk = mk-sym(kdf-ck(r1,r2,r3,r4)) .
-  eq (kdf-ck(r1,r2,r3,r4) \in knl(s)) = false .
-  eq (mk-sym(kdf-ck(r1,r2,r3,r4)) \in knl(s)) = false .
-  red inv8(s,r1,r2,r3,r4) implies inv6(s,ck,mk) implies inv6(intruDeriveCK(s,r1,r2,r3,r4),ck,mk) .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in knl(s)) = true .
+  eq (r9 \in knl(s)) = true .
+  eq (r8 \in usedRM(s)) = true .
+  red forwardSeMLK(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
+set trace whole off
