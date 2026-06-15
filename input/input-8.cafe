@@ -1,0 +1,8 @@
+ipsgopen INV .
+  generate inv8(S:Sys, CK:ChainK)
+  induction on S:Sys .
+close
+set-output examples/PQ3/inv/inv8.cafe .
+:save-proof .
+
+eof

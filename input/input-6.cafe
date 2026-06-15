@@ -1,10 +1,9 @@
 ipsgopen INV .
-  inv inv4(S:Sys, CK:ChainK, MK:MsgK) .
-  generate inv6(S:Sys, MK:MsgK, RM:RawMsg)
+  inv inv8(S:Sys, CK:ChainK) .
+  generate inv6(S:Sys, A:Prin, B:Prin, SID:SessId, ESK:ECDHK-SecretK, MSK:MLK-SecretK, Previous-RK:RootK, CK:ChainK, N:Nat)
   induction on S:Sys .
 close
 set-output examples/PQ3/inv/inv6.cafe .
 :save-proof .
 
 eof
-

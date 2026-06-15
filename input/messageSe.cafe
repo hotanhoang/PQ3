@@ -1,8 +1,6 @@
 ipsgopen INV .
   inv inv1(S:Sys, RM:RawMsg) .
   inv inv2(S:Sys, A2:Prin, A:Prin, B:Prin, SID:SessId, ESK:ECDHK-SecretK, MSK:MLK-SecretK, CK:ChainK, RM:RawMsg, Previous-RK:RootK, SB:SymBody, N:Nat) .
-  inv inv3(S:Sys, RM:RawMsg, MK:MsgK) .
-  inv inv6(S:Sys, MK:MsgK, RM:RawMsg) .
   generate messageSe(S:Sys, A2:Prin, A:Prin, B:Prin, SID:SessId, ESK:ECDHK-SecretK, MSK:MLK-SecretK, Previous-RK:RootK, CK:ChainK, RM:RawMsg, SB:SymBody, N:Nat)
   induction on S:Sys .
 close
