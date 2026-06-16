@@ -699,6 +699,16 @@ mod! DATA {
     eq (ienc(MK, RM) = hash(ecdhk-keygen(E1), mlk-keygen(M1))) = false .
     eq (ienc(MK, RM) = mkNPair(MK2, T)) = false .
 
+
+    var CK_any : ChainK .
+    var MK_any : MsgK .
+    var D_any  : Data .
+
+    -- Bổ sung tính Phản xạ (Reflexivity) cho toán tử =
+    eq (CK_any = CK_any) = true .
+    eq (MK_any = MK_any) = true .
+    eq (D_any = D_any) = true .
+
     -- 1. MsgK không thể bằng ECDH Public Key
     eq (mk-sym(CK) = ecdhk-keygen(E)) = false .
     eq (ecdhk-keygen(E) = mk-sym(CK)) = false .

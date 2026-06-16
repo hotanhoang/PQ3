@@ -43,6 +43,792 @@ open INV .
   eq (r6 \in knl(s)) = true .
   eq (r7 \in knl(s)) = true .
   eq (r9 \in knl(s)) = true .
+  eq (r8 \in usedRM(s)) = true .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in knl(s)) = true .
+  eq (r9 \in knl(s)) = true .
+  eq (r8 \in usedRM(s)) = false .
+  eq rm = r8 .
+  eq a = b .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in knl(s)) = true .
+  eq (r9 \in knl(s)) = true .
+  eq (r8 \in usedRM(s)) = false .
+  eq rm = r8 .
+  eq (a = b) = false .
+  eq a = intru .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in knl(s)) = true .
+  eq (r9 \in knl(s)) = true .
+  eq (r8 \in usedRM(s)) = false .
+  eq rm = r8 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq b = intru .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in knl(s)) = true .
+  eq (r9 \in knl(s)) = true .
+  eq (r8 \in usedRM(s)) = false .
+  eq rm = r8 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq r8 = noRawMsg .
+  eq (noRawMsg \in usedRM(s)) = true .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in knl(s)) = true .
+  eq (r9 \in knl(s)) = true .
+  eq (r8 \in usedRM(s)) = false .
+  eq rm = r8 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq r8 = noRawMsg .
+  eq (noRawMsg \in usedRM(s)) = false .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in knl(s)) = true .
+  eq (r9 \in knl(s)) = true .
+  eq (r8 \in usedRM(s)) = false .
+  eq rm = r8 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (r8 = noRawMsg) = false .
+  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r8 .
+  eq symSid(sb) = sid .
+  eq validSymBody(a,b,sb) = true .
+  eq (previous-rk \in leakscr(s)) = true .
+  eq (r8 \in knl(s)) = true .
+  eq (r8 \in leakscr(s)) = true .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in knl(s)) = true .
+  eq (r9 \in knl(s)) = true .
+  eq (r8 \in usedRM(s)) = false .
+  eq rm = r8 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (r8 = noRawMsg) = false .
+  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r8 .
+  eq symSid(sb) = sid .
+  eq validSymBody(a,b,sb) = true .
+  eq (previous-rk \in leakscr(s)) = true .
+  eq (r8 \in knl(s)) = true .
+  eq (r8 \in leakscr(s)) = false .
+  eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = true .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in knl(s)) = true .
+  eq (r9 \in knl(s)) = true .
+  eq (r8 \in usedRM(s)) = false .
+  eq rm = r8 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (r8 = noRawMsg) = false .
+  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r8 .
+  eq symSid(sb) = sid .
+  eq validSymBody(a,b,sb) = true .
+  eq (previous-rk \in leakscr(s)) = true .
+  eq (r8 \in knl(s)) = true .
+  eq (r8 \in leakscr(s)) = false .
+  eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = true .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in knl(s)) = true .
+  eq (r9 \in knl(s)) = true .
+  eq (r8 \in usedRM(s)) = false .
+  eq rm = r8 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (r8 = noRawMsg) = false .
+  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r8 .
+  eq symSid(sb) = sid .
+  eq validSymBody(a,b,sb) = true .
+  eq (previous-rk \in leakscr(s)) = true .
+  eq (r8 \in knl(s)) = true .
+  eq (r8 \in leakscr(s)) = false .
+  eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = true .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in knl(s)) = true .
+  eq (r9 \in knl(s)) = true .
+  eq (r8 \in usedRM(s)) = false .
+  eq rm = r8 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (r8 = noRawMsg) = false .
+  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r8 .
+  eq symSid(sb) = sid .
+  eq validSymBody(a,b,sb) = true .
+  eq (previous-rk \in leakscr(s)) = true .
+  eq (r8 \in knl(s)) = true .
+  eq (r8 \in leakscr(s)) = false .
+  eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = true .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true, use inv1 as a lemma
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in knl(s)) = true .
+  eq (r9 \in knl(s)) = true .
+  eq (r8 \in usedRM(s)) = false .
+  eq rm = r8 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (r8 = noRawMsg) = false .
+  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r8 .
+  eq symSid(sb) = sid .
+  eq validSymBody(a,b,sb) = true .
+  eq (previous-rk \in leakscr(s)) = true .
+  eq (r8 \in knl(s)) = true .
+  eq (r8 \in leakscr(s)) = false .
+  eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
+  red inv1(s,r8) implies (postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in knl(s)) = true .
+  eq (r9 \in knl(s)) = true .
+  eq (r8 \in usedRM(s)) = false .
+  eq rm = r8 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (r8 = noRawMsg) = false .
+  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r8 .
+  eq symSid(sb) = sid .
+  eq validSymBody(a,b,sb) = true .
+  eq (previous-rk \in leakscr(s)) = true .
+  eq (r8 \in knl(s)) = true .
+  eq (r8 \in leakscr(s)) = false .
+  eq (msg(a2,a,b,sb,n) \in nw(s)) = false .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in knl(s)) = true .
+  eq (r9 \in knl(s)) = true .
+  eq (r8 \in usedRM(s)) = false .
+  eq rm = r8 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (r8 = noRawMsg) = false .
+  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r8 .
+  eq symSid(sb) = sid .
+  eq validSymBody(a,b,sb) = true .
+  eq (previous-rk \in leakscr(s)) = true .
+  eq (r8 \in knl(s)) = false .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in knl(s)) = true .
+  eq (r9 \in knl(s)) = true .
+  eq (r8 \in usedRM(s)) = false .
+  eq rm = r8 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (r8 = noRawMsg) = false .
+  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r8 .
+  eq symSid(sb) = sid .
+  eq validSymBody(a,b,sb) = true .
+  eq (previous-rk \in leakscr(s)) = false .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in knl(s)) = true .
+  eq (r9 \in knl(s)) = true .
+  eq (r8 \in usedRM(s)) = false .
+  eq rm = r8 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (r8 = noRawMsg) = false .
+  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r8 .
+  eq symSid(sb) = sid .
+  eq validSymBody(a,b,sb) = false .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in knl(s)) = true .
+  eq (r9 \in knl(s)) = true .
+  eq (r8 \in usedRM(s)) = false .
+  eq rm = r8 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (r8 = noRawMsg) = false .
+  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r8 .
+  eq (symSid(sb) = sid) = false .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in knl(s)) = true .
+  eq (r9 \in knl(s)) = true .
+  eq (r8 \in usedRM(s)) = false .
+  eq rm = r8 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (r8 = noRawMsg) = false .
+  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
+  eq (symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r8) = false .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in knl(s)) = true .
+  eq (r9 \in knl(s)) = true .
+  eq (r8 \in usedRM(s)) = false .
+  eq rm = r8 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (r8 = noRawMsg) = false .
+  eq (ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid)) = false .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-Cipher .
+  op r5 : -> MLK-Cipher .
+  op r6 : -> ECDHK-PublicK .
+  op r7 : -> MLK-PublicK .
+  op r8 : -> RawMsg .
+  op r9 : -> KeyHash .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r4 \in knl(s)) = true .
+  eq (r5 \in knl(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r7 \in knl(s)) = true .
+  eq (r9 \in knl(s)) = true .
+  eq (r8 \in usedRM(s)) = false .
+  eq (rm = r8) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -463,7 +1249,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (r1 \inCK' leakscr(s)) = true .
+  eq (r1 \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruComChainK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -482,7 +1268,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (r1 \inCK' leakscr(s)) = false .
+  eq (r1 \in' leakscr(s)) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruComChainK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -678,7 +1464,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (MLK-PriK(r1) \in usedSK(s)) = true .
-  eq (MLK-PriK(r1) \in'' leakscr(s)) = true .
+  eq (MLK-PriK(r1) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruComLongTermMlkSK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -698,7 +1484,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (MLK-PriK(r1) \in usedSK(s)) = true .
-  eq (MLK-PriK(r1) \in'' leakscr(s)) = false .
+  eq (MLK-PriK(r1) \in' leakscr(s)) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruComLongTermMlkSK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -775,6 +1561,27 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in usedRM(s)) = true .
+  eq (r1 \in knl(s)) = true .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruComMessage(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r1 \in usedRM(s)) = true .
+  eq (r1 \in knl(s)) = false .
   eq (r1 \in leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruComMessage(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -795,6 +1602,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in usedRM(s)) = true .
+  eq (r1 \in knl(s)) = false .
   eq (r1 \in leakscr(s)) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruComMessage(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -834,7 +1642,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in usedSK(s)) = true .
-  eq (r1 \in'' leakscr(s)) = true .
+  eq (r1 \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruComMlkSK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -854,7 +1662,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in usedSK(s)) = true .
-  eq (r1 \in'' leakscr(s)) = false .
+  eq (r1 \in' leakscr(s)) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruComMlkSK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -892,7 +1700,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (r1 \inMK' leakscr(s)) = true .
+  eq (r1 \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruComMsgK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -911,7 +1719,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (r1 \inMK' leakscr(s)) = false .
+  eq (r1 \in' leakscr(s)) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruComMsgK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -933,6 +1741,29 @@ open INV .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in usedRM(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDecMsg(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> MsgK .
+  op r2 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in usedRM(s)) = true .
+  eq (r2 \in knl(s)) = false .
   eq (senc(r1,r2) \in knl(s)) = true .
   eq rm = r2 .
   eq a = b .
@@ -957,6 +1788,7 @@ open INV .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in usedRM(s)) = true .
+  eq (r2 \in knl(s)) = false .
   eq (senc(r1,r2) \in knl(s)) = true .
   eq rm = r2 .
   eq (a = b) = false .
@@ -982,6 +1814,7 @@ open INV .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in usedRM(s)) = true .
+  eq (r2 \in knl(s)) = false .
   eq (senc(r1,r2) \in knl(s)) = true .
   eq rm = r2 .
   eq (a = b) = false .
@@ -1008,6 +1841,7 @@ open INV .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in usedRM(s)) = true .
+  eq (r2 \in knl(s)) = false .
   eq (senc(r1,r2) \in knl(s)) = true .
   eq rm = r2 .
   eq (a = b) = false .
@@ -1015,6 +1849,37 @@ open INV .
   eq (b = intru) = false .
   eq r2 = noRawMsg .
   eq (noRawMsg \in usedRM(s)) = true .
+  eq (noRawMsg \in knl(s)) = true .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDecMsg(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> MsgK .
+  op r2 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in usedRM(s)) = true .
+  eq (r2 \in knl(s)) = false .
+  eq (senc(r1,r2) \in knl(s)) = true .
+  eq rm = r2 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq r2 = noRawMsg .
+  eq (noRawMsg \in usedRM(s)) = true .
+  eq (noRawMsg \in knl(s)) = false .
   eq (senc(r1,noRawMsg) \in knl(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDecMsg(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -1037,6 +1902,7 @@ open INV .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in usedRM(s)) = true .
+  eq (r2 \in knl(s)) = false .
   eq (senc(r1,r2) \in knl(s)) = true .
   eq rm = r2 .
   eq (a = b) = false .
@@ -1044,6 +1910,7 @@ open INV .
   eq (b = intru) = false .
   eq r2 = noRawMsg .
   eq (noRawMsg \in usedRM(s)) = true .
+  eq (noRawMsg \in knl(s)) = false .
   eq (senc(r1,noRawMsg) \in knl(s)) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDecMsg(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -1066,6 +1933,7 @@ open INV .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in usedRM(s)) = true .
+  eq (r2 \in knl(s)) = false .
   eq (senc(r1,r2) \in knl(s)) = true .
   eq rm = r2 .
   eq (a = b) = false .
@@ -1094,51 +1962,18 @@ open INV .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in usedRM(s)) = true .
-  eq (senc(r1,r2) \in knl(s)) = true .
-  eq rm = r2 .
-  eq (a = b) = false .
-  eq (a = intru) = false .
-  eq (b = intru) = false .
-  eq (r2 = noRawMsg) = false .
-  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
-  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r2 .
-  eq symSid(sb) = sid .
-  eq validSymBody(a,b,sb) = true .
-  eq (previous-rk \in leakscr(s)) = true .
-  eq (r2 \in knl(s)) = true .
-  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDecMsg(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> MsgK .
-  op r2 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r1 \in knl(s)) = true .
-  eq (r2 \in usedRM(s)) = true .
-  eq (senc(r1,r2) \in knl(s)) = true .
-  eq rm = r2 .
-  eq (a = b) = false .
-  eq (a = intru) = false .
-  eq (b = intru) = false .
-  eq (r2 = noRawMsg) = false .
-  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
-  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r2 .
-  eq symSid(sb) = sid .
-  eq validSymBody(a,b,sb) = true .
-  eq (previous-rk \in leakscr(s)) = true .
   eq (r2 \in knl(s)) = false .
+  eq (senc(r1,r2) \in knl(s)) = true .
+  eq rm = r2 .
+  eq (a = b) = false .
+  eq (a = intru) = false .
+  eq (b = intru) = false .
+  eq (r2 = noRawMsg) = false .
+  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r2 .
+  eq symSid(sb) = sid .
+  eq validSymBody(a,b,sb) = true .
+  eq (previous-rk \in leakscr(s)) = true .
   eq (r2 \in leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDecMsg(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -1161,6 +1996,7 @@ open INV .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in usedRM(s)) = true .
+  eq (r2 \in knl(s)) = false .
   eq (senc(r1,r2) \in knl(s)) = true .
   eq rm = r2 .
   eq (a = b) = false .
@@ -1172,10 +2008,9 @@ open INV .
   eq symSid(sb) = sid .
   eq validSymBody(a,b,sb) = true .
   eq (previous-rk \in leakscr(s)) = true .
-  eq (r2 \in knl(s)) = false .
   eq (r2 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDecMsg(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -1197,6 +2032,7 @@ open INV .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in usedRM(s)) = true .
+  eq (r2 \in knl(s)) = false .
   eq (senc(r1,r2) \in knl(s)) = true .
   eq rm = r2 .
   eq (a = b) = false .
@@ -1208,11 +2044,10 @@ open INV .
   eq symSid(sb) = sid .
   eq validSymBody(a,b,sb) = true .
   eq (previous-rk \in leakscr(s)) = true .
-  eq (r2 \in knl(s)) = false .
   eq (r2 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDecMsg(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -1234,6 +2069,7 @@ open INV .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in usedRM(s)) = true .
+  eq (r2 \in knl(s)) = false .
   eq (senc(r1,r2) \in knl(s)) = true .
   eq rm = r2 .
   eq (a = b) = false .
@@ -1245,12 +2081,11 @@ open INV .
   eq symSid(sb) = sid .
   eq validSymBody(a,b,sb) = true .
   eq (previous-rk \in leakscr(s)) = true .
-  eq (r2 \in knl(s)) = false .
   eq (r2 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDecMsg(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -1272,6 +2107,7 @@ open INV .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in usedRM(s)) = true .
+  eq (r2 \in knl(s)) = false .
   eq (senc(r1,r2) \in knl(s)) = true .
   eq rm = r2 .
   eq (a = b) = false .
@@ -1283,17 +2119,16 @@ open INV .
   eq symSid(sb) = sid .
   eq validSymBody(a,b,sb) = true .
   eq (previous-rk \in leakscr(s)) = true .
-  eq (r2 \in knl(s)) = false .
   eq (r2 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDecMsg(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
---> true, use inv3 as a lemma
+--> false
 open INV .
   op a : -> Prin .
   op a2 : -> Prin .
@@ -1311,6 +2146,7 @@ open INV .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in usedRM(s)) = true .
+  eq (r2 \in knl(s)) = false .
   eq (senc(r1,r2) \in knl(s)) = true .
   eq rm = r2 .
   eq (a = b) = false .
@@ -1322,14 +2158,13 @@ open INV .
   eq symSid(sb) = sid .
   eq validSymBody(a,b,sb) = true .
   eq (previous-rk \in leakscr(s)) = true .
-  eq (r2 \in knl(s)) = false .
   eq (r2 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = false .
-  red inv3(s,r2,r1) implies (postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDecMsg(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDecMsg(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
 --> true
@@ -1350,6 +2185,7 @@ open INV .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in usedRM(s)) = true .
+  eq (r2 \in knl(s)) = false .
   eq (senc(r1,r2) \in knl(s)) = true .
   eq rm = r2 .
   eq (a = b) = false .
@@ -1361,7 +2197,6 @@ open INV .
   eq symSid(sb) = sid .
   eq validSymBody(a,b,sb) = true .
   eq (previous-rk \in leakscr(s)) = true .
-  eq (r2 \in knl(s)) = false .
   eq (r2 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDecMsg(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
@@ -1385,6 +2220,7 @@ open INV .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in usedRM(s)) = true .
+  eq (r2 \in knl(s)) = false .
   eq (senc(r1,r2) \in knl(s)) = true .
   eq rm = r2 .
   eq (a = b) = false .
@@ -1417,6 +2253,7 @@ open INV .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in usedRM(s)) = true .
+  eq (r2 \in knl(s)) = false .
   eq (senc(r1,r2) \in knl(s)) = true .
   eq rm = r2 .
   eq (a = b) = false .
@@ -1448,6 +2285,7 @@ open INV .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in usedRM(s)) = true .
+  eq (r2 \in knl(s)) = false .
   eq (senc(r1,r2) \in knl(s)) = true .
   eq rm = r2 .
   eq (a = b) = false .
@@ -1478,6 +2316,7 @@ open INV .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in usedRM(s)) = true .
+  eq (r2 \in knl(s)) = false .
   eq (senc(r1,r2) \in knl(s)) = true .
   eq rm = r2 .
   eq (a = b) = false .
@@ -1507,6 +2346,7 @@ open INV .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in usedRM(s)) = true .
+  eq (r2 \in knl(s)) = false .
   eq (senc(r1,r2) \in knl(s)) = true .
   eq rm = r2 .
   eq (a = b) = false .
@@ -1535,6 +2375,7 @@ open INV .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in usedRM(s)) = true .
+  eq (r2 \in knl(s)) = false .
   eq (senc(r1,r2) \in knl(s)) = true .
   eq (rm = r2) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDecMsg(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
@@ -1558,6 +2399,7 @@ open INV .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in usedRM(s)) = true .
+  eq (r2 \in knl(s)) = false .
   eq (senc(r1,r2) \in knl(s)) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDecMsg(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -1706,18 +2548,17 @@ open INV .
   op msk : -> MLK-SecretK .
   op n : -> Nat .
   op previous-rk : -> RootK .
-  op r1 : -> RootK .
-  op r2 : -> ECDHK-ShareS .
-  op r3 : -> MLK-ShareS .
-  op r4 : -> SessId .
+  op r1 : -> ECDHK-ShareS .
+  op r2 : -> MLK-ShareS .
+  op r3 : -> SessId .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq r1 = zero-rk .
+  eq (r1 \in knl(s)) = true .
   eq (r2 \in knl(s)) = true .
-  eq (r3 \in knl(s)) = true .
-  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDeriveInitCK(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+  eq (zero-rk \in knl(s)) = true .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDeriveInitCK(s,r1,r2,r3),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
 --> true
@@ -1730,18 +2571,17 @@ open INV .
   op msk : -> MLK-SecretK .
   op n : -> Nat .
   op previous-rk : -> RootK .
-  op r1 : -> RootK .
-  op r2 : -> ECDHK-ShareS .
-  op r3 : -> MLK-ShareS .
-  op r4 : -> SessId .
+  op r1 : -> ECDHK-ShareS .
+  op r2 : -> MLK-ShareS .
+  op r3 : -> SessId .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq r1 = zero-rk .
+  eq (r1 \in knl(s)) = true .
   eq (r2 \in knl(s)) = true .
-  eq (r3 \in knl(s)) = false .
-  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDeriveInitCK(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+  eq (zero-rk \in knl(s)) = false .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDeriveInitCK(s,r1,r2,r3),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
 --> true
@@ -1754,17 +2594,16 @@ open INV .
   op msk : -> MLK-SecretK .
   op n : -> Nat .
   op previous-rk : -> RootK .
-  op r1 : -> RootK .
-  op r2 : -> ECDHK-ShareS .
-  op r3 : -> MLK-ShareS .
-  op r4 : -> SessId .
+  op r1 : -> ECDHK-ShareS .
+  op r2 : -> MLK-ShareS .
+  op r3 : -> SessId .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq r1 = zero-rk .
+  eq (r1 \in knl(s)) = true .
   eq (r2 \in knl(s)) = false .
-  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDeriveInitCK(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDeriveInitCK(s,r1,r2,r3),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
 --> true
@@ -1777,16 +2616,15 @@ open INV .
   op msk : -> MLK-SecretK .
   op n : -> Nat .
   op previous-rk : -> RootK .
-  op r1 : -> RootK .
-  op r2 : -> ECDHK-ShareS .
-  op r3 : -> MLK-ShareS .
-  op r4 : -> SessId .
+  op r1 : -> ECDHK-ShareS .
+  op r2 : -> MLK-ShareS .
+  op r3 : -> SessId .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (r1 = zero-rk) = false .
-  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDeriveInitCK(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+  eq (r1 \in knl(s)) = false .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDeriveInitCK(s,r1,r2,r3),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
 --> true
@@ -1846,65 +2684,6 @@ open INV .
   eq (r1 = noChainK) = false .
   eq (r1 \in knl(s)) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDeriveMsgK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> ChainK .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq r1 = noChainK .
-  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDeriveNextCK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> ChainK .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r1 = noChainK) = false .
-  eq (r1 \in knl(s)) = true .
-  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDeriveNextCK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> ChainK .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r1 = noChainK) = false .
-  eq (r1 \in knl(s)) = false .
-  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruDeriveNextCK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
 --> true
@@ -2466,7 +3245,7 @@ open INV .
   eq (previous-rk \in leakscr(s)) = true .
   eq (r1 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruRandMessage(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -2499,8 +3278,8 @@ open INV .
   eq (previous-rk \in leakscr(s)) = true .
   eq (r1 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruRandMessage(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -2533,9 +3312,9 @@ open INV .
   eq (previous-rk \in leakscr(s)) = true .
   eq (r1 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruRandMessage(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -2568,10 +3347,10 @@ open INV .
   eq (previous-rk \in leakscr(s)) = true .
   eq (r1 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruRandMessage(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -2604,10 +3383,10 @@ open INV .
   eq (previous-rk \in leakscr(s)) = true .
   eq (r1 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = false .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
   red inv2(s,a2,a,b,sid,esk,msk,ck,r1,previous-rk,sb,n) implies (postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(intruRandMessage(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
 
@@ -3709,39 +4488,6 @@ open INV .
   eq (r5 \in usedSK(s)) = false .
   eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
-  eq (mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5),r3)) \in knl(s)) = true .
-  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> Prin .
-  op r2 : -> Prin .
-  op r3 : -> SessId .
-  op r4 : -> ECDHK-SecretK .
-  op r5 : -> MLK-SecretK .
-  op r6 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r1 = r2) = false .
-  eq (ck(s,r1,r2,r3) = noChainK) = false .
-  eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSID(s)) = true .
-  eq (r4 \in usedSK(s)) = false .
-  eq (r5 \in usedSK(s)) = false .
-  eq (r6 \in usedRM(s)) = false .
-  eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
-  eq (mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5),r3)) \in knl(s)) = false .
   eq rm = r6 .
   eq a = b .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
@@ -3775,7 +4521,6 @@ open INV .
   eq (r5 \in usedSK(s)) = false .
   eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
-  eq (mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5),r3)) \in knl(s)) = false .
   eq rm = r6 .
   eq (a = b) = false .
   eq a = intru .
@@ -3810,7 +4555,6 @@ open INV .
   eq (r5 \in usedSK(s)) = false .
   eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
-  eq (mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5),r3)) \in knl(s)) = false .
   eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -3846,7 +4590,6 @@ open INV .
   eq (r5 \in usedSK(s)) = false .
   eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
-  eq (mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5),r3)) \in knl(s)) = false .
   eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -3884,7 +4627,6 @@ open INV .
   eq (r5 \in usedSK(s)) = false .
   eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
-  eq (mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5),r3)) \in knl(s)) = false .
   eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -3922,7 +4664,6 @@ open INV .
   eq (r5 \in usedSK(s)) = false .
   eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
-  eq (mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5),r3)) \in knl(s)) = false .
   eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -3966,7 +4707,6 @@ open INV .
   eq (r5 \in usedSK(s)) = false .
   eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
-  eq (mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5),r3)) \in knl(s)) = false .
   eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -3980,7 +4720,7 @@ open INV .
   eq (r6 \in knl(s)) = true .
   eq (r6 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -4012,7 +4752,6 @@ open INV .
   eq (r5 \in usedSK(s)) = false .
   eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
-  eq (mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5),r3)) \in knl(s)) = false .
   eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -4026,8 +4765,8 @@ open INV .
   eq (r6 \in knl(s)) = true .
   eq (r6 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -4059,7 +4798,6 @@ open INV .
   eq (r5 \in usedSK(s)) = false .
   eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
-  eq (mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5),r3)) \in knl(s)) = false .
   eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -4073,9 +4811,9 @@ open INV .
   eq (r6 \in knl(s)) = true .
   eq (r6 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -4107,7 +4845,6 @@ open INV .
   eq (r5 \in usedSK(s)) = false .
   eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
-  eq (mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5),r3)) \in knl(s)) = false .
   eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -4121,10 +4858,10 @@ open INV .
   eq (r6 \in knl(s)) = true .
   eq (r6 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -4156,7 +4893,6 @@ open INV .
   eq (r5 \in usedSK(s)) = false .
   eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
-  eq (mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5),r3)) \in knl(s)) = false .
   eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -4170,10 +4906,10 @@ open INV .
   eq (r6 \in knl(s)) = true .
   eq (r6 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = false .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
   red inv1(s,r6) implies (postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
 
@@ -4205,7 +4941,6 @@ open INV .
   eq (r5 \in usedSK(s)) = false .
   eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
-  eq (mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5),r3)) \in knl(s)) = false .
   eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -4250,7 +4985,6 @@ open INV .
   eq (r5 \in usedSK(s)) = false .
   eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
-  eq (mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5),r3)) \in knl(s)) = false .
   eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -4293,7 +5027,6 @@ open INV .
   eq (r5 \in usedSK(s)) = false .
   eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
-  eq (mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5),r3)) \in knl(s)) = false .
   eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -4335,7 +5068,6 @@ open INV .
   eq (r5 \in usedSK(s)) = false .
   eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
-  eq (mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5),r3)) \in knl(s)) = false .
   eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -4376,7 +5108,6 @@ open INV .
   eq (r5 \in usedSK(s)) = false .
   eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
-  eq (mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5),r3)) \in knl(s)) = false .
   eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -4416,7 +5147,6 @@ open INV .
   eq (r5 \in usedSK(s)) = false .
   eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
-  eq (mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5),r3)) \in knl(s)) = false .
   eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -4455,7 +5185,6 @@ open INV .
   eq (r5 \in usedSK(s)) = false .
   eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
-  eq (mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5),r3)) \in knl(s)) = false .
   eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -4493,7 +5222,6 @@ open INV .
   eq (r5 \in usedSK(s)) = false .
   eq (r6 \in usedRM(s)) = false .
   eq existPeerPK(r1,r2,r3,peerPKS(s)) = true .
-  eq (mk-sym(kdf-ck(rk(s,r1,r2,r3),(ecdhk-getSecret(findPeerEcdhPK(r1,r2,r3,peerPKS(s))) & r4),(mlk-getSecret(findPeerMlkPK(r1,r2,r3,peerPKS(s))) & r5),r3)) \in knl(s)) = false .
   eq (rm = r6) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -4660,6 +5388,36 @@ open INV .
   eq existUser(r2,idsS(s)) = true .
   eq (r4 \in usedSK(s)) = false .
   eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = true .
+  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> Prin .
+  op r2 : -> Prin .
+  op r3 : -> SessId .
+  op r4 : -> ECDHK-SecretK .
+  op r5 : -> MLK-SecretK .
+  op r6 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r1 = r2) = false .
+  eq existUser(r1,idsS(s)) = true .
+  eq existUser(r2,idsS(s)) = true .
+  eq (r4 \in usedSK(s)) = false .
+  eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq (r3 \in usedSID(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -4689,41 +5447,10 @@ open INV .
   eq existUser(r2,idsS(s)) = true .
   eq (r4 \in usedSK(s)) = false .
   eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq (r3 \in usedSID(s)) = false .
   eq validRegData(findRegData(r2,idsS(s))) = true .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = true .
-  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> Prin .
-  op r2 : -> Prin .
-  op r3 : -> SessId .
-  op r4 : -> ECDHK-SecretK .
-  op r5 : -> MLK-SecretK .
-  op r6 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r1 = r2) = false .
-  eq existUser(r1,idsS(s)) = true .
-  eq existUser(r2,idsS(s)) = true .
-  eq (r4 \in usedSK(s)) = false .
-  eq (r5 \in usedSK(s)) = false .
-  eq (r3 \in usedSID(s)) = false .
-  eq validRegData(findRegData(r2,idsS(s))) = true .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
-  eq r6 = rm .
+  eq rm = r6 .
   eq a = b .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -4753,10 +5480,10 @@ open INV .
   eq existUser(r2,idsS(s)) = true .
   eq (r4 \in usedSK(s)) = false .
   eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq (r3 \in usedSID(s)) = false .
   eq validRegData(findRegData(r2,idsS(s))) = true .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
-  eq r6 = rm .
+  eq rm = r6 .
   eq (a = b) = false .
   eq a = intru .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
@@ -4787,10 +5514,10 @@ open INV .
   eq existUser(r2,idsS(s)) = true .
   eq (r4 \in usedSK(s)) = false .
   eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq (r3 \in usedSID(s)) = false .
   eq validRegData(findRegData(r2,idsS(s))) = true .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
-  eq r6 = rm .
+  eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
   eq b = intru .
@@ -4822,14 +5549,15 @@ open INV .
   eq existUser(r2,idsS(s)) = true .
   eq (r4 \in usedSK(s)) = false .
   eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq (r3 \in usedSID(s)) = false .
   eq validRegData(findRegData(r2,idsS(s))) = true .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
-  eq r6 = rm .
+  eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
   eq (b = intru) = false .
-  eq rm = noRawMsg .
+  eq r6 = noRawMsg .
+  eq (noRawMsg \in usedRM(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -4858,21 +5586,15 @@ open INV .
   eq existUser(r2,idsS(s)) = true .
   eq (r4 \in usedSK(s)) = false .
   eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq (r3 \in usedSID(s)) = false .
   eq validRegData(findRegData(r2,idsS(s))) = true .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
-  eq r6 = rm .
+  eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
   eq (b = intru) = false .
-  eq (rm = noRawMsg) = false .
-  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
-  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = rm .
-  eq symSid(sb) = sid .
-  eq validSymBody(a,b,sb) = true .
-  eq (previous-rk \in leakscr(s)) = true .
-  eq (rm \in knl(s)) = true .
-  eq (rm \in leakscr(s)) = true .
+  eq r6 = noRawMsg .
+  eq (noRawMsg \in usedRM(s)) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -4901,22 +5623,21 @@ open INV .
   eq existUser(r2,idsS(s)) = true .
   eq (r4 \in usedSK(s)) = false .
   eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq (r3 \in usedSID(s)) = false .
   eq validRegData(findRegData(r2,idsS(s))) = true .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
-  eq r6 = rm .
+  eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
   eq (b = intru) = false .
-  eq (rm = noRawMsg) = false .
+  eq (r6 = noRawMsg) = false .
   eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
-  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = rm .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r6 .
   eq symSid(sb) = sid .
   eq validSymBody(a,b,sb) = true .
   eq (previous-rk \in leakscr(s)) = true .
-  eq (rm \in knl(s)) = true .
-  eq (rm \in leakscr(s)) = false .
-  eq (rm \in usedRM(s)) = true .
+  eq (r6 \in knl(s)) = true .
+  eq (r6 \in leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -4945,24 +5666,23 @@ open INV .
   eq existUser(r2,idsS(s)) = true .
   eq (r4 \in usedSK(s)) = false .
   eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq (r3 \in usedSID(s)) = false .
   eq validRegData(findRegData(r2,idsS(s))) = true .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
-  eq r6 = rm .
+  eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
   eq (b = intru) = false .
-  eq (rm = noRawMsg) = false .
+  eq (r6 = noRawMsg) = false .
   eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
-  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = rm .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r6 .
   eq symSid(sb) = sid .
   eq validSymBody(a,b,sb) = true .
   eq (previous-rk \in leakscr(s)) = true .
-  eq (rm \in knl(s)) = true .
-  eq (rm \in leakscr(s)) = false .
-  eq (rm \in usedRM(s)) = false .
+  eq (r6 \in knl(s)) = true .
+  eq (r6 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -4991,25 +5711,24 @@ open INV .
   eq existUser(r2,idsS(s)) = true .
   eq (r4 \in usedSK(s)) = false .
   eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq (r3 \in usedSID(s)) = false .
   eq validRegData(findRegData(r2,idsS(s))) = true .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
-  eq r6 = rm .
+  eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
   eq (b = intru) = false .
-  eq (rm = noRawMsg) = false .
+  eq (r6 = noRawMsg) = false .
   eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
-  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = rm .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r6 .
   eq symSid(sb) = sid .
   eq validSymBody(a,b,sb) = true .
   eq (previous-rk \in leakscr(s)) = true .
-  eq (rm \in knl(s)) = true .
-  eq (rm \in leakscr(s)) = false .
-  eq (rm \in usedRM(s)) = false .
+  eq (r6 \in knl(s)) = true .
+  eq (r6 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -5038,26 +5757,25 @@ open INV .
   eq existUser(r2,idsS(s)) = true .
   eq (r4 \in usedSK(s)) = false .
   eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq (r3 \in usedSID(s)) = false .
   eq validRegData(findRegData(r2,idsS(s))) = true .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
-  eq r6 = rm .
+  eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
   eq (b = intru) = false .
-  eq (rm = noRawMsg) = false .
+  eq (r6 = noRawMsg) = false .
   eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
-  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = rm .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r6 .
   eq symSid(sb) = sid .
   eq validSymBody(a,b,sb) = true .
   eq (previous-rk \in leakscr(s)) = true .
-  eq (rm \in knl(s)) = true .
-  eq (rm \in leakscr(s)) = false .
-  eq (rm \in usedRM(s)) = false .
+  eq (r6 \in knl(s)) = true .
+  eq (r6 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -5086,27 +5804,26 @@ open INV .
   eq existUser(r2,idsS(s)) = true .
   eq (r4 \in usedSK(s)) = false .
   eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq (r3 \in usedSID(s)) = false .
   eq validRegData(findRegData(r2,idsS(s))) = true .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
-  eq r6 = rm .
+  eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
   eq (b = intru) = false .
-  eq (rm = noRawMsg) = false .
+  eq (r6 = noRawMsg) = false .
   eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
-  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = rm .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r6 .
   eq symSid(sb) = sid .
   eq validSymBody(a,b,sb) = true .
   eq (previous-rk \in leakscr(s)) = true .
-  eq (rm \in knl(s)) = true .
-  eq (rm \in leakscr(s)) = false .
-  eq (rm \in usedRM(s)) = false .
+  eq (r6 \in knl(s)) = true .
+  eq (r6 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -5135,28 +5852,27 @@ open INV .
   eq existUser(r2,idsS(s)) = true .
   eq (r4 \in usedSK(s)) = false .
   eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq (r3 \in usedSID(s)) = false .
   eq validRegData(findRegData(r2,idsS(s))) = true .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
-  eq r6 = rm .
+  eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
   eq (b = intru) = false .
-  eq (rm = noRawMsg) = false .
+  eq (r6 = noRawMsg) = false .
   eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
-  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = rm .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r6 .
   eq symSid(sb) = sid .
   eq validSymBody(a,b,sb) = true .
   eq (previous-rk \in leakscr(s)) = true .
-  eq (rm \in knl(s)) = true .
-  eq (rm \in leakscr(s)) = false .
-  eq (rm \in usedRM(s)) = false .
+  eq (r6 \in knl(s)) = true .
+  eq (r6 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = false .
-  red inv1(s,rm) implies (postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
+  red inv1(s,r6) implies (postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
 
 --> true
@@ -5184,22 +5900,21 @@ open INV .
   eq existUser(r2,idsS(s)) = true .
   eq (r4 \in usedSK(s)) = false .
   eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq (r3 \in usedSID(s)) = false .
   eq validRegData(findRegData(r2,idsS(s))) = true .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
-  eq r6 = rm .
+  eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
   eq (b = intru) = false .
-  eq (rm = noRawMsg) = false .
+  eq (r6 = noRawMsg) = false .
   eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
-  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = rm .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r6 .
   eq symSid(sb) = sid .
   eq validSymBody(a,b,sb) = true .
   eq (previous-rk \in leakscr(s)) = true .
-  eq (rm \in knl(s)) = true .
-  eq (rm \in leakscr(s)) = false .
-  eq (rm \in usedRM(s)) = false .
+  eq (r6 \in knl(s)) = true .
+  eq (r6 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -5229,20 +5944,20 @@ open INV .
   eq existUser(r2,idsS(s)) = true .
   eq (r4 \in usedSK(s)) = false .
   eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq (r3 \in usedSID(s)) = false .
   eq validRegData(findRegData(r2,idsS(s))) = true .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
-  eq r6 = rm .
+  eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
   eq (b = intru) = false .
-  eq (rm = noRawMsg) = false .
+  eq (r6 = noRawMsg) = false .
   eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
-  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = rm .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r6 .
   eq symSid(sb) = sid .
   eq validSymBody(a,b,sb) = true .
   eq (previous-rk \in leakscr(s)) = true .
-  eq (rm \in knl(s)) = false .
+  eq (r6 \in knl(s)) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -5271,16 +5986,16 @@ open INV .
   eq existUser(r2,idsS(s)) = true .
   eq (r4 \in usedSK(s)) = false .
   eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq (r3 \in usedSID(s)) = false .
   eq validRegData(findRegData(r2,idsS(s))) = true .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
-  eq r6 = rm .
+  eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
   eq (b = intru) = false .
-  eq (rm = noRawMsg) = false .
+  eq (r6 = noRawMsg) = false .
   eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
-  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = rm .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r6 .
   eq symSid(sb) = sid .
   eq validSymBody(a,b,sb) = true .
   eq (previous-rk \in leakscr(s)) = false .
@@ -5312,16 +6027,16 @@ open INV .
   eq existUser(r2,idsS(s)) = true .
   eq (r4 \in usedSK(s)) = false .
   eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq (r3 \in usedSID(s)) = false .
   eq validRegData(findRegData(r2,idsS(s))) = true .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
-  eq r6 = rm .
+  eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
   eq (b = intru) = false .
-  eq (rm = noRawMsg) = false .
+  eq (r6 = noRawMsg) = false .
   eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
-  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = rm .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r6 .
   eq symSid(sb) = sid .
   eq validSymBody(a,b,sb) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
@@ -5352,16 +6067,16 @@ open INV .
   eq existUser(r2,idsS(s)) = true .
   eq (r4 \in usedSK(s)) = false .
   eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq (r3 \in usedSID(s)) = false .
   eq validRegData(findRegData(r2,idsS(s))) = true .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
-  eq r6 = rm .
+  eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
   eq (b = intru) = false .
-  eq (rm = noRawMsg) = false .
+  eq (r6 = noRawMsg) = false .
   eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
-  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = rm .
+  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r6 .
   eq (symSid(sb) = sid) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -5391,16 +6106,16 @@ open INV .
   eq existUser(r2,idsS(s)) = true .
   eq (r4 \in usedSK(s)) = false .
   eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq (r3 \in usedSID(s)) = false .
   eq validRegData(findRegData(r2,idsS(s))) = true .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
-  eq r6 = rm .
+  eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
   eq (b = intru) = false .
-  eq (rm = noRawMsg) = false .
+  eq (r6 = noRawMsg) = false .
   eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
-  eq (symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = rm) = false .
+  eq (symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r6) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -5429,14 +6144,14 @@ open INV .
   eq existUser(r2,idsS(s)) = true .
   eq (r4 \in usedSK(s)) = false .
   eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq (r3 \in usedSID(s)) = false .
   eq validRegData(findRegData(r2,idsS(s))) = true .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
-  eq r6 = rm .
+  eq rm = r6 .
   eq (a = b) = false .
   eq (a = intru) = false .
   eq (b = intru) = false .
-  eq (rm = noRawMsg) = false .
+  eq (r6 = noRawMsg) = false .
   eq (ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid)) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -5466,10 +6181,10 @@ open INV .
   eq existUser(r2,idsS(s)) = true .
   eq (r4 \in usedSK(s)) = false .
   eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq (r3 \in usedSID(s)) = false .
   eq validRegData(findRegData(r2,idsS(s))) = true .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
-  eq (r6 = rm) = false .
+  eq (rm = r6) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -5498,6 +6213,7 @@ open INV .
   eq existUser(r2,idsS(s)) = true .
   eq (r4 \in usedSK(s)) = false .
   eq (r5 \in usedSK(s)) = false .
+  eq (r6 \in usedRM(s)) = false .
   eq (r3 \in usedSID(s)) = false .
   eq validRegData(findRegData(r2,idsS(s))) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
@@ -5672,34 +6388,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = true .
-  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> Prin .
-  op r2 : -> Prin .
-  op r3 : -> SessId .
-  op r4 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r1 = r2) = false .
-  eq (ck(s,r1,r2,r3) = noChainK) = false .
-  eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSID(s)) = true .
-  eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq a = b .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
@@ -5728,7 +6416,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq a = intru .
@@ -5758,7 +6445,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -5789,7 +6475,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -5822,7 +6507,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -5855,7 +6539,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -5889,7 +6572,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -5925,7 +6607,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -5962,7 +6643,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6000,7 +6680,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6012,7 +6691,6 @@ open INV .
   eq (r2 = intru) = false .
   eq (ck(s,intru,r2,r3) = noChainK) = false .
   eq (rk(s,intru,r2,r3) = noRootK) = false .
-  eq (mk-sym(ck(s,intru,r2,r3)) \in knl(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -6039,46 +6717,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
-  eq rm = r4 .
-  eq (a = b) = false .
-  eq (a = intru) = false .
-  eq (b = intru) = false .
-  eq (r4 = noRawMsg) = false .
-  eq a = r1 .
-  eq (b = r1) = false .
-  eq r1 = intru .
-  eq (r2 = intru) = false .
-  eq (ck(s,intru,r2,r3) = noChainK) = false .
-  eq (rk(s,intru,r2,r3) = noRootK) = false .
-  eq (mk-sym(ck(s,intru,r2,r3)) \in knl(s)) = false .
-  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> Prin .
-  op r2 : -> Prin .
-  op r3 : -> SessId .
-  op r4 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r1 = r2) = false .
-  eq (ck(s,r1,r2,r3) = noChainK) = false .
-  eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSID(s)) = true .
-  eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6117,7 +6755,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6157,7 +6794,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6171,7 +6807,6 @@ open INV .
   eq r2 = intru .
   eq (ck(s,r1,intru,r3) = noChainK) = false .
   eq (rk(s,r1,intru,r3) = noRootK) = false .
-  eq (mk-sym(ck(s,r1,intru,r3)) \in knl(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -6198,48 +6833,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
-  eq rm = r4 .
-  eq (a = b) = false .
-  eq (a = intru) = false .
-  eq (b = intru) = false .
-  eq (r4 = noRawMsg) = false .
-  eq a = r1 .
-  eq (b = r1) = false .
-  eq (r1 = intru) = false .
-  eq a2 = r1 .
-  eq b = r2 .
-  eq r2 = intru .
-  eq (ck(s,r1,intru,r3) = noChainK) = false .
-  eq (rk(s,r1,intru,r3) = noRootK) = false .
-  eq (mk-sym(ck(s,r1,intru,r3)) \in knl(s)) = false .
-  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> Prin .
-  op r2 : -> Prin .
-  op r3 : -> SessId .
-  op r4 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r1 = r2) = false .
-  eq (ck(s,r1,r2,r3) = noChainK) = false .
-  eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSID(s)) = true .
-  eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6283,7 +6876,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6328,7 +6920,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6348,54 +6939,6 @@ open INV .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
   eq (sid \in usedSID(s)) = true .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in knl(s)) = true .
-  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> Prin .
-  op r2 : -> Prin .
-  op r3 : -> SessId .
-  op r4 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r1 = r2) = false .
-  eq (ck(s,r1,r2,r3) = noChainK) = false .
-  eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSID(s)) = true .
-  eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
-  eq rm = r4 .
-  eq (a = b) = false .
-  eq (a = intru) = false .
-  eq (b = intru) = false .
-  eq (r4 = noRawMsg) = false .
-  eq a = r1 .
-  eq (b = r1) = false .
-  eq (r1 = intru) = false .
-  eq a2 = r1 .
-  eq b = r2 .
-  eq (r2 = intru) = false .
-  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid) .
-  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb))),symCt(sb)) = r4 .
-  eq symSid(sb) = sid .
-  eq sb = symBody(r3,ns(s,r1,r2,r3),senc(mk-sym(ck(s,r1,r2,r3)),r4),sign(sk(r1),symSignedData(r1,r2,r3,ns(s,r1,r2,r3),senc(mk-sym(ck(s,r1,r2,r3)),r4)))) .
-  eq r3 = sid .
-  eq (ck(s,r1,r2,sid) = noChainK) = false .
-  eq (rk(s,r1,r2,sid) = noRootK) = false .
-  eq (sid \in usedSID(s)) = true .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in knl(s)) = false .
   eq ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq time(s) = n .
   eq (previous-rk \in leakscr(s)) = true .
@@ -6427,7 +6970,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6447,13 +6989,12 @@ open INV .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
   eq (sid \in usedSID(s)) = true .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in knl(s)) = false .
   eq ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq time(s) = n .
   eq (previous-rk \in leakscr(s)) = true .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in leakscr(s)) = true .
+  eq (sk(r2) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -6480,7 +7021,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6500,14 +7040,13 @@ open INV .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
   eq (sid \in usedSID(s)) = true .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in knl(s)) = false .
   eq ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq time(s) = n .
   eq (previous-rk \in leakscr(s)) = true .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in leakscr(s)) = false .
-  eq (ck(s,r1,r2,sid) \in leakscr(s)) = true .
+  eq (sk(r2) \in' leakscr(s)) = false .
+  eq (ck(s,r1,r2,sid) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -6534,7 +7073,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6554,15 +7092,14 @@ open INV .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
   eq (sid \in usedSID(s)) = true .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in knl(s)) = false .
   eq ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq time(s) = n .
   eq (previous-rk \in leakscr(s)) = true .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in leakscr(s)) = false .
-  eq (ck(s,r1,r2,sid) \in leakscr(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in leakscr(s)) = true .
+  eq (sk(r2) \in' leakscr(s)) = false .
+  eq (ck(s,r1,r2,sid) \in' leakscr(s)) = false .
+  eq (mk-sym(ck(s,r1,r2,sid)) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -6589,7 +7126,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6609,16 +7145,15 @@ open INV .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
   eq (sid \in usedSID(s)) = true .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in knl(s)) = false .
   eq ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq time(s) = n .
   eq (previous-rk \in leakscr(s)) = true .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in leakscr(s)) = false .
-  eq (ck(s,r1,r2,sid) \in leakscr(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in leakscr(s)) = false .
-  eq ((MLK-PriK(r2) & msk) \in leakscr(s)) = true .
+  eq (sk(r2) \in' leakscr(s)) = false .
+  eq (ck(s,r1,r2,sid) \in' leakscr(s)) = false .
+  eq (mk-sym(ck(s,r1,r2,sid)) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(r2) & msk) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -6645,7 +7180,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6665,16 +7199,15 @@ open INV .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
   eq (sid \in usedSID(s)) = true .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in knl(s)) = false .
   eq ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq time(s) = n .
   eq (previous-rk \in leakscr(s)) = true .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in leakscr(s)) = false .
-  eq (ck(s,r1,r2,sid) \in leakscr(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in leakscr(s)) = false .
-  eq ((MLK-PriK(r2) & msk) \in leakscr(s)) = false .
+  eq (sk(r2) \in' leakscr(s)) = false .
+  eq (ck(s,r1,r2,sid) \in' leakscr(s)) = false .
+  eq (mk-sym(ck(s,r1,r2,sid)) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(r2) & msk) \in' leakscr(s)) = false .
   red inv1(s,r4) implies (postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
 
@@ -6701,7 +7234,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6721,7 +7253,6 @@ open INV .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
   eq (sid \in usedSID(s)) = true .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in knl(s)) = false .
   eq ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq time(s) = n .
   eq (previous-rk \in leakscr(s)) = true .
@@ -6752,7 +7283,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6772,7 +7302,6 @@ open INV .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
   eq (sid \in usedSID(s)) = true .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in knl(s)) = false .
   eq ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq time(s) = n .
   eq (previous-rk \in leakscr(s)) = false .
@@ -6802,7 +7331,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6822,7 +7350,6 @@ open INV .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
   eq (sid \in usedSID(s)) = true .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in knl(s)) = false .
   eq ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq (time(s) = n) = false .
   eq (previous-rk \in leakscr(s)) = true .
@@ -6854,7 +7381,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6874,13 +7400,12 @@ open INV .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
   eq (sid \in usedSID(s)) = true .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in knl(s)) = false .
   eq ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq (time(s) = n) = false .
   eq (previous-rk \in leakscr(s)) = true .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in leakscr(s)) = true .
+  eq (sk(r2) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -6907,7 +7432,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6927,14 +7451,13 @@ open INV .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
   eq (sid \in usedSID(s)) = true .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in knl(s)) = false .
   eq ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq (time(s) = n) = false .
   eq (previous-rk \in leakscr(s)) = true .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in leakscr(s)) = false .
-  eq (ck(s,r1,r2,sid) \in leakscr(s)) = true .
+  eq (sk(r2) \in' leakscr(s)) = false .
+  eq (ck(s,r1,r2,sid) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -6961,7 +7484,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -6981,15 +7503,14 @@ open INV .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
   eq (sid \in usedSID(s)) = true .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in knl(s)) = false .
   eq ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq (time(s) = n) = false .
   eq (previous-rk \in leakscr(s)) = true .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in leakscr(s)) = false .
-  eq (ck(s,r1,r2,sid) \in leakscr(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in leakscr(s)) = true .
+  eq (sk(r2) \in' leakscr(s)) = false .
+  eq (ck(s,r1,r2,sid) \in' leakscr(s)) = false .
+  eq (mk-sym(ck(s,r1,r2,sid)) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -7016,7 +7537,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7036,16 +7556,15 @@ open INV .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
   eq (sid \in usedSID(s)) = true .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in knl(s)) = false .
   eq ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq (time(s) = n) = false .
   eq (previous-rk \in leakscr(s)) = true .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in leakscr(s)) = false .
-  eq (ck(s,r1,r2,sid) \in leakscr(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in leakscr(s)) = false .
-  eq ((MLK-PriK(r2) & msk) \in leakscr(s)) = true .
+  eq (sk(r2) \in' leakscr(s)) = false .
+  eq (ck(s,r1,r2,sid) \in' leakscr(s)) = false .
+  eq (mk-sym(ck(s,r1,r2,sid)) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(r2) & msk) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -7072,7 +7591,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7092,16 +7610,15 @@ open INV .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
   eq (sid \in usedSID(s)) = true .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in knl(s)) = false .
   eq ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq (time(s) = n) = false .
   eq (previous-rk \in leakscr(s)) = true .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in leakscr(s)) = false .
-  eq (ck(s,r1,r2,sid) \in leakscr(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in leakscr(s)) = false .
-  eq ((MLK-PriK(r2) & msk) \in leakscr(s)) = false .
+  eq (sk(r2) \in' leakscr(s)) = false .
+  eq (ck(s,r1,r2,sid) \in' leakscr(s)) = false .
+  eq (mk-sym(ck(s,r1,r2,sid)) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(r2) & msk) \in' leakscr(s)) = false .
   eq (msg(r1,r1,r2,symBody(sid,ns(s,r1,r2,sid),senc(mk-sym(ck(s,r1,r2,sid)),r4),sign(sk(r1),symSignedData(r1,r2,sid,ns(s,r1,r2,sid),senc(mk-sym(ck(s,r1,r2,sid)),r4)))),n) \in nw(s)) = true .
   red inv1(s,r4) implies (postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
@@ -7129,7 +7646,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7149,16 +7665,15 @@ open INV .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
   eq (sid \in usedSID(s)) = true .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in knl(s)) = false .
   eq ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq (time(s) = n) = false .
   eq (previous-rk \in leakscr(s)) = true .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in leakscr(s)) = false .
-  eq (ck(s,r1,r2,sid) \in leakscr(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in leakscr(s)) = false .
-  eq ((MLK-PriK(r2) & msk) \in leakscr(s)) = false .
+  eq (sk(r2) \in' leakscr(s)) = false .
+  eq (ck(s,r1,r2,sid) \in' leakscr(s)) = false .
+  eq (mk-sym(ck(s,r1,r2,sid)) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(r2) & msk) \in' leakscr(s)) = false .
   eq (msg(r1,r1,r2,symBody(sid,ns(s,r1,r2,sid),senc(mk-sym(ck(s,r1,r2,sid)),r4),sign(sk(r1),symSignedData(r1,r2,sid,ns(s,r1,r2,sid),senc(mk-sym(ck(s,r1,r2,sid)),r4)))),n) \in nw(s)) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -7186,7 +7701,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7206,7 +7720,6 @@ open INV .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
   eq (sid \in usedSID(s)) = true .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in knl(s)) = false .
   eq ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq (time(s) = n) = false .
   eq (previous-rk \in leakscr(s)) = true .
@@ -7237,7 +7750,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7257,7 +7769,6 @@ open INV .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
   eq (sid \in usedSID(s)) = true .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in knl(s)) = false .
   eq ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   eq (time(s) = n) = false .
   eq (previous-rk \in leakscr(s)) = false .
@@ -7287,7 +7798,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7307,7 +7817,6 @@ open INV .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
   eq (sid \in usedSID(s)) = true .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in knl(s)) = false .
   eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid)) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -7335,7 +7844,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7381,7 +7889,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7424,7 +7931,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7470,7 +7976,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7491,7 +7996,7 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(r1,r1,r2,sb,n) \in nw(s)) = true .
-  eq (sk(r2) \in leakscr(s)) = true .
+  eq (sk(r2) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -7518,7 +8023,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7539,8 +8043,8 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(r1,r1,r2,sb,n) \in nw(s)) = true .
-  eq (sk(r2) \in leakscr(s)) = false .
-  eq ((MLK-PriK(r2) & msk) \in leakscr(s)) = true .
+  eq (sk(r2) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(r2) & msk) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -7567,7 +8071,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7588,9 +8091,9 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(r1,r1,r2,sb,n) \in nw(s)) = true .
-  eq (sk(r2) \in leakscr(s)) = false .
-  eq ((MLK-PriK(r2) & msk) \in leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb)) \in leakscr(s)) = true .
+  eq (sk(r2) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(r2) & msk) \in' leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb)) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -7617,7 +8120,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7638,10 +8140,10 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(r1,r1,r2,sb,n) \in nw(s)) = true .
-  eq (sk(r2) \in leakscr(s)) = false .
-  eq ((MLK-PriK(r2) & msk) \in leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb)) \in leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb))) \in leakscr(s)) = true .
+  eq (sk(r2) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(r2) & msk) \in' leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb))) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -7668,7 +8170,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7689,10 +8190,10 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(r1,r1,r2,sb,n) \in nw(s)) = true .
-  eq (sk(r2) \in leakscr(s)) = false .
-  eq ((MLK-PriK(r2) & msk) \in leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb)) \in leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb))) \in leakscr(s)) = false .
+  eq (sk(r2) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(r2) & msk) \in' leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
   red inv1(s,r4) implies (postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
 
@@ -7719,7 +8220,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7766,7 +8266,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7811,7 +8310,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7855,7 +8353,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7898,7 +8395,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7939,7 +8435,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -7979,7 +8474,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -8018,7 +8512,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -8062,7 +8555,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -8081,7 +8573,7 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(r1,r1,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -8108,7 +8600,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -8127,8 +8618,8 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(r1,r1,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -8155,7 +8646,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -8174,9 +8664,9 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(r1,r1,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -8203,7 +8693,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -8222,10 +8711,10 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(r1,r1,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -8252,7 +8741,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -8271,10 +8759,10 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(r1,r1,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = false .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
   red inv1(s,r4) implies (postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
 
@@ -8301,7 +8789,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -8346,7 +8833,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -8389,7 +8875,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -8431,7 +8916,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -8472,7 +8956,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -8512,7 +8995,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -8551,7 +9033,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -8589,7 +9070,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -8632,7 +9112,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -8650,7 +9129,7 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(a2,r1,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -8677,7 +9156,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -8695,8 +9173,8 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(a2,r1,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -8723,7 +9201,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -8741,9 +9218,9 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(a2,r1,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -8770,7 +9247,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -8788,10 +9264,10 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(a2,r1,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -8818,7 +9294,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -8836,10 +9311,10 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(a2,r1,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = false .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
   red inv1(s,r4) implies (postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
 
@@ -8866,7 +9341,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -8910,7 +9384,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -8952,7 +9425,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -8993,7 +9465,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -9033,7 +9504,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -9072,7 +9542,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -9110,7 +9579,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -9147,7 +9615,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -9187,7 +9654,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -9202,7 +9668,7 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -9229,7 +9695,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -9244,8 +9709,8 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -9272,7 +9737,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -9287,9 +9751,9 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -9316,7 +9780,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -9331,10 +9794,10 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = true .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -9361,7 +9824,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -9376,10 +9838,10 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = false .
+  eq (sk(b) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
   red inv1(s,r4) implies (postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
 
@@ -9406,7 +9868,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -9447,7 +9908,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -9486,7 +9946,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -9524,7 +9983,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -9561,7 +10019,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -9597,7 +10054,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -9632,7 +10088,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq rm = r4 .
   eq (a = b) = false .
   eq (a = intru) = false .
@@ -9666,7 +10121,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -9699,7 +10153,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -9733,7 +10186,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -9768,7 +10220,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -9777,7 +10228,6 @@ open INV .
   eq (r2 = intru) = false .
   eq (ck(s,intru,r2,r3) = noChainK) = false .
   eq (rk(s,intru,r2,r3) = noRootK) = false .
-  eq (mk-sym(ck(s,intru,r2,r3)) \in knl(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -9804,43 +10254,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
-  eq (rm = r4) = false .
-  eq a = r1 .
-  eq a2 = r1 .
-  eq b = r2 .
-  eq r1 = intru .
-  eq (r2 = intru) = false .
-  eq (ck(s,intru,r2,r3) = noChainK) = false .
-  eq (rk(s,intru,r2,r3) = noRootK) = false .
-  eq (mk-sym(ck(s,intru,r2,r3)) \in knl(s)) = false .
-  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> Prin .
-  op r2 : -> Prin .
-  op r3 : -> SessId .
-  op r4 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r1 = r2) = false .
-  eq (ck(s,r1,r2,r3) = noChainK) = false .
-  eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSID(s)) = true .
-  eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -9874,7 +10287,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -9909,7 +10321,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -9918,7 +10329,6 @@ open INV .
   eq r2 = intru .
   eq (ck(s,r1,intru,r3) = noChainK) = false .
   eq (rk(s,r1,intru,r3) = noRootK) = false .
-  eq (mk-sym(ck(s,r1,intru,r3)) \in knl(s)) = true .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -9945,43 +10355,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
-  eq (rm = r4) = false .
-  eq a = r1 .
-  eq a2 = r1 .
-  eq b = r2 .
-  eq (r1 = intru) = false .
-  eq r2 = intru .
-  eq (ck(s,r1,intru,r3) = noChainK) = false .
-  eq (rk(s,r1,intru,r3) = noRootK) = false .
-  eq (mk-sym(ck(s,r1,intru,r3)) \in knl(s)) = false .
-  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> Prin .
-  op r2 : -> Prin .
-  op r3 : -> SessId .
-  op r4 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r1 = r2) = false .
-  eq (ck(s,r1,r2,r3) = noChainK) = false .
-  eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSID(s)) = true .
-  eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -10015,7 +10388,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -10054,7 +10426,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -10094,7 +10465,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -10109,49 +10479,6 @@ open INV .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
   eq (sid \in usedSID(s)) = true .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in knl(s)) = true .
-  red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> Prin .
-  op r2 : -> Prin .
-  op r3 : -> SessId .
-  op r4 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r1 = r2) = false .
-  eq (ck(s,r1,r2,r3) = noChainK) = false .
-  eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSID(s)) = true .
-  eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
-  eq (rm = r4) = false .
-  eq a = r1 .
-  eq a2 = r1 .
-  eq b = r2 .
-  eq (r1 = intru) = false .
-  eq (r2 = intru) = false .
-  eq (rm = noRawMsg) = false .
-  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid) .
-  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb))),symCt(sb)) = rm .
-  eq sb = symBody(r3,ns(s,r1,r2,r3),senc(mk-sym(ck(s,r1,r2,r3)),r4),sign(sk(r1),symSignedData(r1,r2,r3,ns(s,r1,r2,r3),senc(mk-sym(ck(s,r1,r2,r3)),r4)))) .
-  eq r3 = sid .
-  eq (ck(s,r1,r2,sid) = noChainK) = false .
-  eq (rk(s,r1,r2,sid) = noRootK) = false .
-  eq (sid \in usedSID(s)) = true .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in knl(s)) = false .
   eq ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid) .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -10179,7 +10506,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -10194,7 +10520,6 @@ open INV .
   eq (ck(s,r1,r2,sid) = noChainK) = false .
   eq (rk(s,r1,r2,sid) = noRootK) = false .
   eq (sid \in usedSID(s)) = true .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in knl(s)) = false .
   eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),ns(s,r1,r2,sid)) = ck(s,r1,r2,sid)) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -10222,7 +10547,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -10263,7 +10587,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -10301,7 +10624,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -10338,7 +10660,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -10374,7 +10695,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -10409,7 +10729,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq a2 = r1 .
@@ -10440,7 +10759,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq (rm = r4) = false .
   eq a = r1 .
   eq (a2 = r1) = false .
@@ -10470,7 +10788,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   eq (rm = r4) = false .
   eq (a = r1) = false .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
@@ -10501,4 +10818,4 @@ open INV .
   red postCompSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies postCompSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
---> Time taken is 43664ms
+--> Time taken is 41727ms

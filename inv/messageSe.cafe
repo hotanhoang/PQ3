@@ -2606,87 +2606,6 @@ open INV .
   op msk : -> MLK-SecretK .
   op n : -> Nat .
   op previous-rk : -> RootK .
-  op r1 : -> ChainK .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq r1 = noChainK .
-  red messageSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies messageSe(intruDeriveNextCK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> ChainK .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r1 = noChainK) = false .
-  eq (r1 \in knl(s)) = true .
-  eq (nextck(r1) \in knl(s)) = true .
-  red messageSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies messageSe(intruDeriveNextCK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> ChainK .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r1 = noChainK) = false .
-  eq (r1 \in knl(s)) = true .
-  eq (nextck(r1) \in knl(s)) = false .
-  red messageSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies messageSe(intruDeriveNextCK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> ChainK .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r1 = noChainK) = false .
-  eq (r1 \in knl(s)) = false .
-  red messageSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies messageSe(intruDeriveNextCK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
   op r1 : -> RootK .
   op r2 : -> ECDHK-ShareS .
   op r3 : -> MLK-ShareS .
@@ -10370,4 +10289,4 @@ open INV .
   red messageSe(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies messageSe(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
---> Time taken is 37526ms
+--> Time taken is 37601ms

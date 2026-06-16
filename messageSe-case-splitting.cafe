@@ -19,7 +19,6 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  
   eq (r1 \in knl(s)) = true .
   eq (r2 \in usedRM(s)) = true .
   eq (r2 \in knl(s)) = false .
@@ -40,8 +39,6 @@ open INV .
   eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
   eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
 
-  eq (r1 = mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)))) = false .
-
   red (inv3a(s, a2, a, b, sid, esk, msk, previous-rk, ck, rm, sb, n, r1) and 
        inv3b(s, a2, a, b, sid, esk, msk, previous-rk, ck, sb, n) and 
        messageSe(s, a2, a, b, sid, esk, msk, previous-rk, ck, rm, sb, n)) 
@@ -49,101 +46,146 @@ open INV .
       messageSe(intruDecMsg(s, r1, r2), a2, a, b, sid, esk, msk, previous-rk, ck, rm, sb, n) .
 close
 
-
-
--- case 2: suppose r1 is the honest key 
--- case 2.1
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> MsgK .
-  op r2 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
+-- open INV .
+--   op a : -> Prin .
+--   op a2 : -> Prin .
+--   op b : -> Prin .
+--   op ck : -> ChainK .
+--   op esk : -> ECDHK-SecretK .
+--   op msk : -> MLK-SecretK .
+--   op n : -> Nat .
+--   op previous-rk : -> RootK .
+--   op r1 : -> MsgK .
+--   op r2 : -> RawMsg .
+--   op rm : -> RawMsg .
+--   op s : -> Sys .
+--   op sb : -> SymBody .
+--   op sid : -> SessId .
   
-  eq (r1 \in knl(s)) = true .
-  eq (r2 \in usedRM(s)) = true .
-  eq (r2 \in knl(s)) = false .
-  eq (senc(r1,r2) \in knl(s)) = true .
-  eq rm = r2 .
-  eq (a = b) = false .
-  eq (a = intru) = false .
-  eq (b = intru) = false .
-  eq (r2 = noRawMsg) = false .
-  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
-  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r2 .
-  eq symSid(sb) = sid .
-  eq validSymBody(a,b,sb) = true .
-  eq (r2 \in leakscr(s)) = false .
-  eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
+--   eq (r1 \in knl(s)) = true .
+--   eq (r2 \in usedRM(s)) = true .
+--   eq (r2 \in knl(s)) = false .
+--   eq (senc(r1,r2) \in knl(s)) = true .
+--   eq rm = r2 .
+--   eq (a = b) = false .
+--   eq (a = intru) = false .
+--   eq (b = intru) = false .
+--   eq (r2 = noRawMsg) = false .
+--   eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
+--   eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r2 .
+--   eq symSid(sb) = sid .
+--   eq validSymBody(a,b,sb) = true .
+--   eq (r2 \in leakscr(s)) = false .
+--   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
+--   eq (sk(b) \in' leakscr(s)) = false .
+--   eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
+--   eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
+--   eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
 
-  eq r1 = mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in knl(s)) = true .
+--   eq (r1 = mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)))) = false .
 
-  red (inv3a(s, a2, a, b, sid, esk, msk, previous-rk, ck, rm, sb, n, r1) and 
-       inv3b(s, a2, a, b, sid, esk, msk, previous-rk, ck, sb, n) and 
-       messageSe(s, a2, a, b, sid, esk, msk, previous-rk, ck, rm, sb, n)) 
-      implies 
-      messageSe(intruDecMsg(s, r1, r2), a2, a, b, sid, esk, msk, previous-rk, ck, rm, sb, n) .
-close
+--   red (inv3a(s, a2, a, b, sid, esk, msk, previous-rk, ck, rm, sb, n, r1) and 
+--        inv3b(s, a2, a, b, sid, esk, msk, previous-rk, ck, sb, n) and 
+--        messageSe(s, a2, a, b, sid, esk, msk, previous-rk, ck, rm, sb, n)) 
+--       implies 
+--       messageSe(intruDecMsg(s, r1, r2), a2, a, b, sid, esk, msk, previous-rk, ck, rm, sb, n) .
+-- close
 
---> case 2.2
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> MsgK .
-  op r2 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
+
+
+-- -- case 2: suppose r1 is the honest key 
+-- -- case 2.1
+-- --> true
+-- open INV .
+--   op a : -> Prin .
+--   op a2 : -> Prin .
+--   op b : -> Prin .
+--   op ck : -> ChainK .
+--   op esk : -> ECDHK-SecretK .
+--   op msk : -> MLK-SecretK .
+--   op n : -> Nat .
+--   op previous-rk : -> RootK .
+--   op r1 : -> MsgK .
+--   op r2 : -> RawMsg .
+--   op rm : -> RawMsg .
+--   op s : -> Sys .
+--   op sb : -> SymBody .
+--   op sid : -> SessId .
   
-  eq (r1 \in knl(s)) = true .
-  eq (r2 \in usedRM(s)) = true .
-  eq (r2 \in knl(s)) = false .
-  eq (senc(r1,r2) \in knl(s)) = true .
-  eq rm = r2 .
-  eq (a = b) = false .
-  eq (a = intru) = false .
-  eq (b = intru) = false .
-  eq (r2 = noRawMsg) = false .
-  eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
-  eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r2 .
-  eq symSid(sb) = sid .
-  eq validSymBody(a,b,sb) = true .
-  eq (r2 \in leakscr(s)) = false .
-  eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
+--   eq (r1 \in knl(s)) = true .
+--   eq (r2 \in usedRM(s)) = true .
+--   eq (r2 \in knl(s)) = false .
+--   eq (senc(r1,r2) \in knl(s)) = true .
+--   eq rm = r2 .
+--   eq (a = b) = false .
+--   eq (a = intru) = false .
+--   eq (b = intru) = false .
+--   eq (r2 = noRawMsg) = false .
+--   eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
+--   eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r2 .
+--   eq symSid(sb) = sid .
+--   eq validSymBody(a,b,sb) = true .
+--   eq (r2 \in leakscr(s)) = false .
+--   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
+--   eq (sk(b) \in' leakscr(s)) = false .
+--   eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
+--   eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
+--   eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
 
-  eq r1 = mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in knl(s)) = false .
+--   eq r1 = mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) .
+--   eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in knl(s)) = true .
 
-  red (inv3a(s, a2, a, b, sid, esk, msk, previous-rk, ck, rm, sb, n, r1) and 
-       inv3b(s, a2, a, b, sid, esk, msk, previous-rk, ck, sb, n) and 
-       messageSe(s, a2, a, b, sid, esk, msk, previous-rk, ck, rm, sb, n)) 
-      implies 
-      messageSe(intruDecMsg(s, r1, r2), a2, a, b, sid, esk, msk, previous-rk, ck, rm, sb, n) .
-close
+--   red (inv3a(s, a2, a, b, sid, esk, msk, previous-rk, ck, rm, sb, n, r1) and 
+--        inv3b(s, a2, a, b, sid, esk, msk, previous-rk, ck, sb, n) and 
+--        messageSe(s, a2, a, b, sid, esk, msk, previous-rk, ck, rm, sb, n)) 
+--       implies 
+--       messageSe(intruDecMsg(s, r1, r2), a2, a, b, sid, esk, msk, previous-rk, ck, rm, sb, n) .
+-- close
+
+-- --> case 2.2
+-- --> true
+-- open INV .
+--   op a : -> Prin .
+--   op a2 : -> Prin .
+--   op b : -> Prin .
+--   op ck : -> ChainK .
+--   op esk : -> ECDHK-SecretK .
+--   op msk : -> MLK-SecretK .
+--   op n : -> Nat .
+--   op previous-rk : -> RootK .
+--   op r1 : -> MsgK .
+--   op r2 : -> RawMsg .
+--   op rm : -> RawMsg .
+--   op s : -> Sys .
+--   op sb : -> SymBody .
+--   op sid : -> SessId .
+  
+--   eq (r1 \in knl(s)) = true .
+--   eq (r2 \in usedRM(s)) = true .
+--   eq (r2 \in knl(s)) = false .
+--   eq (senc(r1,r2) \in knl(s)) = true .
+--   eq rm = r2 .
+--   eq (a = b) = false .
+--   eq (a = intru) = false .
+--   eq (b = intru) = false .
+--   eq (r2 = noRawMsg) = false .
+--   eq ck = kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid) .
+--   eq symDec(mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))),symCt(sb)) = r2 .
+--   eq symSid(sb) = sid .
+--   eq validSymBody(a,b,sb) = true .
+--   eq (r2 \in leakscr(s)) = false .
+--   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
+--   eq (sk(b) \in' leakscr(s)) = false .
+--   eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
+--   eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
+--   eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
+
+--   eq r1 = mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) .
+--   eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in knl(s)) = false .
+
+--   red (inv3a(s, a2, a, b, sid, esk, msk, previous-rk, ck, rm, sb, n, r1) and 
+--        inv3b(s, a2, a, b, sid, esk, msk, previous-rk, ck, sb, n) and 
+--        messageSe(s, a2, a, b, sid, esk, msk, previous-rk, ck, rm, sb, n)) 
+--       implies 
+--       messageSe(intruDecMsg(s, r1, r2), a2, a, b, sid, esk, msk, previous-rk, ck, rm, sb, n) .
+-- close

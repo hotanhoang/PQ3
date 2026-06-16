@@ -139,6 +139,7 @@ mod INV {
         ) .
 
     -- for chain key
+    -- lemma: 1 + 2 + 3a + 3e (case splitting manually)
     op forwardSeCK : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK RawMsg SymBody Nat -> Bool .
     eq forwardSeCK(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, RM, SB, N) =
     (
@@ -149,13 +150,13 @@ mod INV {
         symSid(SB) = SID and
 
         kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
-        symDec(mk-sym(CK), symCt(SB)) = RM and
+        symDec(mkAt(CK, symN(SB)), symCt(SB)) = RM and
         not (RM = noRawMsg) and
         RM \in usedRM(S) and
 
-        not (ss-mlk(B, MSK) \in leakscr(S)) and
-        not (ckAt(CK, symN(SB)) \in leakscr(S)) and
-        not (mkAt(CK, symN(SB)) \in leakscr(S)) and
+        not (ss-mlk(B, MSK) \in' leakscr(S)) and
+        not (ckAt(CK, symN(SB)) \in' leakscr(S)) and
+        not (mkAt(CK, symN(SB)) \in' leakscr(S)) and
         not (RM \in leakscr(S)) and
         (ckAt(CK, s(symN(SB))) \in' leakscr(S) implies N < timeLeak(ckAt(CK, s(symN(SB))), leakscr(S))) 
     )
@@ -165,6 +166,7 @@ mod INV {
     ) .
 
     -- for message key
+    -- lemma: 1 + 2 + 3a + 3f (case splitting manually)
     op forwardSeMsg : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK RawMsg SymBody Nat -> Bool .
     eq forwardSeMsg(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, RM, SB, N) =
     (
@@ -181,9 +183,9 @@ mod INV {
         RM \in usedRM(S) and
 
 
-        not (ss-mlk(B, MSK) \in leakscr(S)) and
-        not (ckAt(CK, symN(SB)) \in leakscr(S)) and
-        not (mkAt(CK, symN(SB)) \in leakscr(S)) and
+        not (ss-mlk(B, MSK) \in' leakscr(S)) and
+        not (ckAt(CK, symN(SB)) \in' leakscr(S)) and
+        not (mkAt(CK, symN(SB)) \in' leakscr(S)) and
         not (RM \in leakscr(S)) and
         (mkAt(CK, s(symN(SB))) \in' leakscr(S) implies N < timeLeak(mkAt(CK, s(symN(SB))), leakscr(S))) 
 
@@ -212,19 +214,20 @@ mod INV {
 
             Previous-RK \in leakscr(S) and
 
-            not (sk(B) \in leakscr(S)) and
-            not (ss-mlk(B, MSK) \in leakscr(S)) and
-            not (ckAt(CK, symN(SB)) \in leakscr(S)) and
-            not (mkAt(CK, symN(SB)) \in leakscr(S)) and
+            not (sk(B) \in' leakscr(S)) and
+            not (ss-mlk(B, MSK) \in' leakscr(S)) and
+            not (ckAt(CK, symN(SB)) \in' leakscr(S)) and
+            not (mkAt(CK, symN(SB)) \in' leakscr(S)) and
             not (RM \in leakscr(S))
         )
         implies
-        (
+        (   
             not (RM \in knl(S))
         ) .
 
     -- -- **************************************************************************************************************************************************************************************************
     -- =====> Authenticity
+    -- no lemma
     op auth : Sys Prin Prin Prin SessId RawMsg ChainK SymBody Nat Nat -> Bool .
     eq auth(S, A2, A, B, SID, RM, CK, SB, N, ?T) =
     (
@@ -328,7 +331,7 @@ mod INV {
             not (mkAt(CK, symN(SB)) \in knl(S))
         ) .
     
-    -- lemma
+    -- lemma: 11 + 12
     op inv3d : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
     eq inv3d(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
         (
@@ -348,6 +351,69 @@ mod INV {
         (
             not (mkAt(CK, symN(SB)) \in knl(S))
         ) .
+
+    -- lemma: 13 + 14
+    op inv3e : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
+    eq inv3e(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
+        (
+            not (A = intru or B = intru) and
+            not (A = B) and
+            msg(A2, A, B, SB, N) \in nw(S) and
+            validSymBody(A, B, SB) and
+            symSid(SB) = SID and
+            kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
+            
+            not (ss-mlk(B, MSK) \in' leakscr(S)) and
+            not (ckAt(CK, symN(SB)) \in' leakscr(S)) and
+            not (mkAt(CK, symN(SB)) \in' leakscr(S)) and
+            (ckAt(CK, s(symN(SB))) \in' leakscr(S) implies N < timeLeak(ckAt(CK, s(symN(SB))), leakscr(S)))
+        )
+        implies
+        (
+            not (mkAt(CK, symN(SB)) \in knl(S))
+        ) .
+    -- lemma: 15 + 16
+    op inv3f : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
+    eq inv3f(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
+        (
+            not (A = intru or B = intru) and
+            not (A = B) and
+            msg(A2, A, B, SB, N) \in nw(S) and
+            validSymBody(A, B, SB) and
+            symSid(SB) = SID and
+            kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
+            
+            not (ss-mlk(B, MSK) \in' leakscr(S)) and
+            not (ckAt(CK, symN(SB)) \in' leakscr(S)) and
+            not (mkAt(CK, symN(SB)) \in' leakscr(S)) and
+            (mkAt(CK, s(symN(SB))) \in' leakscr(S) implies N < timeLeak(mkAt(CK, s(symN(SB))), leakscr(S))) 
+        )
+        implies
+        (
+            not (mkAt(CK, symN(SB)) \in knl(S))
+        ) .
+
+    op inv3g : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
+    eq inv3g(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
+        (
+            not (A = intru or B = intru) and
+            not (A = B) and
+            msg(A2, A, B, SB, N) \in nw(S) and
+            validSymBody(A, B, SB) and
+            symSid(SB) = SID and
+            kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
+            
+            Previous-RK \in leakscr(S) and
+            not (sk(B) \in' leakscr(S)) and
+            not (ss-mlk(B, MSK) \in' leakscr(S)) and
+            not (ckAt(CK, symN(SB)) \in' leakscr(S)) and
+            not (mkAt(CK, symN(SB)) \in' leakscr(S))
+        )
+        implies
+        (
+            not (mkAt(CK, symN(SB)) \in knl(S))
+        ) .
+
     -- no lemma
     op inv4 : Sys Prin Prin Prin SymBody Nat MsgK RawMsg -> Bool .
     eq inv4(S, A2, A, B, SB, N, MK, RM) =
@@ -456,5 +522,115 @@ mod INV {
             not (mkAt(CK, N) \in knl(S))
         ) .
 
+    -- lemma: 8
+    op inv11 : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
+    eq inv11(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
+        (
+            not (A = intru or B = intru) and
+            not (A = B) and
+            msg(A2, A, B, SB, N) \in nw(S) and
+            validSymBody(A, B, SB) and
+            symSid(SB) = SID and
+            kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
+            
+            not (ckAt(CK, symN(SB)) \in' leakscr(S)) and
+            not (Previous-RK \in leakscr(S)) and
+            (MLK-PriK(B) \in' leakscr(S) implies N < timeLeak(MLK-PriK(B), leakscr(S)))
+        )
+        implies
+        (
+            not (ckAt(CK, symN(SB)) \in knl(S))
+        ) .
+    -- lemma: 8
+    op inv12 : Sys Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK Nat -> Bool .
+    eq inv12(S, A, B, SID, ESK, MSK, Previous-RK, CK, N) =
+        (
+            not (A = intru or B = intru) and
+            not (A = B) and
+            kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
+            
+            not (ckAt(CK, N) \in' leakscr(S)) and
+            not (mkAt(CK, N) \in' leakscr(S)) and
+            not (Previous-RK \in leakscr(S)) and
+            (MLK-PriK(B) \in' leakscr(S) implies time(S) < timeLeak(MLK-PriK(B), leakscr(S)))
+        )
+        implies
+        (
+            not (mkAt(CK, N) \in knl(S))
+        ) .
+    -- lemma 8
+    op inv13 : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
+    eq inv13(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
+        (
+            not (A = intru or B = intru) and
+            not (A = B) and
+            msg(A2, A, B, SB, N) \in nw(S) and
+            validSymBody(A, B, SB) and
+            symSid(SB) = SID and
+            kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
+            
+            not (ss-mlk(B, MSK) \in' leakscr(S)) and
+            not (ckAt(CK, symN(SB)) \in' leakscr(S)) and
+            (ckAt(CK, s(symN(SB))) \in' leakscr(S) implies N < timeLeak(ckAt(CK, s(symN(SB))), leakscr(S)))
+        )
+        implies
+        (
+            not (ckAt(CK, symN(SB)) \in knl(S))
+        ) .
+    -- lemma 8
+    op inv14 : Sys Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK Nat -> Bool .
+    eq inv14(S, A, B, SID, ESK, MSK, Previous-RK, CK, N) =
+        (
+            not (A = intru or B = intru) and
+            not (A = B) and
+            kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
+            
+            not (ss-mlk(B, MSK) \in' leakscr(S)) and
+            not (ckAt(CK, N) \in' leakscr(S)) and
+            not (mkAt(CK, N) \in' leakscr(S)) and
+            (ckAt(CK, s(N)) \in' leakscr(S) implies time(S) < timeLeak(ckAt(CK, s(N)), leakscr(S)))
+        )
+        implies
+        (
+            not (mkAt(CK, N) \in knl(S))
+        ) .
+
+    -- lemma: 8
+    op inv15 : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
+    eq inv15(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
+        (
+            not (A = intru or B = intru) and
+            not (A = B) and
+            msg(A2, A, B, SB, N) \in nw(S) and
+            validSymBody(A, B, SB) and
+            symSid(SB) = SID and
+            kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
+            
+            not (ss-mlk(B, MSK) \in' leakscr(S)) and
+            not (ckAt(CK, symN(SB)) \in' leakscr(S)) and
+            not (mkAt(CK, symN(SB)) \in' leakscr(S)) and
+            (mkAt(CK, s(symN(SB))) \in' leakscr(S) implies N < timeLeak(mkAt(CK, s(symN(SB))), leakscr(S)))
+        )
+        implies
+        (
+            not (ckAt(CK, symN(SB)) \in knl(S))
+        ) .
+    -- lemma: 8
+    op inv16 : Sys Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK Nat -> Bool .
+    eq inv16(S, A, B, SID, ESK, MSK, Previous-RK, CK, N) =
+        (
+            not (A = intru or B = intru) and
+            not (A = B) and
+            kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
+            
+            not (ss-mlk(B, MSK) \in' leakscr(S)) and
+            not (ckAt(CK, N) \in' leakscr(S)) and
+            not (mkAt(CK, N) \in' leakscr(S)) and
+            (mkAt(CK, s(N)) \in' leakscr(S) implies time(S) < timeLeak(mkAt(CK, s(N)), leakscr(S)))
+        )
+        implies
+        (
+            not (mkAt(CK, N) \in knl(S))
+        ) .
 }
 
