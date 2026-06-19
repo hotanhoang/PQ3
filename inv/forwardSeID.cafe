@@ -312,9 +312,9 @@ open INV .
   eq (r8 \in knl(s)) = true .
   eq (r8 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = true .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -359,10 +359,10 @@ open INV .
   eq (r8 \in knl(s)) = true .
   eq (r8 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = true .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -407,11 +407,11 @@ open INV .
   eq (r8 \in knl(s)) = true .
   eq (r8 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = true .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -456,11 +456,11 @@ open INV .
   eq (r8 \in knl(s)) = true .
   eq (r8 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = false .
   red inv1(s,r8) implies (forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
 
@@ -505,7 +505,7 @@ open INV .
   eq (r8 \in knl(s)) = true .
   eq (r8 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = false .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -551,8 +551,8 @@ open INV .
   eq (r8 \in knl(s)) = true .
   eq (r8 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -597,9 +597,9 @@ open INV .
   eq (r8 \in knl(s)) = true .
   eq (r8 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -644,10 +644,10 @@ open INV .
   eq (r8 \in knl(s)) = true .
   eq (r8 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -692,10 +692,10 @@ open INV .
   eq (r8 \in knl(s)) = true .
   eq (r8 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = false .
   red inv1(s,r8) implies (forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(fkInitMsg(s,r1,r2,r3,r4,r5,r6,r7,r8,r9),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
 
@@ -1393,7 +1393,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (r1 \in' leakscr(s)) = true .
+  eq (r1 \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(intruComChainK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -1412,7 +1412,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (r1 \in' leakscr(s)) = false .
+  eq (r1 \in leakscr(s)) = false .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(intruComChainK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -1569,7 +1569,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (sk(r1) \in' leakscr(s)) = true .
+  eq (sk(r1) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(intruComLongTermIDSK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -1588,7 +1588,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (sk(r1) \in' leakscr(s)) = false .
+  eq (sk(r1) \in leakscr(s)) = false .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(intruComLongTermIDSK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -1608,7 +1608,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (MLK-PriK(r1) \in usedSK(s)) = true .
-  eq (MLK-PriK(r1) \in' leakscr(s)) = true .
+  eq (MLK-PriK(r1) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(intruComLongTermMlkSK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -1628,7 +1628,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (MLK-PriK(r1) \in usedSK(s)) = true .
-  eq (MLK-PriK(r1) \in' leakscr(s)) = false .
+  eq (MLK-PriK(r1) \in leakscr(s)) = false .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(intruComLongTermMlkSK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -1786,7 +1786,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in usedSK(s)) = true .
-  eq (r1 \in' leakscr(s)) = true .
+  eq (r1 \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(intruComMlkSK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -1806,7 +1806,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in usedSK(s)) = true .
-  eq (r1 \in' leakscr(s)) = false .
+  eq (r1 \in leakscr(s)) = false .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(intruComMlkSK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -1844,7 +1844,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (r1 \in' leakscr(s)) = true .
+  eq (r1 \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(intruComMsgK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -1863,7 +1863,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (r1 \in' leakscr(s)) = false .
+  eq (r1 \in leakscr(s)) = false .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(intruComMsgK(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -2152,9 +2152,9 @@ open INV .
   eq validSymBody(a,b,sb) = true .
   eq (r2 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = true .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(intruDecMsg(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -2189,10 +2189,10 @@ open INV .
   eq validSymBody(a,b,sb) = true .
   eq (r2 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = true .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(intruDecMsg(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -2227,11 +2227,11 @@ open INV .
   eq validSymBody(a,b,sb) = true .
   eq (r2 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = true .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(intruDecMsg(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -2266,11 +2266,11 @@ open INV .
   eq validSymBody(a,b,sb) = true .
   eq (r2 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = false .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(intruDecMsg(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -2305,7 +2305,7 @@ open INV .
   eq validSymBody(a,b,sb) = true .
   eq (r2 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = false .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(intruDecMsg(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -2341,8 +2341,8 @@ open INV .
   eq validSymBody(a,b,sb) = true .
   eq (r2 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(intruDecMsg(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -2377,9 +2377,9 @@ open INV .
   eq validSymBody(a,b,sb) = true .
   eq (r2 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(intruDecMsg(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -2414,10 +2414,10 @@ open INV .
   eq validSymBody(a,b,sb) = true .
   eq (r2 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(intruDecMsg(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -2452,10 +2452,10 @@ open INV .
   eq validSymBody(a,b,sb) = true .
   eq (r2 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = false .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(intruDecMsg(s,r1,r2),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -3501,9 +3501,9 @@ open INV .
   eq validSymBody(a,b,sb) = true .
   eq (r1 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = true .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(intruRandMessage(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -3535,10 +3535,10 @@ open INV .
   eq validSymBody(a,b,sb) = true .
   eq (r1 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = true .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(intruRandMessage(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -3570,11 +3570,11 @@ open INV .
   eq validSymBody(a,b,sb) = true .
   eq (r1 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = true .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(intruRandMessage(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -3606,11 +3606,11 @@ open INV .
   eq validSymBody(a,b,sb) = true .
   eq (r1 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = false .
   red inv2(s,a2,a,b,sid,esk,msk,ck,r1,previous-rk,sb,n) implies (forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(intruRandMessage(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
 
@@ -3642,7 +3642,7 @@ open INV .
   eq validSymBody(a,b,sb) = true .
   eq (r1 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = false .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(intruRandMessage(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -3675,8 +3675,8 @@ open INV .
   eq validSymBody(a,b,sb) = true .
   eq (r1 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(intruRandMessage(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -3708,9 +3708,9 @@ open INV .
   eq validSymBody(a,b,sb) = true .
   eq (r1 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(intruRandMessage(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -3742,10 +3742,10 @@ open INV .
   eq validSymBody(a,b,sb) = true .
   eq (r1 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(intruRandMessage(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -3777,10 +3777,10 @@ open INV .
   eq validSymBody(a,b,sb) = true .
   eq (r1 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = false .
   red inv2(s,a2,a,b,sid,esk,msk,ck,r1,previous-rk,sb,n) implies (forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(intruRandMessage(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
 
@@ -5081,9 +5081,9 @@ open INV .
   eq (r6 \in knl(s)) = true .
   eq (r6 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = true .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -5127,10 +5127,10 @@ open INV .
   eq (r6 \in knl(s)) = true .
   eq (r6 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = true .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -5174,11 +5174,11 @@ open INV .
   eq (r6 \in knl(s)) = true .
   eq (r6 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = true .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -5222,11 +5222,11 @@ open INV .
   eq (r6 \in knl(s)) = true .
   eq (r6 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = false .
   red inv1(s,r6) implies (forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
 
@@ -5270,7 +5270,7 @@ open INV .
   eq (r6 \in knl(s)) = true .
   eq (r6 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = false .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -5315,8 +5315,8 @@ open INV .
   eq (r6 \in knl(s)) = true .
   eq (r6 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -5360,9 +5360,9 @@ open INV .
   eq (r6 \in knl(s)) = true .
   eq (r6 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -5406,10 +5406,10 @@ open INV .
   eq (r6 \in knl(s)) = true .
   eq (r6 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -5453,10 +5453,10 @@ open INV .
   eq (r6 \in knl(s)) = true .
   eq (r6 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = false .
   red inv1(s,r6) implies (forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-ar(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
 
@@ -6184,9 +6184,9 @@ open INV .
   eq (r6 \in knl(s)) = true .
   eq (r6 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = true .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -6230,10 +6230,10 @@ open INV .
   eq (r6 \in knl(s)) = true .
   eq (r6 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = true .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -6277,11 +6277,11 @@ open INV .
   eq (r6 \in knl(s)) = true .
   eq (r6 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = true .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -6325,11 +6325,11 @@ open INV .
   eq (r6 \in knl(s)) = true .
   eq (r6 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = false .
   red inv1(s,r6) implies (forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
 
@@ -6373,7 +6373,7 @@ open INV .
   eq (r6 \in knl(s)) = true .
   eq (r6 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = false .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -6418,8 +6418,8 @@ open INV .
   eq (r6 \in knl(s)) = true .
   eq (r6 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -6463,9 +6463,9 @@ open INV .
   eq (r6 \in knl(s)) = true .
   eq (r6 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -6509,10 +6509,10 @@ open INV .
   eq (r6 \in knl(s)) = true .
   eq (r6 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -6556,10 +6556,10 @@ open INV .
   eq (r6 \in knl(s)) = true .
   eq (r6 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = false .
   red inv1(s,r6) implies (forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-init(s,r1,r2,r3,r4,r5,r6),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
 
@@ -7637,8 +7637,8 @@ open INV .
   eq time(s) = n .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in' leakscr(s)) = true .
-  eq (ck(s,r1,r2,sid) \in' leakscr(s)) = true .
+  eq (sk(r2) \in leakscr(s)) = true .
+  eq (ck(s,r1,r2,sid) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -7688,10 +7688,10 @@ open INV .
   eq time(s) = n .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in' leakscr(s)) = true .
-  eq (ck(s,r1,r2,sid) \in' leakscr(s)) = false .
+  eq (sk(r2) \in leakscr(s)) = true .
+  eq (ck(s,r1,r2,sid) \in leakscr(s)) = false .
   eq (n < timeLeak(sk(r2),leakscr(s))) = true .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in' leakscr(s)) = true .
+  eq (mk-sym(ck(s,r1,r2,sid)) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -7741,11 +7741,11 @@ open INV .
   eq time(s) = n .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in' leakscr(s)) = true .
-  eq (ck(s,r1,r2,sid) \in' leakscr(s)) = false .
+  eq (sk(r2) \in leakscr(s)) = true .
+  eq (ck(s,r1,r2,sid) \in leakscr(s)) = false .
   eq (n < timeLeak(sk(r2),leakscr(s))) = true .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(r2) & msk) \in' leakscr(s)) = true .
+  eq (mk-sym(ck(s,r1,r2,sid)) \in leakscr(s)) = false .
+  eq ((MLK-PriK(r2) & msk) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -7795,11 +7795,11 @@ open INV .
   eq time(s) = n .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in' leakscr(s)) = true .
-  eq (ck(s,r1,r2,sid) \in' leakscr(s)) = false .
+  eq (sk(r2) \in leakscr(s)) = true .
+  eq (ck(s,r1,r2,sid) \in leakscr(s)) = false .
   eq (n < timeLeak(sk(r2),leakscr(s))) = true .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(r2) & msk) \in' leakscr(s)) = false .
+  eq (mk-sym(ck(s,r1,r2,sid)) \in leakscr(s)) = false .
+  eq ((MLK-PriK(r2) & msk) \in leakscr(s)) = false .
   red inv1(s,r4) implies (forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
 
@@ -7849,8 +7849,8 @@ open INV .
   eq time(s) = n .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in' leakscr(s)) = true .
-  eq (ck(s,r1,r2,sid) \in' leakscr(s)) = false .
+  eq (sk(r2) \in leakscr(s)) = true .
+  eq (ck(s,r1,r2,sid) \in leakscr(s)) = false .
   eq (n < timeLeak(sk(r2),leakscr(s))) = false .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -7901,8 +7901,8 @@ open INV .
   eq time(s) = n .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in' leakscr(s)) = false .
-  eq (ck(s,r1,r2,sid) \in' leakscr(s)) = true .
+  eq (sk(r2) \in leakscr(s)) = false .
+  eq (ck(s,r1,r2,sid) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -7952,9 +7952,9 @@ open INV .
   eq time(s) = n .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in' leakscr(s)) = false .
-  eq (ck(s,r1,r2,sid) \in' leakscr(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in' leakscr(s)) = true .
+  eq (sk(r2) \in leakscr(s)) = false .
+  eq (ck(s,r1,r2,sid) \in leakscr(s)) = false .
+  eq (mk-sym(ck(s,r1,r2,sid)) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -8004,10 +8004,10 @@ open INV .
   eq time(s) = n .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in' leakscr(s)) = false .
-  eq (ck(s,r1,r2,sid) \in' leakscr(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(r2) & msk) \in' leakscr(s)) = true .
+  eq (sk(r2) \in leakscr(s)) = false .
+  eq (ck(s,r1,r2,sid) \in leakscr(s)) = false .
+  eq (mk-sym(ck(s,r1,r2,sid)) \in leakscr(s)) = false .
+  eq ((MLK-PriK(r2) & msk) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -8057,10 +8057,10 @@ open INV .
   eq time(s) = n .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in' leakscr(s)) = false .
-  eq (ck(s,r1,r2,sid) \in' leakscr(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(r2) & msk) \in' leakscr(s)) = false .
+  eq (sk(r2) \in leakscr(s)) = false .
+  eq (ck(s,r1,r2,sid) \in leakscr(s)) = false .
+  eq (mk-sym(ck(s,r1,r2,sid)) \in leakscr(s)) = false .
+  eq ((MLK-PriK(r2) & msk) \in leakscr(s)) = false .
   red inv1(s,r4) implies (forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
 
@@ -8207,8 +8207,8 @@ open INV .
   eq (time(s) = n) = false .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in' leakscr(s)) = true .
-  eq (ck(s,r1,r2,sid) \in' leakscr(s)) = true .
+  eq (sk(r2) \in leakscr(s)) = true .
+  eq (ck(s,r1,r2,sid) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -8258,10 +8258,10 @@ open INV .
   eq (time(s) = n) = false .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in' leakscr(s)) = true .
-  eq (ck(s,r1,r2,sid) \in' leakscr(s)) = false .
+  eq (sk(r2) \in leakscr(s)) = true .
+  eq (ck(s,r1,r2,sid) \in leakscr(s)) = false .
   eq (n < timeLeak(sk(r2),leakscr(s))) = true .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in' leakscr(s)) = true .
+  eq (mk-sym(ck(s,r1,r2,sid)) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -8311,11 +8311,11 @@ open INV .
   eq (time(s) = n) = false .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in' leakscr(s)) = true .
-  eq (ck(s,r1,r2,sid) \in' leakscr(s)) = false .
+  eq (sk(r2) \in leakscr(s)) = true .
+  eq (ck(s,r1,r2,sid) \in leakscr(s)) = false .
   eq (n < timeLeak(sk(r2),leakscr(s))) = true .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(r2) & msk) \in' leakscr(s)) = true .
+  eq (mk-sym(ck(s,r1,r2,sid)) \in leakscr(s)) = false .
+  eq ((MLK-PriK(r2) & msk) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -8365,11 +8365,11 @@ open INV .
   eq (time(s) = n) = false .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in' leakscr(s)) = true .
-  eq (ck(s,r1,r2,sid) \in' leakscr(s)) = false .
+  eq (sk(r2) \in leakscr(s)) = true .
+  eq (ck(s,r1,r2,sid) \in leakscr(s)) = false .
   eq (n < timeLeak(sk(r2),leakscr(s))) = true .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(r2) & msk) \in' leakscr(s)) = false .
+  eq (mk-sym(ck(s,r1,r2,sid)) \in leakscr(s)) = false .
+  eq ((MLK-PriK(r2) & msk) \in leakscr(s)) = false .
   eq (msg(r1,r1,r2,symBody(sid,ns(s,r1,r2,sid),senc(mk-sym(ck(s,r1,r2,sid)),r4),sign(sk(r1),symSignedData(r1,r2,sid,ns(s,r1,r2,sid),senc(mk-sym(ck(s,r1,r2,sid)),r4)))),n) \in nw(s)) = true .
   red inv1(s,r4) implies (forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
@@ -8420,11 +8420,11 @@ open INV .
   eq (time(s) = n) = false .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in' leakscr(s)) = true .
-  eq (ck(s,r1,r2,sid) \in' leakscr(s)) = false .
+  eq (sk(r2) \in leakscr(s)) = true .
+  eq (ck(s,r1,r2,sid) \in leakscr(s)) = false .
   eq (n < timeLeak(sk(r2),leakscr(s))) = true .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(r2) & msk) \in' leakscr(s)) = false .
+  eq (mk-sym(ck(s,r1,r2,sid)) \in leakscr(s)) = false .
+  eq ((MLK-PriK(r2) & msk) \in leakscr(s)) = false .
   eq (msg(r1,r1,r2,symBody(sid,ns(s,r1,r2,sid),senc(mk-sym(ck(s,r1,r2,sid)),r4),sign(sk(r1),symSignedData(r1,r2,sid,ns(s,r1,r2,sid),senc(mk-sym(ck(s,r1,r2,sid)),r4)))),n) \in nw(s)) = false .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -8475,8 +8475,8 @@ open INV .
   eq (time(s) = n) = false .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in' leakscr(s)) = true .
-  eq (ck(s,r1,r2,sid) \in' leakscr(s)) = false .
+  eq (sk(r2) \in leakscr(s)) = true .
+  eq (ck(s,r1,r2,sid) \in leakscr(s)) = false .
   eq (n < timeLeak(sk(r2),leakscr(s))) = false .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -8527,8 +8527,8 @@ open INV .
   eq (time(s) = n) = false .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in' leakscr(s)) = false .
-  eq (ck(s,r1,r2,sid) \in' leakscr(s)) = true .
+  eq (sk(r2) \in leakscr(s)) = false .
+  eq (ck(s,r1,r2,sid) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -8578,9 +8578,9 @@ open INV .
   eq (time(s) = n) = false .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in' leakscr(s)) = false .
-  eq (ck(s,r1,r2,sid) \in' leakscr(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in' leakscr(s)) = true .
+  eq (sk(r2) \in leakscr(s)) = false .
+  eq (ck(s,r1,r2,sid) \in leakscr(s)) = false .
+  eq (mk-sym(ck(s,r1,r2,sid)) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -8630,10 +8630,10 @@ open INV .
   eq (time(s) = n) = false .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in' leakscr(s)) = false .
-  eq (ck(s,r1,r2,sid) \in' leakscr(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(r2) & msk) \in' leakscr(s)) = true .
+  eq (sk(r2) \in leakscr(s)) = false .
+  eq (ck(s,r1,r2,sid) \in leakscr(s)) = false .
+  eq (mk-sym(ck(s,r1,r2,sid)) \in leakscr(s)) = false .
+  eq ((MLK-PriK(r2) & msk) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -8683,10 +8683,10 @@ open INV .
   eq (time(s) = n) = false .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in' leakscr(s)) = false .
-  eq (ck(s,r1,r2,sid) \in' leakscr(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(r2) & msk) \in' leakscr(s)) = false .
+  eq (sk(r2) \in leakscr(s)) = false .
+  eq (ck(s,r1,r2,sid) \in leakscr(s)) = false .
+  eq (mk-sym(ck(s,r1,r2,sid)) \in leakscr(s)) = false .
+  eq ((MLK-PriK(r2) & msk) \in leakscr(s)) = false .
   eq (msg(r1,r1,r2,symBody(sid,ns(s,r1,r2,sid),senc(mk-sym(ck(s,r1,r2,sid)),r4),sign(sk(r1),symSignedData(r1,r2,sid,ns(s,r1,r2,sid),senc(mk-sym(ck(s,r1,r2,sid)),r4)))),n) \in nw(s)) = true .
   red inv1(s,r4) implies (forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
@@ -8737,10 +8737,10 @@ open INV .
   eq (time(s) = n) = false .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
-  eq (sk(r2) \in' leakscr(s)) = false .
-  eq (ck(s,r1,r2,sid) \in' leakscr(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,sid)) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(r2) & msk) \in' leakscr(s)) = false .
+  eq (sk(r2) \in leakscr(s)) = false .
+  eq (ck(s,r1,r2,sid) \in leakscr(s)) = false .
+  eq (mk-sym(ck(s,r1,r2,sid)) \in leakscr(s)) = false .
+  eq ((MLK-PriK(r2) & msk) \in leakscr(s)) = false .
   eq (msg(r1,r1,r2,symBody(sid,ns(s,r1,r2,sid),senc(mk-sym(ck(s,r1,r2,sid)),r4),sign(sk(r1),symSignedData(r1,r2,sid,ns(s,r1,r2,sid),senc(mk-sym(ck(s,r1,r2,sid)),r4)))),n) \in nw(s)) = false .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -9012,9 +9012,9 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(r1,r1,r2,sb,n) \in nw(s)) = true .
-  eq (sk(r2) \in' leakscr(s)) = true .
+  eq (sk(r2) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(r2),leakscr(s))) = true .
-  eq ((MLK-PriK(r2) & msk) \in' leakscr(s)) = true .
+  eq ((MLK-PriK(r2) & msk) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -9060,10 +9060,10 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(r1,r1,r2,sb,n) \in nw(s)) = true .
-  eq (sk(r2) \in' leakscr(s)) = true .
+  eq (sk(r2) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(r2),leakscr(s))) = true .
-  eq ((MLK-PriK(r2) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb)) \in' leakscr(s)) = true .
+  eq ((MLK-PriK(r2) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb)) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -9109,11 +9109,11 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(r1,r1,r2,sb,n) \in nw(s)) = true .
-  eq (sk(r2) \in' leakscr(s)) = true .
+  eq (sk(r2) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(r2),leakscr(s))) = true .
-  eq ((MLK-PriK(r2) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb))) \in' leakscr(s)) = true .
+  eq ((MLK-PriK(r2) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb))) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -9159,11 +9159,11 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(r1,r1,r2,sb,n) \in nw(s)) = true .
-  eq (sk(r2) \in' leakscr(s)) = true .
+  eq (sk(r2) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(r2),leakscr(s))) = true .
-  eq ((MLK-PriK(r2) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(r2) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb))) \in leakscr(s)) = false .
   red inv1(s,r4) implies (forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
 
@@ -9209,7 +9209,7 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(r1,r1,r2,sb,n) \in nw(s)) = true .
-  eq (sk(r2) \in' leakscr(s)) = true .
+  eq (sk(r2) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(r2),leakscr(s))) = false .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -9256,8 +9256,8 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(r1,r1,r2,sb,n) \in nw(s)) = true .
-  eq (sk(r2) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(r2) & msk) \in' leakscr(s)) = true .
+  eq (sk(r2) \in leakscr(s)) = false .
+  eq ((MLK-PriK(r2) & msk) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -9303,9 +9303,9 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(r1,r1,r2,sb,n) \in nw(s)) = true .
-  eq (sk(r2) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(r2) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb)) \in' leakscr(s)) = true .
+  eq (sk(r2) \in leakscr(s)) = false .
+  eq ((MLK-PriK(r2) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb)) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -9351,10 +9351,10 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(r1,r1,r2,sb,n) \in nw(s)) = true .
-  eq (sk(r2) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(r2) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb))) \in' leakscr(s)) = true .
+  eq (sk(r2) \in leakscr(s)) = false .
+  eq ((MLK-PriK(r2) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb))) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -9400,10 +9400,10 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(r1,r1,r2,sb,n) \in nw(s)) = true .
-  eq (sk(r2) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(r2) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
+  eq (sk(r2) \in leakscr(s)) = false .
+  eq ((MLK-PriK(r2) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(r2) & esk),(MLK-PriK(r2) & msk),sid),symN(sb))) \in leakscr(s)) = false .
   red inv1(s,r4) implies (forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
 
@@ -9736,9 +9736,9 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(r1,r1,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = true .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -9782,10 +9782,10 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(r1,r1,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = true .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -9829,11 +9829,11 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(r1,r1,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = true .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -9877,11 +9877,11 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(r1,r1,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = false .
   red inv1(s,r4) implies (forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
 
@@ -9925,7 +9925,7 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(r1,r1,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = false .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -9970,8 +9970,8 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(r1,r1,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -10015,9 +10015,9 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(r1,r1,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -10061,10 +10061,10 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(r1,r1,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -10108,10 +10108,10 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(r1,r1,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = false .
   red inv1(s,r4) implies (forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
 
@@ -10433,9 +10433,9 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(a2,r1,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = true .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -10478,10 +10478,10 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(a2,r1,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = true .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -10524,11 +10524,11 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(a2,r1,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = true .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -10571,11 +10571,11 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(a2,r1,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = false .
   red inv1(s,r4) implies (forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
 
@@ -10618,7 +10618,7 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(a2,r1,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = false .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -10662,8 +10662,8 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(a2,r1,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -10706,9 +10706,9 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(a2,r1,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -10751,10 +10751,10 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(a2,r1,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -10797,10 +10797,10 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(a2,r1,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = false .
   red inv1(s,r4) implies (forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
 
@@ -11110,9 +11110,9 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = true .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -11152,10 +11152,10 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = true .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -11195,11 +11195,11 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = true .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -11239,11 +11239,11 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = true .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = false .
   red inv1(s,r4) implies (forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
 
@@ -11283,7 +11283,7 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = true .
   eq (n < timeLeak(sk(b),leakscr(s))) = false .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
@@ -11324,8 +11324,8 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -11365,9 +11365,9 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -11407,10 +11407,10 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = true .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = true .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
@@ -11450,10 +11450,10 @@ open INV .
   eq (r4 \in knl(s)) = true .
   eq (r4 \in leakscr(s)) = false .
   eq (msg(a2,a,b,sb,n) \in nw(s)) = true .
-  eq (sk(b) \in' leakscr(s)) = false .
-  eq ((MLK-PriK(b) & msk) \in' leakscr(s)) = false .
-  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in' leakscr(s)) = false .
-  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in' leakscr(s)) = false .
+  eq (sk(b) \in leakscr(s)) = false .
+  eq ((MLK-PriK(b) & msk) \in leakscr(s)) = false .
+  eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
+  eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = false .
   red inv1(s,r4) implies (forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
 
@@ -12391,4 +12391,4 @@ open INV .
   red forwardSeID(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeID(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) .
 close
 
---> Time taken is 69493ms
+--> Time taken is 85172ms

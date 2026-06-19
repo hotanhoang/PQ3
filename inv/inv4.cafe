@@ -416,7 +416,7 @@ open INV .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
-  eq (r1 \in' leakscr(s)) = true .
+  eq (r1 \in leakscr(s)) = true .
   red inv4(s,a2,a,b,sb,n,mk,rm) implies inv4(intruComChainK(s,r1),a2,a,b,sb,n,mk,rm) .
 close
 
@@ -431,7 +431,7 @@ open INV .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
-  eq (r1 \in' leakscr(s)) = false .
+  eq (r1 \in leakscr(s)) = false .
   red inv4(s,a2,a,b,sb,n,mk,rm) implies inv4(intruComChainK(s,r1),a2,a,b,sb,n,mk,rm) .
 close
 
@@ -556,7 +556,7 @@ open INV .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
-  eq (sk(r1) \in' leakscr(s)) = true .
+  eq (sk(r1) \in leakscr(s)) = true .
   red inv4(s,a2,a,b,sb,n,mk,rm) implies inv4(intruComLongTermIDSK(s,r1),a2,a,b,sb,n,mk,rm) .
 close
 
@@ -571,7 +571,7 @@ open INV .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
-  eq (sk(r1) \in' leakscr(s)) = false .
+  eq (sk(r1) \in leakscr(s)) = false .
   red inv4(s,a2,a,b,sb,n,mk,rm) implies inv4(intruComLongTermIDSK(s,r1),a2,a,b,sb,n,mk,rm) .
 close
 
@@ -587,7 +587,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   eq (MLK-PriK(r1) \in usedSK(s)) = true .
-  eq (MLK-PriK(r1) \in' leakscr(s)) = true .
+  eq (MLK-PriK(r1) \in leakscr(s)) = true .
   red inv4(s,a2,a,b,sb,n,mk,rm) implies inv4(intruComLongTermMlkSK(s,r1),a2,a,b,sb,n,mk,rm) .
 close
 
@@ -603,7 +603,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   eq (MLK-PriK(r1) \in usedSK(s)) = true .
-  eq (MLK-PriK(r1) \in' leakscr(s)) = false .
+  eq (MLK-PriK(r1) \in leakscr(s)) = false .
   red inv4(s,a2,a,b,sb,n,mk,rm) implies inv4(intruComLongTermMlkSK(s,r1),a2,a,b,sb,n,mk,rm) .
 close
 
@@ -729,7 +729,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   eq (r1 \in usedSK(s)) = true .
-  eq (r1 \in' leakscr(s)) = true .
+  eq (r1 \in leakscr(s)) = true .
   red inv4(s,a2,a,b,sb,n,mk,rm) implies inv4(intruComMlkSK(s,r1),a2,a,b,sb,n,mk,rm) .
 close
 
@@ -745,7 +745,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   eq (r1 \in usedSK(s)) = true .
-  eq (r1 \in' leakscr(s)) = false .
+  eq (r1 \in leakscr(s)) = false .
   red inv4(s,a2,a,b,sb,n,mk,rm) implies inv4(intruComMlkSK(s,r1),a2,a,b,sb,n,mk,rm) .
 close
 
@@ -775,7 +775,7 @@ open INV .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
-  eq (r1 \in' leakscr(s)) = true .
+  eq (r1 \in leakscr(s)) = true .
   red inv4(s,a2,a,b,sb,n,mk,rm) implies inv4(intruComMsgK(s,r1),a2,a,b,sb,n,mk,rm) .
 close
 
@@ -790,7 +790,7 @@ open INV .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
-  eq (r1 \in' leakscr(s)) = false .
+  eq (r1 \in leakscr(s)) = false .
   red inv4(s,a2,a,b,sb,n,mk,rm) implies inv4(intruComMsgK(s,r1),a2,a,b,sb,n,mk,rm) .
 close
 
@@ -1078,71 +1078,6 @@ open INV .
   eq (r1 = noChainK) = false .
   eq (r1 \in knl(s)) = false .
   red inv4(s,a2,a,b,sb,n,mk,rm) implies inv4(intruDeriveMsgK(s,r1),a2,a,b,sb,n,mk,rm) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op mk : -> MsgK .
-  op n : -> Nat .
-  op r1 : -> ChainK .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  eq r1 = noChainK .
-  red inv4(s,a2,a,b,sb,n,mk,rm) implies inv4(intruDeriveNextCK(s,r1),a2,a,b,sb,n,mk,rm) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op mk : -> MsgK .
-  op n : -> Nat .
-  op r1 : -> ChainK .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  eq (r1 = noChainK) = false .
-  eq (r1 \in knl(s)) = true .
-  eq (nextck(r1) \in knl(s)) = true .
-  red inv4(s,a2,a,b,sb,n,mk,rm) implies inv4(intruDeriveNextCK(s,r1),a2,a,b,sb,n,mk,rm) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op mk : -> MsgK .
-  op n : -> Nat .
-  op r1 : -> ChainK .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  eq (r1 = noChainK) = false .
-  eq (r1 \in knl(s)) = true .
-  eq (nextck(r1) \in knl(s)) = false .
-  red inv4(s,a2,a,b,sb,n,mk,rm) implies inv4(intruDeriveNextCK(s,r1),a2,a,b,sb,n,mk,rm) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op mk : -> MsgK .
-  op n : -> Nat .
-  op r1 : -> ChainK .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  eq (r1 = noChainK) = false .
-  eq (r1 \in knl(s)) = false .
-  red inv4(s,a2,a,b,sb,n,mk,rm) implies inv4(intruDeriveNextCK(s,r1),a2,a,b,sb,n,mk,rm) .
 close
 
 --> true
@@ -2847,4 +2782,4 @@ open INV .
   red inv4(s,a2,a,b,sb,n,mk,rm) implies inv4(send-sym(s,r1,r2,r3,r4),a2,a,b,sb,n,mk,rm) .
 close
 
---> Time taken is 4413ms
+--> Time taken is 4794ms

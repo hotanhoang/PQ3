@@ -316,7 +316,7 @@ open INV .
   op r1 : -> ChainK .
   op rm : -> RawMsg .
   op s : -> Sys .
-  eq (r1 \in' leakscr(s)) = true .
+  eq (r1 \in leakscr(s)) = true .
   red inv5(s,mk,rm) implies inv5(intruComChainK(s,r1),mk,rm) .
 close
 
@@ -326,7 +326,7 @@ open INV .
   op r1 : -> ChainK .
   op rm : -> RawMsg .
   op s : -> Sys .
-  eq (r1 \in' leakscr(s)) = false .
+  eq (r1 \in leakscr(s)) = false .
   red inv5(s,mk,rm) implies inv5(intruComChainK(s,r1),mk,rm) .
 close
 
@@ -411,7 +411,7 @@ open INV .
   op r1 : -> Prin .
   op rm : -> RawMsg .
   op s : -> Sys .
-  eq (sk(r1) \in' leakscr(s)) = true .
+  eq (sk(r1) \in leakscr(s)) = true .
   red inv5(s,mk,rm) implies inv5(intruComLongTermIDSK(s,r1),mk,rm) .
 close
 
@@ -421,7 +421,7 @@ open INV .
   op r1 : -> Prin .
   op rm : -> RawMsg .
   op s : -> Sys .
-  eq (sk(r1) \in' leakscr(s)) = false .
+  eq (sk(r1) \in leakscr(s)) = false .
   red inv5(s,mk,rm) implies inv5(intruComLongTermIDSK(s,r1),mk,rm) .
 close
 
@@ -432,7 +432,7 @@ open INV .
   op rm : -> RawMsg .
   op s : -> Sys .
   eq (MLK-PriK(r1) \in usedSK(s)) = true .
-  eq (MLK-PriK(r1) \in' leakscr(s)) = true .
+  eq (MLK-PriK(r1) \in leakscr(s)) = true .
   red inv5(s,mk,rm) implies inv5(intruComLongTermMlkSK(s,r1),mk,rm) .
 close
 
@@ -443,7 +443,7 @@ open INV .
   op rm : -> RawMsg .
   op s : -> Sys .
   eq (MLK-PriK(r1) \in usedSK(s)) = true .
-  eq (MLK-PriK(r1) \in' leakscr(s)) = false .
+  eq (MLK-PriK(r1) \in leakscr(s)) = false .
   red inv5(s,mk,rm) implies inv5(intruComLongTermMlkSK(s,r1),mk,rm) .
 close
 
@@ -529,7 +529,7 @@ open INV .
   op rm : -> RawMsg .
   op s : -> Sys .
   eq (r1 \in usedSK(s)) = true .
-  eq (r1 \in' leakscr(s)) = true .
+  eq (r1 \in leakscr(s)) = true .
   red inv5(s,mk,rm) implies inv5(intruComMlkSK(s,r1),mk,rm) .
 close
 
@@ -540,7 +540,7 @@ open INV .
   op rm : -> RawMsg .
   op s : -> Sys .
   eq (r1 \in usedSK(s)) = true .
-  eq (r1 \in' leakscr(s)) = false .
+  eq (r1 \in leakscr(s)) = false .
   red inv5(s,mk,rm) implies inv5(intruComMlkSK(s,r1),mk,rm) .
 close
 
@@ -560,7 +560,7 @@ open INV .
   op r1 : -> MsgK .
   op rm : -> RawMsg .
   op s : -> Sys .
-  eq (r1 \in' leakscr(s)) = true .
+  eq (r1 \in leakscr(s)) = true .
   red inv5(s,mk,rm) implies inv5(intruComMsgK(s,r1),mk,rm) .
 close
 
@@ -570,7 +570,7 @@ open INV .
   op r1 : -> MsgK .
   op rm : -> RawMsg .
   op s : -> Sys .
-  eq (r1 \in' leakscr(s)) = false .
+  eq (r1 \in leakscr(s)) = false .
   red inv5(s,mk,rm) implies inv5(intruComMsgK(s,r1),mk,rm) .
 close
 
@@ -778,51 +778,6 @@ open INV .
   eq (r1 = noChainK) = false .
   eq (r1 \in knl(s)) = false .
   red inv5(s,mk,rm) implies inv5(intruDeriveMsgK(s,r1),mk,rm) .
-close
-
---> true
-open INV .
-  op mk : -> MsgK .
-  op r1 : -> ChainK .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  eq r1 = noChainK .
-  red inv5(s,mk,rm) implies inv5(intruDeriveNextCK(s,r1),mk,rm) .
-close
-
---> true
-open INV .
-  op mk : -> MsgK .
-  op r1 : -> ChainK .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  eq (r1 = noChainK) = false .
-  eq (r1 \in knl(s)) = true .
-  eq (nextck(r1) \in knl(s)) = true .
-  red inv5(s,mk,rm) implies inv5(intruDeriveNextCK(s,r1),mk,rm) .
-close
-
---> true
-open INV .
-  op mk : -> MsgK .
-  op r1 : -> ChainK .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  eq (r1 = noChainK) = false .
-  eq (r1 \in knl(s)) = true .
-  eq (nextck(r1) \in knl(s)) = false .
-  red inv5(s,mk,rm) implies inv5(intruDeriveNextCK(s,r1),mk,rm) .
-close
-
---> true
-open INV .
-  op mk : -> MsgK .
-  op r1 : -> ChainK .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  eq (r1 = noChainK) = false .
-  eq (r1 \in knl(s)) = false .
-  red inv5(s,mk,rm) implies inv5(intruDeriveNextCK(s,r1),mk,rm) .
 close
 
 --> true
@@ -1928,4 +1883,4 @@ open INV .
   red inv5(s,mk,rm) implies inv5(send-sym(s,r1,r2,r3,r4),mk,rm) .
 close
 
---> Time taken is 4047ms
+--> Time taken is 4346ms

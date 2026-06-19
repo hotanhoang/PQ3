@@ -45,10 +45,10 @@ mod INV {
             not (RM = noRawMsg) and
             RM \in usedRM(S) and
             
-            not (sk(B) \in' leakscr(S)) and
-            not (ss-mlk(B, MSK) \in' leakscr(S)) and
-            not (ckAt(CK, symN(SB)) \in' leakscr(S)) and
-            not (mkAt(CK, symN(SB)) \in' leakscr(S)) and
+            not (sk(B) \in leakscr(S)) and
+            not (ss-mlk(B, MSK) \in leakscr(S)) and
+            not (ckAt(CK, symN(SB)) \in leakscr(S)) and
+            not (mkAt(CK, symN(SB)) \in leakscr(S)) and
             not (RM \in leakscr(S)) 
         )
         implies
@@ -73,11 +73,11 @@ mod INV {
             not (RM = noRawMsg) and
             RM \in usedRM(S) and
 
-            not (ss-mlk(B, MSK) \in' leakscr(S)) and
-            not (ckAt(CK, symN(SB)) \in' leakscr(S)) and
-            not (mkAt(CK, symN(SB)) \in' leakscr(S)) and
+            not (ss-mlk(B, MSK) \in leakscr(S)) and
+            not (ckAt(CK, symN(SB)) \in leakscr(S)) and
+            not (mkAt(CK, symN(SB)) \in leakscr(S)) and
             not (RM \in leakscr(S)) and
-            (sk(B) \in' leakscr(S) implies N < timeLeak(sk(B), leakscr(S)))
+            (sk(B) \in leakscr(S) implies N < timeLeak(sk(B), leakscr(S)))
         )
         implies
         (
@@ -100,11 +100,11 @@ mod INV {
     --         not (RM = noRawMsg) and
     --         RM \in usedRM(S) and
 
-    --         not (ckAt(CK, symN(SB)) \in' leakscr(S)) and
-    --         not (mkAt(CK, symN(SB)) \in' leakscr(S)) and
+    --         not (ckAt(CK, symN(SB)) \in leakscr(S)) and
+    --         not (mkAt(CK, symN(SB)) \in leakscr(S)) and
     --         not (RM \in leakscr(S)) and
     --         Previous-RK = zero-rk and
-    --         (MLK-PriK(B) \in' leakscr(S) implies N < timeLeak(MLK-PriK(B), leakscr(S)))
+    --         (MLK-PriK(B) \in leakscr(S) implies N < timeLeak(MLK-PriK(B), leakscr(S)))
     --     )
     --     implies
     --     (
@@ -126,12 +126,12 @@ mod INV {
             not (RM = noRawMsg) and
             RM \in usedRM(S) and
 
-            not (ckAt(CK, symN(SB)) \in' leakscr(S)) and
-            not (mkAt(CK, symN(SB)) \in' leakscr(S)) and
+            not (ckAt(CK, symN(SB)) \in leakscr(S)) and
+            not (mkAt(CK, symN(SB)) \in leakscr(S)) and
             not (RM \in leakscr(S)) and
             not(Previous-RK \in leakscr(S)) and
             not(Previous-RK = zero-rk) and
-            (MLK-PriK(B) \in' leakscr(S) implies N < timeLeak(MLK-PriK(B), leakscr(S)))
+            (MLK-PriK(B) \in leakscr(S) implies N < timeLeak(MLK-PriK(B), leakscr(S)))
         )
         implies
         (
@@ -154,11 +154,11 @@ mod INV {
         not (RM = noRawMsg) and
         RM \in usedRM(S) and
 
-        not (ss-mlk(B, MSK) \in' leakscr(S)) and
-        not (ckAt(CK, symN(SB)) \in' leakscr(S)) and
-        not (mkAt(CK, symN(SB)) \in' leakscr(S)) and
+        not (ss-mlk(B, MSK) \in leakscr(S)) and
+        not (ckAt(CK, symN(SB)) \in leakscr(S)) and
+        not (mkAt(CK, symN(SB)) \in leakscr(S)) and
         not (RM \in leakscr(S)) and
-        (ckAt(CK, s(symN(SB))) \in' leakscr(S) implies N < timeLeak(ckAt(CK, s(symN(SB))), leakscr(S))) 
+        (ckAt(CK, s(symN(SB))) \in leakscr(S) implies N < timeLeak(ckAt(CK, s(symN(SB))), leakscr(S))) 
     )
     implies
     (
@@ -183,11 +183,11 @@ mod INV {
         RM \in usedRM(S) and
 
 
-        not (ss-mlk(B, MSK) \in' leakscr(S)) and
-        not (ckAt(CK, symN(SB)) \in' leakscr(S)) and
-        not (mkAt(CK, symN(SB)) \in' leakscr(S)) and
+        not (ss-mlk(B, MSK) \in leakscr(S)) and
+        not (ckAt(CK, symN(SB)) \in leakscr(S)) and
+        not (mkAt(CK, symN(SB)) \in leakscr(S)) and
         not (RM \in leakscr(S)) and
-        (mkAt(CK, s(symN(SB))) \in' leakscr(S) implies N < timeLeak(mkAt(CK, s(symN(SB))), leakscr(S))) 
+        (mkAt(CK, s(symN(SB))) \in leakscr(S) implies N < timeLeak(mkAt(CK, s(symN(SB))), leakscr(S))) 
 
     )
     implies
@@ -198,7 +198,7 @@ mod INV {
 
     -- -- **************************************************************************************************************************************************************************************************
     -- =====> POST-COMPROMISE SECURITY
-
+    -- lemma: 1 + 2 + 3a + 3g (case splitting manually)
     op postCompSe : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK RawMsg SymBody Nat -> Bool .
     eq postCompSe(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, RM, SB, N) =
         (
@@ -214,10 +214,36 @@ mod INV {
 
             Previous-RK \in leakscr(S) and
 
-            not (sk(B) \in' leakscr(S)) and
-            not (ss-mlk(B, MSK) \in' leakscr(S)) and
-            not (ckAt(CK, symN(SB)) \in' leakscr(S)) and
-            not (mkAt(CK, symN(SB)) \in' leakscr(S)) and
+            not (sk(B) \in leakscr(S)) and
+            not (ss-mlk(B, MSK) \in leakscr(S)) and
+            not (ckAt(CK, symN(SB)) \in leakscr(S)) and
+            not (mkAt(CK, symN(SB)) \in leakscr(S)) and
+            not (RM \in leakscr(S))
+        )
+        implies
+        (   
+            not (RM \in knl(S))
+        ) .
+
+    op postCompSeMLK : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK RawMsg SymBody Nat -> Bool .
+    eq postCompSeMLK(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, RM, SB, N) =
+        (
+            not (A = intru or B = intru) and
+            not (A = B) and
+            msg(A2, A, B, SB, N) \in nw(S) and
+            validSymBody(A, B, SB) and
+            symSid(SB) = SID and
+            kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
+            symDec(mkAt(CK, symN(SB)), symCt(SB)) = RM and
+            not (RM = noRawMsg) and
+            RM \in usedRM(S) and
+
+            Previous-RK \in leakscr(S) and
+
+            not (sk(B) \in leakscr(S)) and
+            not (ss-mlk(B, MSK) \in leakscr(S)) and
+            not (ckAt(CK, symN(SB)) \in leakscr(S)) and
+            not (mkAt(CK, symN(SB)) \in leakscr(S)) and
             not (RM \in leakscr(S))
         )
         implies
@@ -238,7 +264,7 @@ mod INV {
         symSid(SB) = SID and
         symDec(mkAt(CK, symN(SB)), symCt(SB)) = RM and
         not (RM = noRawMsg) and
-        not (sk(A) \in' leakscr(S))
+        not (sk(A) \in leakscr(S))
     )
     implies
     (
@@ -300,10 +326,10 @@ mod INV {
             validSymBody(A, B, SB) and
             symSid(SB) = SID and
             kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
-            not (sk(B) \in' leakscr(S)) and
-            not (ss-mlk(B, MSK) \in' leakscr(S)) and
-            not (ckAt(CK, symN(SB)) \in' leakscr(S)) and
-            not (mkAt(CK, symN(SB)) \in' leakscr(S))
+            not (sk(B) \in leakscr(S)) and
+            not (ss-mlk(B, MSK) \in leakscr(S)) and
+            not (ckAt(CK, symN(SB)) \in leakscr(S)) and
+            not (mkAt(CK, symN(SB)) \in leakscr(S))
         )
         implies
         (
@@ -321,10 +347,10 @@ mod INV {
             symSid(SB) = SID and
             kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
             
-            not (ss-mlk(B, MSK) \in' leakscr(S)) and
-            not (ckAt(CK, symN(SB)) \in' leakscr(S)) and
-            not (mkAt(CK, symN(SB)) \in' leakscr(S)) and
-            (sk(B) \in' leakscr(S) implies N < timeLeak(sk(B), leakscr(S)))
+            not (ss-mlk(B, MSK) \in leakscr(S)) and
+            not (ckAt(CK, symN(SB)) \in leakscr(S)) and
+            not (mkAt(CK, symN(SB)) \in leakscr(S)) and
+            (sk(B) \in leakscr(S) implies N < timeLeak(sk(B), leakscr(S)))
         )
         implies
         (
@@ -342,10 +368,10 @@ mod INV {
             symSid(SB) = SID and
             kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
             
-            not (ckAt(CK, symN(SB)) \in' leakscr(S)) and
-            not (mkAt(CK, symN(SB)) \in' leakscr(S)) and
+            not (ckAt(CK, symN(SB)) \in leakscr(S)) and
+            not (mkAt(CK, symN(SB)) \in leakscr(S)) and
             not (Previous-RK \in leakscr(S)) and
-            (MLK-PriK(B) \in' leakscr(S) implies N < timeLeak(MLK-PriK(B), leakscr(S)))
+            (MLK-PriK(B) \in leakscr(S) implies N < timeLeak(MLK-PriK(B), leakscr(S)))
         )
         implies
         (
@@ -363,10 +389,10 @@ mod INV {
             symSid(SB) = SID and
             kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
             
-            not (ss-mlk(B, MSK) \in' leakscr(S)) and
-            not (ckAt(CK, symN(SB)) \in' leakscr(S)) and
-            not (mkAt(CK, symN(SB)) \in' leakscr(S)) and
-            (ckAt(CK, s(symN(SB))) \in' leakscr(S) implies N < timeLeak(ckAt(CK, s(symN(SB))), leakscr(S)))
+            not (ss-mlk(B, MSK) \in leakscr(S)) and
+            not (ckAt(CK, symN(SB)) \in leakscr(S)) and
+            not (mkAt(CK, symN(SB)) \in leakscr(S)) and
+            (ckAt(CK, s(symN(SB))) \in leakscr(S) implies N < timeLeak(ckAt(CK, s(symN(SB))), leakscr(S)))
         )
         implies
         (
@@ -383,16 +409,17 @@ mod INV {
             symSid(SB) = SID and
             kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
             
-            not (ss-mlk(B, MSK) \in' leakscr(S)) and
-            not (ckAt(CK, symN(SB)) \in' leakscr(S)) and
-            not (mkAt(CK, symN(SB)) \in' leakscr(S)) and
-            (mkAt(CK, s(symN(SB))) \in' leakscr(S) implies N < timeLeak(mkAt(CK, s(symN(SB))), leakscr(S))) 
+            not (ss-mlk(B, MSK) \in leakscr(S)) and
+            not (ckAt(CK, symN(SB)) \in leakscr(S)) and
+            not (mkAt(CK, symN(SB)) \in leakscr(S)) and
+            (mkAt(CK, s(symN(SB))) \in leakscr(S) implies N < timeLeak(mkAt(CK, s(symN(SB))), leakscr(S))) 
         )
         implies
         (
             not (mkAt(CK, symN(SB)) \in knl(S))
         ) .
 
+    -- lemma: 17 + 18
     op inv3g : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
     eq inv3g(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
         (
@@ -404,10 +431,10 @@ mod INV {
             kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
             
             Previous-RK \in leakscr(S) and
-            not (sk(B) \in' leakscr(S)) and
-            not (ss-mlk(B, MSK) \in' leakscr(S)) and
-            not (ckAt(CK, symN(SB)) \in' leakscr(S)) and
-            not (mkAt(CK, symN(SB)) \in' leakscr(S))
+            not (sk(B) \in leakscr(S)) and
+            not (ss-mlk(B, MSK) \in leakscr(S)) and
+            not (ckAt(CK, symN(SB)) \in leakscr(S)) and
+            not (mkAt(CK, symN(SB)) \in leakscr(S))
         )
         implies
         (
@@ -445,10 +472,10 @@ mod INV {
             not (A = intru or B = intru) and
             not (A = B) and
             kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
-            not (sk(B) \in' leakscr(S)) and
-            not (ss-mlk(B, MSK) \in' leakscr(S)) and
-            not (ckAt(CK, N) \in' leakscr(S)) and
-            not (mkAt(CK, N) \in' leakscr(S))
+            not (sk(B) \in leakscr(S)) and
+            not (ss-mlk(B, MSK) \in leakscr(S)) and
+            not (ckAt(CK, N) \in leakscr(S)) and
+            not (mkAt(CK, N) \in leakscr(S))
         )
         implies
         (
@@ -464,9 +491,9 @@ mod INV {
             validSymBody(A, B, SB) and
             symSid(SB) = SID and
             kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
-            not (sk(B) \in' leakscr(S)) and
-            not (ss-mlk(B, MSK) \in' leakscr(S)) and
-            not (ckAt(CK, symN(SB)) \in' leakscr(S))
+            not (sk(B) \in leakscr(S)) and
+            not (ss-mlk(B, MSK) \in leakscr(S)) and
+            not (ckAt(CK, symN(SB)) \in leakscr(S))
         )
         implies
         (
@@ -477,7 +504,7 @@ mod INV {
     op inv8 : Sys ChainK -> Bool .
     eq inv8(S, CK) =
         (
-            not (CK \in' leakscr(S))
+            not (CK \in leakscr(S))
         )
         implies
         (
@@ -495,9 +522,9 @@ mod INV {
             symSid(SB) = SID and
             kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
             
-            not (ss-mlk(B, MSK) \in' leakscr(S)) and
-            not (ckAt(CK, symN(SB)) \in' leakscr(S)) and
-            (sk(B) \in' leakscr(S) implies N < timeLeak(sk(B), leakscr(S)))
+            not (ss-mlk(B, MSK) \in leakscr(S)) and
+            not (ckAt(CK, symN(SB)) \in leakscr(S)) and
+            (sk(B) \in leakscr(S) implies N < timeLeak(sk(B), leakscr(S)))
         )
         implies
         (
@@ -511,11 +538,11 @@ mod INV {
             not (A = B) and
             kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
             
-            not (ss-mlk(B, MSK) \in' leakscr(S)) and
-            not (ckAt(CK, N) \in' leakscr(S)) and
-            not (mkAt(CK, N) \in' leakscr(S)) and
+            not (ss-mlk(B, MSK) \in leakscr(S)) and
+            not (ckAt(CK, N) \in leakscr(S)) and
+            not (mkAt(CK, N) \in leakscr(S)) and
 
-            (sk(B) \in' leakscr(S) implies time(S) < timeLeak(sk(B), leakscr(S)))
+            (sk(B) \in leakscr(S) implies time(S) < timeLeak(sk(B), leakscr(S)))
         )
         implies
         (
@@ -533,9 +560,9 @@ mod INV {
             symSid(SB) = SID and
             kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
             
-            not (ckAt(CK, symN(SB)) \in' leakscr(S)) and
+            not (ckAt(CK, symN(SB)) \in leakscr(S)) and
             not (Previous-RK \in leakscr(S)) and
-            (MLK-PriK(B) \in' leakscr(S) implies N < timeLeak(MLK-PriK(B), leakscr(S)))
+            (MLK-PriK(B) \in leakscr(S) implies N < timeLeak(MLK-PriK(B), leakscr(S)))
         )
         implies
         (
@@ -549,10 +576,10 @@ mod INV {
             not (A = B) and
             kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
             
-            not (ckAt(CK, N) \in' leakscr(S)) and
-            not (mkAt(CK, N) \in' leakscr(S)) and
+            not (ckAt(CK, N) \in leakscr(S)) and
+            not (mkAt(CK, N) \in leakscr(S)) and
             not (Previous-RK \in leakscr(S)) and
-            (MLK-PriK(B) \in' leakscr(S) implies time(S) < timeLeak(MLK-PriK(B), leakscr(S)))
+            (MLK-PriK(B) \in leakscr(S) implies time(S) < timeLeak(MLK-PriK(B), leakscr(S)))
         )
         implies
         (
@@ -569,9 +596,9 @@ mod INV {
             symSid(SB) = SID and
             kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
             
-            not (ss-mlk(B, MSK) \in' leakscr(S)) and
-            not (ckAt(CK, symN(SB)) \in' leakscr(S)) and
-            (ckAt(CK, s(symN(SB))) \in' leakscr(S) implies N < timeLeak(ckAt(CK, s(symN(SB))), leakscr(S)))
+            not (ss-mlk(B, MSK) \in leakscr(S)) and
+            not (ckAt(CK, symN(SB)) \in leakscr(S)) and
+            (ckAt(CK, s(symN(SB))) \in leakscr(S) implies N < timeLeak(ckAt(CK, s(symN(SB))), leakscr(S)))
         )
         implies
         (
@@ -585,10 +612,10 @@ mod INV {
             not (A = B) and
             kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
             
-            not (ss-mlk(B, MSK) \in' leakscr(S)) and
-            not (ckAt(CK, N) \in' leakscr(S)) and
-            not (mkAt(CK, N) \in' leakscr(S)) and
-            (ckAt(CK, s(N)) \in' leakscr(S) implies time(S) < timeLeak(ckAt(CK, s(N)), leakscr(S)))
+            not (ss-mlk(B, MSK) \in leakscr(S)) and
+            not (ckAt(CK, N) \in leakscr(S)) and
+            not (mkAt(CK, N) \in leakscr(S)) and
+            (ckAt(CK, s(N)) \in leakscr(S) implies time(S) < timeLeak(ckAt(CK, s(N)), leakscr(S)))
         )
         implies
         (
@@ -606,10 +633,10 @@ mod INV {
             symSid(SB) = SID and
             kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
             
-            not (ss-mlk(B, MSK) \in' leakscr(S)) and
-            not (ckAt(CK, symN(SB)) \in' leakscr(S)) and
-            not (mkAt(CK, symN(SB)) \in' leakscr(S)) and
-            (mkAt(CK, s(symN(SB))) \in' leakscr(S) implies N < timeLeak(mkAt(CK, s(symN(SB))), leakscr(S)))
+            not (ss-mlk(B, MSK) \in leakscr(S)) and
+            not (ckAt(CK, symN(SB)) \in leakscr(S)) and
+            not (mkAt(CK, symN(SB)) \in leakscr(S)) and
+            (mkAt(CK, s(symN(SB))) \in leakscr(S) implies N < timeLeak(mkAt(CK, s(symN(SB))), leakscr(S)))
         )
         implies
         (
@@ -623,10 +650,48 @@ mod INV {
             not (A = B) and
             kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
             
-            not (ss-mlk(B, MSK) \in' leakscr(S)) and
-            not (ckAt(CK, N) \in' leakscr(S)) and
-            not (mkAt(CK, N) \in' leakscr(S)) and
-            (mkAt(CK, s(N)) \in' leakscr(S) implies time(S) < timeLeak(mkAt(CK, s(N)), leakscr(S)))
+            not (ss-mlk(B, MSK) \in leakscr(S)) and
+            not (ckAt(CK, N) \in leakscr(S)) and
+            not (mkAt(CK, N) \in leakscr(S)) and
+            (mkAt(CK, s(N)) \in leakscr(S) implies time(S) < timeLeak(mkAt(CK, s(N)), leakscr(S)))
+        )
+        implies
+        (
+            not (mkAt(CK, N) \in knl(S))
+        ) .
+    -- lemma: 8
+    op inv17 : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
+    eq inv17(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
+        (
+            not (A = intru or B = intru) and
+            not (A = B) and
+            msg(A2, A, B, SB, N) \in nw(S) and
+            validSymBody(A, B, SB) and
+            symSid(SB) = SID and
+            kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
+            
+            Previous-RK \in leakscr(S) and
+            not (sk(B) \in leakscr(S)) and
+            not (ss-mlk(B, MSK) \in leakscr(S)) and
+            not (ckAt(CK, symN(SB)) \in leakscr(S))
+        )
+        implies
+        (
+            not (ckAt(CK, symN(SB)) \in knl(S))
+        ) .
+    -- lemma: 8
+    op inv18 : Sys Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK Nat -> Bool .
+    eq inv18(S, A, B, SID, ESK, MSK, Previous-RK, CK, N) =
+        (
+            not (A = intru or B = intru) and
+            not (A = B) and
+            kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
+            
+            Previous-RK \in leakscr(S) and
+            not (sk(B) \in leakscr(S)) and
+            not (ss-mlk(B, MSK) \in leakscr(S)) and
+            not (ckAt(CK, N) \in leakscr(S)) and
+            not (mkAt(CK, N) \in leakscr(S))
         )
         implies
         (
