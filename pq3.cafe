@@ -165,38 +165,17 @@ mod! LONGTERM-IDENTITY {
 
 
     eq verify(pk(P), SD, sign(sk(P), SD)) = true .
-    -- ceq verify(pk(P), SD, sign(sk(P), SD')) = false if not(SD = SD') .
-    -- ceq verify(pk(P), SD, sign(sk(Q), SD)) = false if not (P = Q) .
     eq verify(pk(P), SD, sign(sk(Q), SD')) = (P = Q) and (SD = SD') .
 
     eq (pk(P) = pk(Q)) = (P = Q) .
     eq (sk(P) = sk(Q)) = (P = Q) .
 }
 
--- mod! RAW-MESSAGE {
---     [RawMsg]
---     op noRawMsg : -> RawMsg {constr}
--- }
 mod! RAW-MESSAGE {
-    pr(NAT)
-    
-    [InitRawMsg SymRawMsg AsymRawMsg < RawMsg]
-    
+    [RawMsg]
     op noRawMsg : -> RawMsg {constr}
-
-    op i-msg : Nat -> InitRawMsg {constr}
-    op s-msg : Nat -> SymRawMsg {constr}
-    op a-msg : Nat -> AsymRawMsg {constr}
-
-    vars N1 N2 : Nat
-
-    eq (i-msg(N1) = s-msg(N2)) = false .
-    eq (s-msg(N1) = i-msg(N2)) = false .
-    eq (i-msg(N1) = a-msg(N2)) = false .
-    eq (a-msg(N1) = i-msg(N2)) = false .
-    eq (s-msg(N1) = a-msg(N2)) = false .
-    eq (a-msg(N1) = s-msg(N2)) = false .
 }
+
 mod! SET (D :: TRIV) {
   [Elt.D < Set]
   op empty : -> Set {constr}
@@ -208,7 +187,6 @@ mod! SET (D :: TRIV) {
   eq E1 \in empty = false .
   eq E1 \in E2 = (E1 = E2) .
   eq E1 \in (E2 S) = (E1 = E2) or (E1 \in S) .
-  
 }
 
 mod! BAG (D :: TRIV) {
@@ -2138,7 +2116,6 @@ mod* PQ3 {
     eq knl(fkMsg(S, A, B, SID, C1, C2, ESK, MSK, RM)) = knl(S) .
     ceq fkMsg(S, A, B, SID, C1, C2, ESK, MSK, RM) = S if not c-fkMsg(S, A, B, SID, C1, C2, ESK, MSK, RM) .
 
-
     -- 20. capability of intruder when previous root key, ecdh share, and mlk share are all in the intruder's knowledge
     op intruDeriveRootK : Sys RootK ECDHK-ShareS MLK-ShareS SessId -> Sys {constr}
     op c-intruDeriveRootK : Sys RootK ECDHK-ShareS MLK-ShareS SessId -> Bool
@@ -2162,7 +2139,6 @@ mod* PQ3 {
     ceq knl(intruDeriveRootK(S, RK0, ES0, MS0, SID)) 
         = kdf-rk(RK0, ES0, MS0, SID) || knl(S) if c-intruDeriveRootK(S, RK0, ES0, MS0, SID) .
     ceq intruDeriveRootK(S, RK0, ES0, MS0, SID) = S if not c-intruDeriveRootK(S, RK0, ES0, MS0, SID) .
-
 
     -- 21. capability of intruder to derive chain key when the root key, ecdh share, and mlk share are all in the intruder's knowledge
     op intruDeriveCK : Sys RootK ECDHK-ShareS MLK-ShareS SessId -> Sys {constr}
@@ -2298,5 +2274,4 @@ mod* PQ3 {
     eq leakscr(intruDecMsg(S, MK, RM)) = leakscr(S) .
     ceq knl(intruDecMsg(S, MK, RM)) =  RM || knl(S) if c-intruDecMsg(S, MK, RM) .
     ceq intruDecMsg(S, MK, RM) = S if not c-intruDecMsg(S, MK, RM) .
-
 }

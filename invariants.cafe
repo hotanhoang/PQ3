@@ -84,33 +84,6 @@ mod INV {
             not (RM \in knl(S))
         ) .
 
-
-    -- for ML-KEM secret key (counterexample)
-    -- op forwardSeMLK : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK RawMsg SymBody Nat -> Bool .
-    -- eq forwardSeMLK(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, RM, SB, N) =
-    --     (
-    --         not (A = intru or B = intru) and
-    --         not (A = B) and
-    --         msg(A2, A, B, SB, N) \in nw(S) and
-    --         validSymBody(A, B, SB) and
-    --         symSid(SB) = SID and
-
-    --         kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
-    --         symDec(mkAt(CK, symN(SB)), symCt(SB)) = RM and
-    --         not (RM = noRawMsg) and
-    --         RM \in usedRM(S) and
-
-    --         not (ckAt(CK, symN(SB)) \in leakscr(S)) and
-    --         not (mkAt(CK, symN(SB)) \in leakscr(S)) and
-    --         not (RM \in leakscr(S)) and
-    --         Previous-RK = zero-rk and
-    --         (MLK-PriK(B) \in leakscr(S) implies N < timeLeak(MLK-PriK(B), leakscr(S)))
-    --     )
-    --     implies
-    --     (
-    --         not (RM \in knl(S))
-    --     ) .
-
     -- lemma 1 + 2 + 3a + 3d (case splitting manually)
     op forwardSeMLK : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK RawMsg SymBody Nat -> Bool .
     eq forwardSeMLK(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, RM, SB, N) =
@@ -120,12 +93,12 @@ mod INV {
             msg(A2, A, B, SB, N) \in nw(S) and
             validSymBody(A, B, SB) and
             symSid(SB) = SID and
-
             kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
             symDec(mkAt(CK, symN(SB)), symCt(SB)) = RM and
             not (RM = noRawMsg) and
             RM \in usedRM(S) and
 
+            not (sk(B) \in leakscr(S)) and
             not (ckAt(CK, symN(SB)) \in leakscr(S)) and
             not (mkAt(CK, symN(SB)) \in leakscr(S)) and
             not (RM \in leakscr(S)) and
@@ -148,12 +121,12 @@ mod INV {
         msg(A2, A, B, SB, N) \in nw(S) and
         validSymBody(A, B, SB) and
         symSid(SB) = SID and
-
         kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
         symDec(mkAt(CK, symN(SB)), symCt(SB)) = RM and
         not (RM = noRawMsg) and
         RM \in usedRM(S) and
 
+        not (sk(B) \in leakscr(S)) and
         not (ss-mlk(B, MSK) \in leakscr(S)) and
         not (ckAt(CK, symN(SB)) \in leakscr(S)) and
         not (mkAt(CK, symN(SB)) \in leakscr(S)) and
@@ -164,7 +137,6 @@ mod INV {
     (
         not (RM \in knl(S))
     ) .
-
     -- for message key
     -- lemma: 1 + 2 + 3a + 3f (case splitting manually)
     op forwardSeMsg : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK RawMsg SymBody Nat -> Bool .
@@ -182,7 +154,7 @@ mod INV {
         not (RM = noRawMsg) and
         RM \in usedRM(S) and
 
-
+        not (sk(B) \in leakscr(S)) and
         not (ss-mlk(B, MSK) \in leakscr(S)) and
         not (ckAt(CK, symN(SB)) \in leakscr(S)) and
         not (mkAt(CK, symN(SB)) \in leakscr(S)) and
@@ -225,8 +197,8 @@ mod INV {
             not (RM \in knl(S))
         ) .
 
-    op postCompSeMLK : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK RawMsg SymBody Nat -> Bool .
-    eq postCompSeMLK(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, RM, SB, N) =
+    op postCompSe : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK RawMsg SymBody Nat -> Bool .
+    eq postCompSe(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, RM, SB, N) =
         (
             not (A = intru or B = intru) and
             not (A = B) and
@@ -368,6 +340,7 @@ mod INV {
             symSid(SB) = SID and
             kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
             
+            not (sk(B) \in leakscr(S)) and
             not (ckAt(CK, symN(SB)) \in leakscr(S)) and
             not (mkAt(CK, symN(SB)) \in leakscr(S)) and
             not (Previous-RK \in leakscr(S)) and
@@ -389,6 +362,7 @@ mod INV {
             symSid(SB) = SID and
             kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
             
+            not (sk(B) \in leakscr(S)) and
             not (ss-mlk(B, MSK) \in leakscr(S)) and
             not (ckAt(CK, symN(SB)) \in leakscr(S)) and
             not (mkAt(CK, symN(SB)) \in leakscr(S)) and
@@ -409,6 +383,7 @@ mod INV {
             symSid(SB) = SID and
             kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
             
+            not (sk(B) \in leakscr(S)) and
             not (ss-mlk(B, MSK) \in leakscr(S)) and
             not (ckAt(CK, symN(SB)) \in leakscr(S)) and
             not (mkAt(CK, symN(SB)) \in leakscr(S)) and
