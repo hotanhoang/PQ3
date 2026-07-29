@@ -1,0 +1,9 @@
+ipsgopen INV .
+  generate inv10(S:Sys, A2:Prin, A:Prin, B:Prin, SB:SymBody, N:Nat, MK:MsgK, RM:RawMsg)
+  induction on S:Sys .
+close
+set-output examples/PQ3/inv/inv10.cafe .
+:save-proof .
+
+eof
+

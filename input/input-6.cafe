@@ -1,0 +1,10 @@
+ipsgopen INV .
+  inv inv17(S:Sys, A2:Prin, A:Prin, B:Prin, SID:SessId, ESK:ECDHK-SecretK, MSK:MLK-SecretK, Previous-RK:RootK, CK:ChainK, SB:SymBody, N:Nat) .
+  inv inv18(S:Sys, A:Prin, B:Prin, SID:SessId, ESK:ECDHK-SecretK, MSK:MLK-SecretK, Previous-RK:RootK, CK:ChainK, N:Nat) .
+  generate inv6(S:Sys, A2:Prin, A:Prin, B:Prin, SID:SessId, ESK:ECDHK-SecretK, MSK:MLK-SecretK, Previous-RK:RootK, CK:ChainK, SB:SymBody, N:Nat)
+  induction on S:Sys .
+close
+set-output examples/PQ3/inv/inv6.cafe .
+:save-proof .
+
+eof

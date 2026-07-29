@@ -1,11 +1,23 @@
-in pq3.cafe
-
+in pq3.cafe .
 open PQ3 .
+
+  vars A A2 B : Prin .
+  var S : Sys .
+  var SID : SessId .
+  var ESK : ECDHK-SecretK .
+  var MSK : MLK-SecretK .
+  var CK : ChainK .
+  var RM : RawMsg .
+  var SB : SymBody .
+  var N : Nat .
+
+  
   ops p q : -> Prin .
   ops ec ec1 ec2 : -> ECDHK-SecretK .
   ops ml ml1 ml2 : -> MLK-SecretK .
 
-  op rm0 : -> RawMsg .
+  -- Khai báo 2 raw message riêng biệt cho Init và Sym
+  ops rm0 rm1 : -> RawMsg .
 
   ops s0 s1 s2 s3 s4 : -> Sys .
   op sid0 : -> SessId .
@@ -14,7 +26,14 @@ open PQ3 .
   op sb0 : -> SymBody .
 
   eq (p = q) = false .
+  eq (q = intru) = false .
+  eq (p = intru) = false .
+
+  -- Ràng buộc cho rm0 và rm1
   eq (rm0 = noRawMsg) = false .
+  eq (rm1 = noRawMsg) = false .
+  eq (rm0 = rm1) = false .
+
   eq (ec = ec1) = false .
   eq (ec = ec2) = false .
   eq (ec1 = ec2) = false .
@@ -35,46 +54,67 @@ open PQ3 .
   eq (ml2 = MLK-PriK(q)) = false .
   eq (ml = MLK-PriK(q)) = false .
 
-  -- register bundle keys of p and q on IDS server
+  -- 1. Register bundle keys of p and q on IDS server
   eq s0 = register(register(init, p), q) .
-
+  
   eq ibInit =
     mkInitBody(
-      p,
-      sid0,
+      p, q, sid0,
       ct-ecdh(q, ec2),
       ct-mlk(q, ml2),
       ecdhk-keygen(ec2),
       mlk-keygen(ml2),
-      hash(ecdhk-keygen(ec2), mlk-keygen(ml2))
+      ns(s0, p, q, sid0),
+      ienc(mk-sym(init-ck(ss-ecdh(q, ec2), ss-mlk(q, ml2), sid0)), rm0),
+      hash(ECDHK-PubK(q), MLK-PubK(q))
     ) .
 
-  -- sender side init
-  eq s1 = send-init(s0, p, q, sid0, ec2, ml2) .
+  -- 2. Sender side init
+  eq s1 = send-init(s0, p, q, sid0, ec2, ml2, rm0) .
 
-  -- receiver side init
+  -- 3. Receiver side init (Sửa time(s1) thành time(s0))
   eq s2 = recv-init(
       s1,
       p, q,
       sid0,
       ibInit,
       time(s0)) .
-  -- check init
-  red rk(s1, p, q, sid0) = rk(s2, q, p, sid0) .   
+    
+  -- Test các điều kiện c-send và c-recv
+  -- red c-send-init(s0, p, q, sid0, ec2, ml2, rm0) .
+  -- red c-recv-init(s1, p, q, sid0, ibInit, time(s0)) .
+  
+  -- Check init: Root key của receiver (q) phải giống Root key của sender (p)
+  -- red rk(s2, q, p, sid0) = rk(s2, p, q, sid0) .
 
-  -- sender side sym
-  eq ct0 = senc(mk-sym(ck(s2, p, q, sid0)), rm0) .
+  -- 4. Sender side sym (Sử dụng rm1 thay cho rm0)
+  eq ct0 = senc(mk-sym(ck(s2, p, q, sid0)), rm1) .
   eq sb0 = mkSymBody(p, q, sid0, ns(s2, p, q, sid0), ct0) .  
-  eq s3 = send-sym(s2, p, q, sid0, rm0) .
+  eq s3 = send-sym(s2, p, q, sid0, rm1) .
 
-  -- -- receiver side sym
+  -- 5. Receiver side sym
   eq s4 = recv-sym(s3, p, q, sid0, sb0, time(s2)) .
 
-  -- -- check
-  red c-send-sym(s2, p, q, sid0, rm0) .
-  red c-recv-sym(s3, p, q, sid0, sb0, time(s2)) .
+  -- Test các điều kiện c-send và c-recv cho sym
+  -- red c-send-sym(s2, p, q, sid0, rm1) .
+  -- red c-recv-sym(s3, p, q, sid0, sb0, time(s2)) .
 
-  red rk(s4, q, p, sid0) = rk(s3, q, p, sid0) .
-  -- red rk(s4, q, p, sid0) .
-  -- red rk(s3, q, p, sid0) .
+  -- Check sym: Chain key của receiver sau khi nhận tiến lên 1 bước, phải bằng Chain key của sender sau khi gửi
+  -- red ck(s4, q, p, sid0) = ck(s3, p, q, sid0) .
+
+
+  op check : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK ChainK RawMsg SymBody Nat -> Bool .
+  eq check(S, A2, A, B, SID, ESK, MSK, CK, RM, SB, N) =
+      (
+          not (A = intru or B = intru) and
+          not (A = B) and
+          SID \in usedSID(S) and
+          ESK \in usedSK(S) and
+          MSK \in usedSK(S) and
+          msg(A2, A, B, SB, N) \in nw(S) and
+          validSymBody(A, B, SB) and
+          symSid(SB) = SID and
+          symDec(mkAt(CK, symN(SB)), symCt(SB)) = RM
+      ) .
+  red check(s3, p, p, q, sid0, ec2, ml2, ck(s2, p, q, sid0), rm1, sb0, time(s2)) .
 close

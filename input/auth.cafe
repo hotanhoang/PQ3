@@ -1,0 +1,9 @@
+ipsgopen INV .
+  generate auth(S:Sys, A2:Prin, A:Prin, B:Prin, SID:SessId, RM:RawMsg, CK:ChainK, SB:SymBody, N:Nat, ?T:Nat)
+  induction on S:Sys .
+close
+set-output examples/PQ3/inv/auth.cafe .
+:save-proof .
+
+eof
+
