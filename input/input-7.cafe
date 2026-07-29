@@ -1,5 +1,6 @@
 ipsgopen INV .
-  inv inv8(S:Sys, CK:ChainK) .
+  inv inv19(S:Sys, A2:Prin, A:Prin, B:Prin, SID:SessId, ESK:ECDHK-SecretK, MSK:MLK-SecretK, Previous-RK:RootK, CK:ChainK, SB:SymBody, N:Nat) .
+  inv inv20(S:Sys, A:Prin, B:Prin, SID:SessId, ESK:ECDHK-SecretK, MSK:MLK-SecretK, Previous-RK:RootK, CK:ChainK, N:Nat) .
   generate inv7(S:Sys, A2:Prin, A:Prin, B:Prin, SID:SessId, ESK:ECDHK-SecretK, MSK:MLK-SecretK, Previous-RK:RootK, CK:ChainK, SB:SymBody, N:Nat)
   induction on S:Sys .
 close

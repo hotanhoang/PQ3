@@ -1,8 +1,0 @@
-ipsgopen INV .
-  generate inv3g(S:Sys, A2:Prin, A:Prin, B:Prin, SID:SessId, ESK:ECDHK-SecretK, MSK:MLK-SecretK, Previous-RK:RootK, CK:ChainK, SB:SymBody, N:Nat)
-  induction on S:Sys .
-close
-set-output examples/PQ3/inv/inv3g.cafe .
-:save-proof .
-
-eof

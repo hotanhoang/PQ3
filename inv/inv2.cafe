@@ -496,7 +496,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (r1 \in' leakscr(s)) = true .
+  eq (r1 \in leakscr(s)) = true .
   red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruComChainK(s,r1),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
 close
 
@@ -515,7 +515,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (r1 \in' leakscr(s)) = false .
+  eq (r1 \in leakscr(s)) = false .
   red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruComChainK(s,r1),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
 close
 
@@ -672,7 +672,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (sk(r1) \in' leakscr(s)) = true .
+  eq (sk(r1) \in leakscr(s)) = true .
   red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruComLongTermIDSK(s,r1),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
 close
 
@@ -691,7 +691,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (sk(r1) \in' leakscr(s)) = false .
+  eq (sk(r1) \in leakscr(s)) = false .
   red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruComLongTermIDSK(s,r1),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
 close
 
@@ -711,7 +711,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (MLK-PriK(r1) \in usedSK(s)) = true .
-  eq (MLK-PriK(r1) \in' leakscr(s)) = true .
+  eq (MLK-PriK(r1) \in leakscr(s)) = true .
   red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruComLongTermMlkSK(s,r1),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
 close
 
@@ -731,7 +731,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (MLK-PriK(r1) \in usedSK(s)) = true .
-  eq (MLK-PriK(r1) \in' leakscr(s)) = false .
+  eq (MLK-PriK(r1) \in leakscr(s)) = false .
   red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruComLongTermMlkSK(s,r1),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
 close
 
@@ -808,6 +808,27 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in usedRM(s)) = true .
+  eq (r1 \in knl(s)) = true .
+  red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruComMessage(s,r1),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
+close
+
+--> true
+open INV .
+  op a : -> Prin .
+  op a2 : -> Prin .
+  op b : -> Prin .
+  op ck : -> ChainK .
+  op esk : -> ECDHK-SecretK .
+  op msk : -> MLK-SecretK .
+  op n : -> Nat .
+  op previous-rk : -> RootK .
+  op r1 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  op sb : -> SymBody .
+  op sid : -> SessId .
+  eq (r1 \in usedRM(s)) = true .
+  eq (r1 \in knl(s)) = false .
   eq (r1 \in leakscr(s)) = true .
   red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruComMessage(s,r1),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
 close
@@ -828,6 +849,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in usedRM(s)) = true .
+  eq (r1 \in knl(s)) = false .
   eq (r1 \in leakscr(s)) = false .
   red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruComMessage(s,r1),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
 close
@@ -867,7 +889,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in usedSK(s)) = true .
-  eq (r1 \in' leakscr(s)) = true .
+  eq (r1 \in leakscr(s)) = true .
   red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruComMlkSK(s,r1),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
 close
 
@@ -887,7 +909,7 @@ open INV .
   op sb : -> SymBody .
   op sid : -> SessId .
   eq (r1 \in usedSK(s)) = true .
-  eq (r1 \in' leakscr(s)) = false .
+  eq (r1 \in leakscr(s)) = false .
   red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruComMlkSK(s,r1),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
 close
 
@@ -925,7 +947,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (r1 \in' leakscr(s)) = true .
+  eq (r1 \in leakscr(s)) = true .
   red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruComMsgK(s,r1),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
 close
 
@@ -944,7 +966,7 @@ open INV .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (r1 \in' leakscr(s)) = false .
+  eq (r1 \in leakscr(s)) = false .
   red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruComMsgK(s,r1),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
 close
 
@@ -966,8 +988,8 @@ open INV .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in usedRM(s)) = true .
-  eq (ienc(r1,r2) \in knl(s)) = true .
-  red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruDecInitMsg(s,r1,r2),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
+  eq (r2 \in knl(s)) = true .
+  red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruDecMsg(s,r1,r2),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
 close
 
 --> true
@@ -988,69 +1010,7 @@ open INV .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in usedRM(s)) = true .
-  eq (ienc(r1,r2) \in knl(s)) = false .
-  red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruDecInitMsg(s,r1,r2),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> MsgK .
-  op r2 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r1 \in knl(s)) = true .
-  eq (r2 \in usedRM(s)) = false .
-  red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruDecInitMsg(s,r1,r2),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> MsgK .
-  op r2 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r1 \in knl(s)) = false .
-  red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruDecInitMsg(s,r1,r2),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> MsgK .
-  op r2 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r1 \in knl(s)) = true .
-  eq (r2 \in usedRM(s)) = true .
+  eq (r2 \in knl(s)) = false .
   eq (senc(r1,r2) \in knl(s)) = true .
   red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruDecMsg(s,r1,r2),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
 close
@@ -1073,6 +1033,7 @@ open INV .
   op sid : -> SessId .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in usedRM(s)) = true .
+  eq (r2 \in knl(s)) = false .
   eq (senc(r1,r2) \in knl(s)) = false .
   red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruDecMsg(s,r1,r2),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
 close
@@ -1221,18 +1182,17 @@ open INV .
   op msk : -> MLK-SecretK .
   op n : -> Nat .
   op previous-rk : -> RootK .
-  op r1 : -> RootK .
-  op r2 : -> ECDHK-ShareS .
-  op r3 : -> MLK-ShareS .
-  op r4 : -> SessId .
+  op r1 : -> ECDHK-ShareS .
+  op r2 : -> MLK-ShareS .
+  op r3 : -> SessId .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq r1 = zero-rk .
+  eq (r1 \in knl(s)) = true .
   eq (r2 \in knl(s)) = true .
-  eq (r3 \in knl(s)) = true .
-  red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruDeriveInitCK(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
+  eq (zero-rk \in knl(s)) = true .
+  red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruDeriveInitCK(s,r1,r2,r3),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
 close
 
 --> true
@@ -1245,18 +1205,17 @@ open INV .
   op msk : -> MLK-SecretK .
   op n : -> Nat .
   op previous-rk : -> RootK .
-  op r1 : -> RootK .
-  op r2 : -> ECDHK-ShareS .
-  op r3 : -> MLK-ShareS .
-  op r4 : -> SessId .
+  op r1 : -> ECDHK-ShareS .
+  op r2 : -> MLK-ShareS .
+  op r3 : -> SessId .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq r1 = zero-rk .
+  eq (r1 \in knl(s)) = true .
   eq (r2 \in knl(s)) = true .
-  eq (r3 \in knl(s)) = false .
-  red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruDeriveInitCK(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
+  eq (zero-rk \in knl(s)) = false .
+  red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruDeriveInitCK(s,r1,r2,r3),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
 close
 
 --> true
@@ -1269,17 +1228,16 @@ open INV .
   op msk : -> MLK-SecretK .
   op n : -> Nat .
   op previous-rk : -> RootK .
-  op r1 : -> RootK .
-  op r2 : -> ECDHK-ShareS .
-  op r3 : -> MLK-ShareS .
-  op r4 : -> SessId .
+  op r1 : -> ECDHK-ShareS .
+  op r2 : -> MLK-ShareS .
+  op r3 : -> SessId .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq r1 = zero-rk .
+  eq (r1 \in knl(s)) = true .
   eq (r2 \in knl(s)) = false .
-  red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruDeriveInitCK(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
+  red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruDeriveInitCK(s,r1,r2,r3),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
 close
 
 --> true
@@ -1292,16 +1250,15 @@ open INV .
   op msk : -> MLK-SecretK .
   op n : -> Nat .
   op previous-rk : -> RootK .
-  op r1 : -> RootK .
-  op r2 : -> ECDHK-ShareS .
-  op r3 : -> MLK-ShareS .
-  op r4 : -> SessId .
+  op r1 : -> ECDHK-ShareS .
+  op r2 : -> MLK-ShareS .
+  op r3 : -> SessId .
   op rm : -> RawMsg .
   op s : -> Sys .
   op sb : -> SymBody .
   op sid : -> SessId .
-  eq (r1 = zero-rk) = false .
-  red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruDeriveInitCK(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
+  eq (r1 \in knl(s)) = false .
+  red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruDeriveInitCK(s,r1,r2,r3),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
 close
 
 --> true
@@ -1361,65 +1318,6 @@ open INV .
   eq (r1 = noChainK) = false .
   eq (r1 \in knl(s)) = false .
   red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruDeriveMsgK(s,r1),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> ChainK .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq r1 = noChainK .
-  red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruDeriveNextCK(s,r1),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> ChainK .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r1 = noChainK) = false .
-  eq (r1 \in knl(s)) = true .
-  red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruDeriveNextCK(s,r1),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
-close
-
---> true
-open INV .
-  op a : -> Prin .
-  op a2 : -> Prin .
-  op b : -> Prin .
-  op ck : -> ChainK .
-  op esk : -> ECDHK-SecretK .
-  op msk : -> MLK-SecretK .
-  op n : -> Nat .
-  op previous-rk : -> RootK .
-  op r1 : -> ChainK .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  op sb : -> SymBody .
-  op sid : -> SessId .
-  eq (r1 = noChainK) = false .
-  eq (r1 \in knl(s)) = false .
-  red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(intruDeriveNextCK(s,r1),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
 close
 
 --> true
@@ -3630,4 +3528,4 @@ open INV .
   red inv2(s,a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) implies inv2(send-sym(s,r1,r2,r3,r4),a2,a,b,sid,esk,msk,ck,rm,previous-rk,sb,n) .
 close
 
---> Time taken is 4664ms
+--> Time taken is 5170ms

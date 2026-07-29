@@ -296,7 +296,7 @@ open INV .
   op r1 : -> ChainK .
   op rm : -> RawMsg .
   op s : -> Sys .
-  eq (r1 \in' leakscr(s)) = true .
+  eq (r1 \in leakscr(s)) = true .
   red inv1(s,rm) implies inv1(intruComChainK(s,r1),rm) .
 close
 
@@ -305,7 +305,7 @@ open INV .
   op r1 : -> ChainK .
   op rm : -> RawMsg .
   op s : -> Sys .
-  eq (r1 \in' leakscr(s)) = false .
+  eq (r1 \in leakscr(s)) = false .
   red inv1(s,rm) implies inv1(intruComChainK(s,r1),rm) .
 close
 
@@ -382,7 +382,7 @@ open INV .
   op r1 : -> Prin .
   op rm : -> RawMsg .
   op s : -> Sys .
-  eq (sk(r1) \in' leakscr(s)) = true .
+  eq (sk(r1) \in leakscr(s)) = true .
   red inv1(s,rm) implies inv1(intruComLongTermIDSK(s,r1),rm) .
 close
 
@@ -391,7 +391,7 @@ open INV .
   op r1 : -> Prin .
   op rm : -> RawMsg .
   op s : -> Sys .
-  eq (sk(r1) \in' leakscr(s)) = false .
+  eq (sk(r1) \in leakscr(s)) = false .
   red inv1(s,rm) implies inv1(intruComLongTermIDSK(s,r1),rm) .
 close
 
@@ -401,7 +401,7 @@ open INV .
   op rm : -> RawMsg .
   op s : -> Sys .
   eq (MLK-PriK(r1) \in usedSK(s)) = true .
-  eq (MLK-PriK(r1) \in' leakscr(s)) = true .
+  eq (MLK-PriK(r1) \in leakscr(s)) = true .
   red inv1(s,rm) implies inv1(intruComLongTermMlkSK(s,r1),rm) .
 close
 
@@ -411,7 +411,7 @@ open INV .
   op rm : -> RawMsg .
   op s : -> Sys .
   eq (MLK-PriK(r1) \in usedSK(s)) = true .
-  eq (MLK-PriK(r1) \in' leakscr(s)) = false .
+  eq (MLK-PriK(r1) \in leakscr(s)) = false .
   red inv1(s,rm) implies inv1(intruComLongTermMlkSK(s,r1),rm) .
 close
 
@@ -448,6 +448,17 @@ open INV .
   op rm : -> RawMsg .
   op s : -> Sys .
   eq (r1 \in usedRM(s)) = true .
+  eq (r1 \in knl(s)) = true .
+  red inv1(s,rm) implies inv1(intruComMessage(s,r1),rm) .
+close
+
+--> true
+open INV .
+  op r1 : -> RawMsg .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  eq (r1 \in usedRM(s)) = true .
+  eq (r1 \in knl(s)) = false .
   eq (r1 \in leakscr(s)) = true .
   red inv1(s,rm) implies inv1(intruComMessage(s,r1),rm) .
 close
@@ -458,6 +469,7 @@ open INV .
   op rm : -> RawMsg .
   op s : -> Sys .
   eq (r1 \in usedRM(s)) = true .
+  eq (r1 \in knl(s)) = false .
   eq (r1 \in leakscr(s)) = false .
   eq rm = r1 .
   red inv1(s,rm) implies inv1(intruComMessage(s,r1),rm) .
@@ -469,6 +481,7 @@ open INV .
   op rm : -> RawMsg .
   op s : -> Sys .
   eq (r1 \in usedRM(s)) = true .
+  eq (r1 \in knl(s)) = false .
   eq (r1 \in leakscr(s)) = false .
   eq (rm = r1) = false .
   red inv1(s,rm) implies inv1(intruComMessage(s,r1),rm) .
@@ -489,7 +502,7 @@ open INV .
   op rm : -> RawMsg .
   op s : -> Sys .
   eq (r1 \in usedSK(s)) = true .
-  eq (r1 \in' leakscr(s)) = true .
+  eq (r1 \in leakscr(s)) = true .
   red inv1(s,rm) implies inv1(intruComMlkSK(s,r1),rm) .
 close
 
@@ -499,7 +512,7 @@ open INV .
   op rm : -> RawMsg .
   op s : -> Sys .
   eq (r1 \in usedSK(s)) = true .
-  eq (r1 \in' leakscr(s)) = false .
+  eq (r1 \in leakscr(s)) = false .
   red inv1(s,rm) implies inv1(intruComMlkSK(s,r1),rm) .
 close
 
@@ -517,7 +530,7 @@ open INV .
   op r1 : -> MsgK .
   op rm : -> RawMsg .
   op s : -> Sys .
-  eq (r1 \in' leakscr(s)) = true .
+  eq (r1 \in leakscr(s)) = true .
   red inv1(s,rm) implies inv1(intruComMsgK(s,r1),rm) .
 close
 
@@ -526,119 +539,20 @@ open INV .
   op r1 : -> MsgK .
   op rm : -> RawMsg .
   op s : -> Sys .
-  eq (r1 \in' leakscr(s)) = false .
+  eq (r1 \in leakscr(s)) = false .
   red inv1(s,rm) implies inv1(intruComMsgK(s,r1),rm) .
 close
 
 --> true
 open INV .
-  op r1 : -> Prin .
-  op r2 : -> ECDHK-SecretK .
-  op r3 : -> MLK-SecretK .
-  op r4 : -> InitBody .
-  op r5 : -> RawMsg .
+  op r1 : -> MsgK .
+  op r2 : -> RawMsg .
   op rm : -> RawMsg .
   op s : -> Sys .
-  eq initDec(mk-sym(kdf-ck(zero-rk,(ECDHK-PriK(r1) & r2),(MLK-PriK(r1) & r3),initSid(r4))),initCt(r4)) = r5 .
-  eq ((ECDHK-PriK(r1) & r2) \in knl(s)) = true .
-  eq ((MLK-PriK(r1) & r3) \in knl(s)) = true .
-  eq rm = r5 .
-  eq (r5 \in knl(s)) = true .
-  red inv1(s,rm) implies inv1(intruCrackInitBody(s,r1,r2,r3,r4,r5),rm) .
-close
-
---> true
-open INV .
-  op r1 : -> Prin .
-  op r2 : -> ECDHK-SecretK .
-  op r3 : -> MLK-SecretK .
-  op r4 : -> InitBody .
-  op r5 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  eq initDec(mk-sym(kdf-ck(zero-rk,(ECDHK-PriK(r1) & r2),(MLK-PriK(r1) & r3),initSid(r4))),initCt(r4)) = r5 .
-  eq ((ECDHK-PriK(r1) & r2) \in knl(s)) = true .
-  eq ((MLK-PriK(r1) & r3) \in knl(s)) = true .
-  eq rm = r5 .
-  eq (r5 \in knl(s)) = false .
-  eq (r5 \in usedRM(s)) = true .
-  red inv1(s,rm) implies inv1(intruCrackInitBody(s,r1,r2,r3,r4,r5),rm) .
-close
-
---> false
-open INV .
-  op r1 : -> Prin .
-  op r2 : -> ECDHK-SecretK .
-  op r3 : -> MLK-SecretK .
-  op r4 : -> InitBody .
-  op r5 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  eq initDec(mk-sym(kdf-ck(zero-rk,(ECDHK-PriK(r1) & r2),(MLK-PriK(r1) & r3),initSid(r4))),initCt(r4)) = r5 .
-  eq ((ECDHK-PriK(r1) & r2) \in knl(s)) = true .
-  eq ((MLK-PriK(r1) & r3) \in knl(s)) = true .
-  eq rm = r5 .
-  eq (r5 \in knl(s)) = false .
-  eq (r5 \in usedRM(s)) = false .
-  red inv1(s,rm) implies inv1(intruCrackInitBody(s,r1,r2,r3,r4,r5),rm) .
-close
-
---> true
-open INV .
-  op r1 : -> Prin .
-  op r2 : -> ECDHK-SecretK .
-  op r3 : -> MLK-SecretK .
-  op r4 : -> InitBody .
-  op r5 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  eq initDec(mk-sym(kdf-ck(zero-rk,(ECDHK-PriK(r1) & r2),(MLK-PriK(r1) & r3),initSid(r4))),initCt(r4)) = r5 .
-  eq ((ECDHK-PriK(r1) & r2) \in knl(s)) = true .
-  eq ((MLK-PriK(r1) & r3) \in knl(s)) = true .
-  eq (rm = r5) = false .
-  red inv1(s,rm) implies inv1(intruCrackInitBody(s,r1,r2,r3,r4,r5),rm) .
-close
-
---> true
-open INV .
-  op r1 : -> Prin .
-  op r2 : -> ECDHK-SecretK .
-  op r3 : -> MLK-SecretK .
-  op r4 : -> InitBody .
-  op r5 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  eq initDec(mk-sym(kdf-ck(zero-rk,(ECDHK-PriK(r1) & r2),(MLK-PriK(r1) & r3),initSid(r4))),initCt(r4)) = r5 .
-  eq ((ECDHK-PriK(r1) & r2) \in knl(s)) = true .
-  eq ((MLK-PriK(r1) & r3) \in knl(s)) = false .
-  red inv1(s,rm) implies inv1(intruCrackInitBody(s,r1,r2,r3,r4,r5),rm) .
-close
-
---> true
-open INV .
-  op r1 : -> Prin .
-  op r2 : -> ECDHK-SecretK .
-  op r3 : -> MLK-SecretK .
-  op r4 : -> InitBody .
-  op r5 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  eq initDec(mk-sym(kdf-ck(zero-rk,(ECDHK-PriK(r1) & r2),(MLK-PriK(r1) & r3),initSid(r4))),initCt(r4)) = r5 .
-  eq ((ECDHK-PriK(r1) & r2) \in knl(s)) = false .
-  red inv1(s,rm) implies inv1(intruCrackInitBody(s,r1,r2,r3,r4,r5),rm) .
-close
-
---> true
-open INV .
-  op r1 : -> Prin .
-  op r2 : -> ECDHK-SecretK .
-  op r3 : -> MLK-SecretK .
-  op r4 : -> InitBody .
-  op r5 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  eq (initDec(mk-sym(kdf-ck(zero-rk,(ECDHK-PriK(r1) & r2),(MLK-PriK(r1) & r3),initSid(r4))),initCt(r4)) = r5) = false .
-  red inv1(s,rm) implies inv1(intruCrackInitBody(s,r1,r2,r3,r4,r5),rm) .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in usedRM(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  red inv1(s,rm) implies inv1(intruDecMsg(s,r1,r2),rm) .
 close
 
 --> true
@@ -649,65 +563,7 @@ open INV .
   op s : -> Sys .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in usedRM(s)) = true .
-  eq (ienc(r1,r2) \in knl(s)) = true .
-  eq rm = r2 .
-  red inv1(s,rm) implies inv1(intruDecInitMsg(s,r1,r2),rm) .
-close
-
---> true
-open INV .
-  op r1 : -> MsgK .
-  op r2 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  eq (r1 \in knl(s)) = true .
-  eq (r2 \in usedRM(s)) = true .
-  eq (ienc(r1,r2) \in knl(s)) = true .
-  eq (rm = r2) = false .
-  red inv1(s,rm) implies inv1(intruDecInitMsg(s,r1,r2),rm) .
-close
-
---> true
-open INV .
-  op r1 : -> MsgK .
-  op r2 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  eq (r1 \in knl(s)) = true .
-  eq (r2 \in usedRM(s)) = true .
-  eq (ienc(r1,r2) \in knl(s)) = false .
-  red inv1(s,rm) implies inv1(intruDecInitMsg(s,r1,r2),rm) .
-close
-
---> true
-open INV .
-  op r1 : -> MsgK .
-  op r2 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  eq (r1 \in knl(s)) = true .
-  eq (r2 \in usedRM(s)) = false .
-  red inv1(s,rm) implies inv1(intruDecInitMsg(s,r1,r2),rm) .
-close
-
---> true
-open INV .
-  op r1 : -> MsgK .
-  op r2 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  eq (r1 \in knl(s)) = false .
-  red inv1(s,rm) implies inv1(intruDecInitMsg(s,r1,r2),rm) .
-close
-
---> true
-open INV .
-  op r1 : -> MsgK .
-  op r2 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  eq (r1 \in knl(s)) = true .
-  eq (r2 \in usedRM(s)) = true .
+  eq (r2 \in knl(s)) = false .
   eq (senc(r1,r2) \in knl(s)) = true .
   eq rm = r2 .
   red inv1(s,rm) implies inv1(intruDecMsg(s,r1,r2),rm) .
@@ -721,6 +577,7 @@ open INV .
   op s : -> Sys .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in usedRM(s)) = true .
+  eq (r2 \in knl(s)) = false .
   eq (senc(r1,r2) \in knl(s)) = true .
   eq (rm = r2) = false .
   red inv1(s,rm) implies inv1(intruDecMsg(s,r1,r2),rm) .
@@ -734,6 +591,7 @@ open INV .
   op s : -> Sys .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in usedRM(s)) = true .
+  eq (r2 \in knl(s)) = false .
   eq (senc(r1,r2) \in knl(s)) = false .
   red inv1(s,rm) implies inv1(intruDecMsg(s,r1,r2),rm) .
 close
@@ -821,6 +679,20 @@ open INV .
   op s : -> Sys .
   eq (r1 \in knl(s)) = true .
   eq (r2 \in knl(s)) = true .
+  eq (zero-rk \in knl(s)) = true .
+  red inv1(s,rm) implies inv1(intruDeriveInitCK(s,r1,r2,r3),rm) .
+close
+
+--> true
+open INV .
+  op r1 : -> ECDHK-ShareS .
+  op r2 : -> MLK-ShareS .
+  op r3 : -> SessId .
+  op rm : -> RawMsg .
+  op s : -> Sys .
+  eq (r1 \in knl(s)) = true .
+  eq (r2 \in knl(s)) = true .
+  eq (zero-rk \in knl(s)) = false .
   red inv1(s,rm) implies inv1(intruDeriveInitCK(s,r1,r2,r3),rm) .
 close
 
@@ -874,35 +746,6 @@ open INV .
   eq (r1 = noChainK) = false .
   eq (r1 \in knl(s)) = false .
   red inv1(s,rm) implies inv1(intruDeriveMsgK(s,r1),rm) .
-close
-
---> true
-open INV .
-  op r1 : -> ChainK .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  eq r1 = noChainK .
-  red inv1(s,rm) implies inv1(intruDeriveNextCK(s,r1),rm) .
-close
-
---> true
-open INV .
-  op r1 : -> ChainK .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  eq (r1 = noChainK) = false .
-  eq (r1 \in knl(s)) = true .
-  red inv1(s,rm) implies inv1(intruDeriveNextCK(s,r1),rm) .
-close
-
---> true
-open INV .
-  op r1 : -> ChainK .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  eq (r1 = noChainK) = false .
-  eq (r1 \in knl(s)) = false .
-  red inv1(s,rm) implies inv1(intruDeriveNextCK(s,r1),rm) .
 close
 
 --> true
@@ -1920,24 +1763,6 @@ open INV .
   eq (rk(s,r1,r2,r3) = noRootK) = false .
   eq (r3 \in usedSID(s)) = true .
   eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = true .
-  red inv1(s,rm) implies inv1(send-sym(s,r1,r2,r3,r4),rm) .
-close
-
---> true
-open INV .
-  op r1 : -> Prin .
-  op r2 : -> Prin .
-  op r3 : -> SessId .
-  op r4 : -> RawMsg .
-  op rm : -> RawMsg .
-  op s : -> Sys .
-  eq (r1 = r2) = false .
-  eq (ck(s,r1,r2,r3) = noChainK) = false .
-  eq (rk(s,r1,r2,r3) = noRootK) = false .
-  eq (r3 \in usedSID(s)) = true .
-  eq (r4 \in usedRM(s)) = false .
-  eq (mk-sym(ck(s,r1,r2,r3)) \in knl(s)) = false .
   red inv1(s,rm) implies inv1(send-sym(s,r1,r2,r3,r4),rm) .
 close
 
@@ -1956,4 +1781,4 @@ open INV .
   red inv1(s,rm) implies inv1(send-sym(s,r1,r2,r3,r4),rm) .
 close
 
---> Time taken is 4623ms
+--> Time taken is 4653ms

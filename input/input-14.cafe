@@ -1,6 +1,5 @@
 ipsgopen INV .
-  inv inv8(S:Sys, CK:ChainK) .
-  generate inv14(S:Sys, A:Prin, B:Prin, SID:SessId, ESK:ECDHK-SecretK, MSK:MLK-SecretK, Previous-RK:RootK, CK:ChainK, N:Nat)
+  generate inv14(S:Sys, CK:ChainK)
   induction on S:Sys .
 close
 set-output examples/PQ3/inv/inv14.cafe .

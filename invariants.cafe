@@ -9,18 +9,32 @@ mod INV {
     var MPK : MLK-PublicK .
     var IB  : InitBody .
     var AB  : AsymBody .
-    var N   : Nat .
+    vars N EOLD ENEW : Nat .
     var MLK-Ct : MLK-Cipher .
     vars Previous-RK RK : RootK .
     var MSK-SS : MLK-ShareS .
     var ESK-SS : ECDHK-ShareS .
-    var CK : ChainK .
+    vars CK CKOLD CKNEW : ChainK .
     vars MK MK1 MK2 : MsgK .
     vars RM RM1 RM2  : RawMsg .
     var SB  : SymBody .
     var Ecdhk-Ci : ECDHK-Cipher .
 
+
     vars ?T : Nat .
+
+
+    op check : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK ChainK RawMsg SymBody Nat -> Bool .
+    eq check(S, A2, A, B, SID, ESK, MSK, CK, RM, SB, N) =
+        (
+            SID \in usedSID(S) and
+            ESK \in usedSK(S) and
+            MSK \in usedSK(S) and
+            msg(A2, A, B, SB, N) \in nw(S) and
+            validSymBody(A, B, SB) and
+            symSid(SB) = SID and
+            symDec(mkAt(CK, symN(SB)), symCt(SB)) = RM
+        ) .
     
     -- -- **************************************************************************************************************************************************************************************************
     -- ===> MESSAGE SECRECY
@@ -31,7 +45,7 @@ mod INV {
         -- 4. ML-KEM shared secret key used to derive the chain key is not leaked 
     -- then the intruder cannot know the message content.
 
-    -- lemma 1 + 2 + 3a + 3b (case splitting manually)
+    -- lemma 1 + 2 + 3 + 4 (case splitting manually)
     op messageSe : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK RawMsg SymBody Nat -> Bool .
     eq messageSe(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, RM, SB, N) =
         (
@@ -59,7 +73,7 @@ mod INV {
     -- -- ****************************************************************  **********************************************************************************************************************************
     -- =====> FORWARD SECRECY
     -- for long-term identity key
-    -- lemma 1 + 2 + 3a + 3c (case splitting manually)
+    -- lemma 1 + 2 + 3 + 5 (case splitting manually)
     op forwardSeID : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK RawMsg SymBody Nat -> Bool .
     eq forwardSeID(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, RM, SB, N) =
         (
@@ -84,7 +98,7 @@ mod INV {
             not (RM \in knl(S))
         ) .
 
-    -- lemma 1 + 2 + 3a + 3d (case splitting manually)
+    -- lemma 1 + 2 + 3 + 6 (case splitting manually)
     op forwardSeMLK : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK RawMsg SymBody Nat -> Bool .
     eq forwardSeMLK(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, RM, SB, N) =
         (
@@ -112,7 +126,7 @@ mod INV {
         ) .
 
     -- for chain key
-    -- lemma: 1 + 2 + 3a + 3e (case splitting manually)
+    -- lemma: 1 + 2 + 3 + 7 (case splitting manually)
     op forwardSeCK : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK RawMsg SymBody Nat -> Bool .
     eq forwardSeCK(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, RM, SB, N) =
     (
@@ -138,7 +152,7 @@ mod INV {
         not (RM \in knl(S))
     ) .
     -- for message key
-    -- lemma: 1 + 2 + 3a + 3f (case splitting manually)
+    -- lemma: 1 + 2 + 3 + 8 (case splitting manually)
     op forwardSeMsg : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK RawMsg SymBody Nat -> Bool .
     eq forwardSeMsg(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, RM, SB, N) =
     (
@@ -170,7 +184,7 @@ mod INV {
 
     -- -- **************************************************************************************************************************************************************************************************
     -- =====> POST-COMPROMISE SECURITY
-    -- lemma: 1 + 2 + 3a + 3g (case splitting manually)
+    -- lemma: 1 + 2 + 3 + 9 (case splitting manually)
     op postCompSe : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK RawMsg SymBody Nat -> Bool .
     eq postCompSe(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, RM, SB, N) =
         (
@@ -197,31 +211,63 @@ mod INV {
             not (RM \in knl(S))
         ) .
 
-    op postCompSe : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK RawMsg SymBody Nat -> Bool .
-    eq postCompSe(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, RM, SB, N) =
-        (
-            not (A = intru or B = intru) and
-            not (A = B) and
-            msg(A2, A, B, SB, N) \in nw(S) and
-            validSymBody(A, B, SB) and
-            symSid(SB) = SID and
-            kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
-            symDec(mkAt(CK, symN(SB)), symCt(SB)) = RM and
-            not (RM = noRawMsg) and
-            RM \in usedRM(S) and
+    -- op postCompSe : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK RawMsg SymBody Nat -> Bool .
+    -- eq postCompSe(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, RM, SB, N) =
+    --     (
+    --         not (A = intru or B = intru) and
+    --         not (A = B) and
+    --         msg(A2, A, B, SB, N) \in nw(S) and
+    --         validSymBody(A, B, SB) and
+    --         symSid(SB) = SID and
+    --         kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) = CK and
+    --         symDec(mkAt(CK, symN(SB)), symCt(SB)) = RM and
+    --         not (RM = noRawMsg) and
+    --         RM \in usedRM(S) and
 
-            Previous-RK \in leakscr(S) and
+    --         Previous-RK \in leakscr(S) and
 
-            not (sk(B) \in leakscr(S)) and
-            not (ss-mlk(B, MSK) \in leakscr(S)) and
-            not (ckAt(CK, symN(SB)) \in leakscr(S)) and
-            not (mkAt(CK, symN(SB)) \in leakscr(S)) and
-            not (RM \in leakscr(S))
-        )
-        implies
-        (   
-            not (RM \in knl(S))
-        ) .
+    --         not (sk(B) \in leakscr(S)) and
+    --         not (ss-mlk(B, MSK) \in leakscr(S)) and
+    --         not (ckAt(CK, symN(SB)) \in leakscr(S)) and
+    --         not (mkAt(CK, symN(SB)) \in leakscr(S)) and
+    --         not (RM \in leakscr(S))
+    --     )
+    --     implies
+    --     (   
+    --         not (RM \in knl(S))
+    --     ) .
+
+
+    -- op postCompSeCK : Sys Prin Prin Prin SessId Nat Nat ChainK ChainK ECDHK-SecretK MLK-SecretK RootK RawMsg SymBody Nat -> Bool .
+    -- eq postCompSeCK(S, A2, A, B, SID, EOLD, ENEW, CKOLD, CKNEW, ESK, MSK, Previous-RK, RM, SB, N) =
+    --     (
+    --         not (A = intru or B = intru) and
+    --         not (A = B) and
+    --         msg(A2, A, B, SB, N) \in nw(S) and
+    --         validSymBody(A, B, SB) and
+    --         symSid(SB) = SID and
+    --         symDec(mkAt(CKNEW, symN(SB)), symCt(SB)) = RM and
+    --         CKNEW = kdf-ck(Previous-RK, ss-ecdh(B, ESK), ss-mlk(B, MSK), SID) and
+    --         not (RM = noRawMsg) and
+    --         RM \in usedRM(S) and
+            
+    --         ckRec(A, B, SID, EOLD, CKOLD) \in keyHist(S) and
+    --         ckRec(A, B, SID, ENEW, CKNEW) \in keyHist(S) and
+    --         EOLD < ENEW and
+            
+            
+    --         CKOLD \in leakscr(S) and
+            
+    --         not (sk(B) \in leakscr(S)) and
+    --         not (ss-mlk(B, MSK) \in leakscr(S)) and
+    --         not (ckAt(CKNEW, symN(SB)) \in leakscr(S)) and
+    --         not (mkAt(CKNEW, symN(SB)) \in leakscr(S)) and
+    --         not (RM \in leakscr(S))
+    --     )
+    --     implies
+    --     (   
+    --         not (RM \in knl(S))
+    --     ) .
 
     -- -- **************************************************************************************************************************************************************************************************
     -- =====> Authenticity
@@ -268,9 +314,9 @@ mod INV {
         (
             RM \in usedRM(S)
         ) .
-    -- lemma: 4 + 5
-    op inv3a : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK RawMsg SymBody Nat MsgK -> Bool .
-    eq inv3a(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, RM, SB, N, MK2) =
+    -- lemma: 10 + 11
+    op inv3 : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK RawMsg SymBody Nat MsgK -> Bool .
+    eq inv3(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, RM, SB, N, MK2) =
         (
             not (A = intru or B = intru) and
             not (A = B) and
@@ -288,9 +334,9 @@ mod INV {
             MK2 = mkAt(CK, symN(SB))
         ) .
 
-    -- lemma: 6 + 7
-    op inv3b : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
-    eq inv3b(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
+    -- lemma: 12 + 13
+    op inv4 : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
+    eq inv4(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
         (
             not (A = intru or B = intru) and
             not (A = B) and
@@ -308,9 +354,9 @@ mod INV {
             not (mkAt(CK, symN(SB)) \in knl(S))
         ) .
 
-    -- lemma: 9 + 10
-    op inv3c : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
-    eq inv3c(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
+    -- lemma: 15 + 16
+    op inv5 : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
+    eq inv5(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
         (
             not (A = intru or B = intru) and
             not (A = B) and
@@ -329,9 +375,9 @@ mod INV {
             not (mkAt(CK, symN(SB)) \in knl(S))
         ) .
     
-    -- lemma: 11 + 12
-    op inv3d : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
-    eq inv3d(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
+    -- lemma: 17 + 18 
+    op inv6 : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
+    eq inv6(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
         (
             not (A = intru or B = intru) and
             not (A = B) and
@@ -351,9 +397,9 @@ mod INV {
             not (mkAt(CK, symN(SB)) \in knl(S))
         ) .
 
-    -- lemma: 13 + 14
-    op inv3e : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
-    eq inv3e(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
+    -- lemma: 19 + 20
+    op inv7 : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
+    eq inv7(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
         (
             not (A = intru or B = intru) and
             not (A = B) and
@@ -372,9 +418,9 @@ mod INV {
         (
             not (mkAt(CK, symN(SB)) \in knl(S))
         ) .
-    -- lemma: 15 + 16
-    op inv3f : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
-    eq inv3f(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
+    -- lemma: 21 + 22
+    op inv8 : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
+    eq inv8(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
         (
             not (A = intru or B = intru) and
             not (A = B) and
@@ -394,9 +440,9 @@ mod INV {
             not (mkAt(CK, symN(SB)) \in knl(S))
         ) .
 
-    -- lemma: 17 + 18
-    op inv3g : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
-    eq inv3g(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
+    -- lemma: 23 + 24
+    op inv9 : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
+    eq inv9(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
         (
             not (A = intru or B = intru) and
             not (A = B) and
@@ -417,8 +463,8 @@ mod INV {
         ) .
 
     -- no lemma
-    op inv4 : Sys Prin Prin Prin SymBody Nat MsgK RawMsg -> Bool .
-    eq inv4(S, A2, A, B, SB, N, MK, RM) =
+    op inv10 : Sys Prin Prin Prin SymBody Nat MsgK RawMsg -> Bool .
+    eq inv10(S, A2, A, B, SB, N, MK, RM) =
         (
             msg(A2, A, B, SB, N) \in nw(S) and
             symDec(MK, symCt(SB)) = RM and
@@ -429,8 +475,8 @@ mod INV {
             RM \in usedRM(S)
         ) .
     -- no lemma
-    op inv5 : Sys MsgK RawMsg -> Bool .
-    eq inv5(S, MK, RM) =
+    op inv11 : Sys MsgK RawMsg -> Bool .
+    eq inv11(S, MK, RM) =
         (
             senc(MK, RM) \in knl(S) and
             not (RM = noRawMsg)
@@ -440,9 +486,9 @@ mod INV {
             RM \in usedRM(S)
         ) .
    
-    -- lemma: 8
-    op inv6 : Sys Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK Nat -> Bool .
-    eq inv6(S, A, B, SID, ESK, MSK, Previous-RK, CK, N) =
+    -- lemma: 14
+    op inv12 : Sys Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK Nat -> Bool .
+    eq inv12(S, A, B, SID, ESK, MSK, Previous-RK, CK, N) =
         (
             not (A = intru or B = intru) and
             not (A = B) and
@@ -456,9 +502,9 @@ mod INV {
         (
             not (mkAt(CK, N) \in knl(S))
         ) .
-    -- lemma: 8
-    op inv7 : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
-    eq inv7(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
+    -- lemma: 14
+    op inv13 : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
+    eq inv13(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
         (
             not (A = intru or B = intru) and
             not (A = B) and
@@ -476,8 +522,8 @@ mod INV {
         ) .
 
     -- no lemma
-    op inv8 : Sys ChainK -> Bool .
-    eq inv8(S, CK) =
+    op inv14 : Sys ChainK -> Bool .
+    eq inv14(S, CK) =
         (
             not (CK \in leakscr(S))
         )
@@ -486,9 +532,9 @@ mod INV {
             not (CK \in knl(S))
         ) .
 
-    -- lemma: 8
-    op inv9 : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
-    eq inv9(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
+    -- lemma: 14
+    op inv15 : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
+    eq inv15(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
         (
             not (A = intru or B = intru) and
             not (A = B) and
@@ -505,9 +551,9 @@ mod INV {
         (
             not (ckAt(CK, symN(SB)) \in knl(S))
         ) .
-    -- lemma: 8
-    op inv10 : Sys Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK Nat -> Bool .
-    eq inv10(S, A, B, SID, ESK, MSK, Previous-RK, CK, N) =
+    -- lemma: 14
+    op inv16 : Sys Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK Nat -> Bool .
+    eq inv16(S, A, B, SID, ESK, MSK, Previous-RK, CK, N) =
         (
             not (A = intru or B = intru) and
             not (A = B) and
@@ -524,9 +570,9 @@ mod INV {
             not (mkAt(CK, N) \in knl(S))
         ) .
 
-    -- lemma: 8
-    op inv11 : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
-    eq inv11(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
+    -- lemma: 14
+    op inv17 : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
+    eq inv17(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
         (
             not (A = intru or B = intru) and
             not (A = B) and
@@ -543,9 +589,9 @@ mod INV {
         (
             not (ckAt(CK, symN(SB)) \in knl(S))
         ) .
-    -- lemma: 8
-    op inv12 : Sys Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK Nat -> Bool .
-    eq inv12(S, A, B, SID, ESK, MSK, Previous-RK, CK, N) =
+    -- lemma: 14
+    op inv18 : Sys Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK Nat -> Bool .
+    eq inv18(S, A, B, SID, ESK, MSK, Previous-RK, CK, N) =
         (
             not (A = intru or B = intru) and
             not (A = B) and
@@ -560,9 +606,9 @@ mod INV {
         (
             not (mkAt(CK, N) \in knl(S))
         ) .
-    -- lemma 8
-    op inv13 : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
-    eq inv13(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
+    -- lemma 14
+    op inv19 : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
+    eq inv19(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
         (
             not (A = intru or B = intru) and
             not (A = B) and
@@ -579,9 +625,9 @@ mod INV {
         (
             not (ckAt(CK, symN(SB)) \in knl(S))
         ) .
-    -- lemma 8
-    op inv14 : Sys Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK Nat -> Bool .
-    eq inv14(S, A, B, SID, ESK, MSK, Previous-RK, CK, N) =
+    -- lemma 14
+    op inv20 : Sys Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK Nat -> Bool .
+    eq inv20(S, A, B, SID, ESK, MSK, Previous-RK, CK, N) =
         (
             not (A = intru or B = intru) and
             not (A = B) and
@@ -597,9 +643,9 @@ mod INV {
             not (mkAt(CK, N) \in knl(S))
         ) .
 
-    -- lemma: 8
-    op inv15 : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
-    eq inv15(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
+    -- lemma: 14
+    op inv21 : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
+    eq inv21(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
         (
             not (A = intru or B = intru) and
             not (A = B) and
@@ -617,9 +663,9 @@ mod INV {
         (
             not (ckAt(CK, symN(SB)) \in knl(S))
         ) .
-    -- lemma: 8
-    op inv16 : Sys Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK Nat -> Bool .
-    eq inv16(S, A, B, SID, ESK, MSK, Previous-RK, CK, N) =
+    -- lemma: 14
+    op inv22 : Sys Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK Nat -> Bool .
+    eq inv22(S, A, B, SID, ESK, MSK, Previous-RK, CK, N) =
         (
             not (A = intru or B = intru) and
             not (A = B) and
@@ -634,9 +680,9 @@ mod INV {
         (
             not (mkAt(CK, N) \in knl(S))
         ) .
-    -- lemma: 8
-    op inv17 : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
-    eq inv17(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
+    -- lemma: 14
+    op inv23 : Sys Prin Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK SymBody Nat -> Bool .
+    eq inv23(S, A2, A, B, SID, ESK, MSK, Previous-RK, CK, SB, N) =
         (
             not (A = intru or B = intru) and
             not (A = B) and
@@ -654,9 +700,9 @@ mod INV {
         (
             not (ckAt(CK, symN(SB)) \in knl(S))
         ) .
-    -- lemma: 8
-    op inv18 : Sys Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK Nat -> Bool .
-    eq inv18(S, A, B, SID, ESK, MSK, Previous-RK, CK, N) =
+    -- lemma: 14
+    op inv24 : Sys Prin Prin SessId ECDHK-SecretK MLK-SecretK RootK ChainK Nat -> Bool .
+    eq inv24(S, A, B, SID, ESK, MSK, Previous-RK, CK, N) =
         (
             not (A = intru or B = intru) and
             not (A = B) and

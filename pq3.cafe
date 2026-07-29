@@ -617,9 +617,15 @@ mod! DATA {
      MLK-SecretK ECDHK-SecretK
      ECDHK-Cipher ECDHK-ShareS
      MLK-Cipher MLK-ShareS
-     Prin PriKey PubKey
+     Prin PriKey PubKey KeyRecord
      MLK-PriKeyTime ID-PriKeyTime ChainKTime MsgKTime KeyHash CipherT AsymCipherT InitCipherT AsymBody SymBody
      < Data]
+
+    
+    -- Constructor để lưu lịch sử Root Key và Chain Key kèm theo Epoch (Nat)
+    op rkRec : Prin Prin SessId Nat RootK -> KeyRecord {constr}
+    op ckRec : Prin Prin SessId Nat ChainK -> KeyRecord {constr}
+
 
     -- concatenation of data
     op _||_ : DataL DataL -> DataL {assoc constr}
@@ -1106,6 +1112,8 @@ mod* PQ3 {
     op recv-ar : Sys Prin Prin SessId AsymBody Nat -> Sys {constr}
     op c-recv-ar : Sys Prin Prin SessId AsymBody Nat -> Bool
 
+
+
  
     -- Variables
     var S : Sys
@@ -1161,6 +1169,12 @@ mod* PQ3 {
     op time : Sys -> Nat 
     op leakscr : Sys -> DataS
     op knl : Sys -> DataL
+    
+    -- Đếm số lần AR (Ratchet Epoch)
+    -- op epoch : Sys Prin Prin SessId -> Nat 
+    
+    -- Tập hợp chứa lịch sử các khóa đã sinh ra
+    -- op keyHist : Sys -> DataS
 
     op rk : Sys Prin Prin SessId -> RootK -- root key of a session
     op ck : Sys Prin Prin SessId -> ChainK -- sending chain key of a session
@@ -1382,6 +1396,9 @@ mod* PQ3 {
     eq ns(init, A, B, SID) = 0 .
     eq nr(init, A, B, SID) = 0 .
 
+    -- eq epoch(init, A, B, SID) = 0 .
+    -- eq keyHist(init) = empty .
+
     -- 
     eq (ckNPair(CK, T) = MLK-PriK(A)) = false .
     eq (MLK-PriK(A) = ckNPair(CK, T)) = false .
@@ -1462,7 +1479,8 @@ mod* PQ3 {
                         mlk-keygen(MSK),
                         ns(S, P, Q, SID), 
                         ienc(mk-sym(init-ck(ss-ecdh(Q, ESK), ss-mlk(Q, MSK), SID)), RM),
-                        hash(ECDHK-PubK(Q), MLK-PubK(Q))), time(S)),
+                        hash(ECDHK-PubK(Q), MLK-PubK(Q)))
+             , time(S)),
             nw(S)
         if c-send-init(S, P, Q, SID, ESK, MSK, RM) .
     ceq idsS(send-init(S, P, Q, SID, ESK, MSK, RM)) = idsS(S) if c-send-init(S, P, Q, SID, ESK, MSK, RM) . 
@@ -1639,7 +1657,8 @@ mod* PQ3 {
                         ar-ss-mlk-send(S, P, Q, SID, MSK),
                         SID
                     )
-                ), RM) || knl(S) if c-send-ar(S, P, Q, SID, ESK, MSK, RM) . 
+                ), RM) || knl(S) if c-send-ar(S, P, Q, SID, ESK, MSK, RM) .
+
     ceq send-ar(S, P, Q, SID, ESK, MSK, RM) = S if not c-send-ar(S, P, Q, SID, ESK, MSK, RM) .
 
     -- *****************************************************************************************************

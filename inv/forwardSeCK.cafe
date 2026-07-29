@@ -3418,7 +3418,8 @@ open INV .
   eq (ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb)) \in leakscr(s)) = false .
   eq (mk-sym(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = false .
   eq (nextck(ckAt(kdf-ck(previous-rk,(ECDHK-PriK(b) & esk),(MLK-PriK(b) & msk),sid),symN(sb))) \in leakscr(s)) = false .
-  red inv2(s,a2,a,b,sid,esk,msk,ck,r1,previous-rk,sb,n) implies (forwardSeCK(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) implies forwardSeCK(intruRandMessage(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
+  red inv2(s,a2,a,b,sid,esk,msk,ck,r1,previous-rk,sb,n) implies (forwardSeCK(s,a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n) 
+  implies forwardSeCK(intruRandMessage(s,r1),a2,a,b,sid,esk,msk,previous-rk,ck,rm,sb,n)) .
 close
 
 --> true
